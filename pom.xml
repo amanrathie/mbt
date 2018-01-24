@@ -17,7 +17,7 @@
 
     <properties>
         <!-- Contexto da aplicação, sem / -->
-        <app.context>projeto-exemplo-sb</app.context>
+        <app.context>mbt</app.context>
         <!-- Propriedades do Sonar e Code Coverage -->
         <sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
