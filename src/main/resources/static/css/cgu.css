@@ -1,0 +1,255 @@
+.brand-logo small {
+    font-size:11px;
+    font-weight: normal;
+}
+
+.pagination>li>a {
+    float:initial;
+}
+/* equivalente ao .box-paginacao form label*/
+.dataTables_length {
+    width: 15%;
+    padding: 0 5px;
+    float: left;
+}
+
+.dataTables_length label {
+    padding-bottom: 5px;
+    font-weight: 700;
+    font-size: 1.15em;
+    color: #2369b3;
+    line-height: 1.1;
+    text-align: left;
+    word-break: break-word;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+.dataTables_length select {
+    width: 100%;
+    margin-top: 5px;
+}
+
+
+table.dataTable {
+    width: 100% !important;
+}
+
+.busca-indice {
+    margin-top: -27px;
+}
+
+.footer-item-filtro {
+    margin-top: 50px;
+}
+
+.footer-item-filtro p{
+    text-align: center;
+    color:grey;
+}
+
+.e404 {
+    font-size: 300px;
+    color: #777;
+}
+
+.loading-grande {
+    margin: 375px 50%;
+    display: inline-block;
+}
+.loading {
+    margin: 140px 50%;
+    display: inline-block;
+}
+
+.botao__gera_paginacao_completa {
+    width: 25%;
+    display: inline-block;
+}
+.box-paginacao {
+    margin-top:10px;
+}
+
+.tooltip{
+    z-index: 1151 !important;
+}
+
+.table-responsive {
+    padding: 10px 0;
+    border:none;
+}
+
+#toast-container>div {
+    opacity:1;
+    width: 400px;
+}
+
+.toast-top-center {
+    top:62px;
+}
+
+.botao-acoes {
+    margin-right: 5px;
+}
+
+.campo-form {
+    font-size: 15px;
+    color: #404143;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    height: auto;
+}
+
+.tipo-interacao-instancia {
+    display: inline-block;
+    padding: 5px 12px;
+    margin: 5px 0;
+    font-weight: 600;
+    font-size: 90%;
+}
+
+.interacoes {
+    margin: 0 0 15px 0;
+}
+
+.caixa-interacao {
+    margin-bottom: 15px;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, .125);
+    min-height: 80px;
+    color: #6d6e70;
+}
+
+.dados-interacao {
+    margin-top: 4px;
+    color: #6d6e70;
+}
+
+.lista-valores-campo {
+    padding-left: 20px;
+}
+
+.link-sem-formatacao a {
+    color: #000000;
+    text-decoration: none;
+}
+
+table.hide-headers thead {
+    display:none;
+}
+
+.dataTables_info {
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-weight: 700;
+    font-size: .97em;
+    color: #2369b3;
+    line-height: 1.1;
+    text-transform: uppercase;
+    display: block;
+}
+
+.detalhes-label { font-weight: bold; color:#404143;}
+
+.texto-label {
+    margin-right: 10px;
+}
+
+.label-classe, .label-id, .label-situacao { font-size:12px;}
+
+.label-classe { background: #5cb85c;}
+.label-id { background: #f0ad4e;}
+.label-situacao { background: #777;}
+
+.label-papel-instancia {
+    display:block;
+    margin-bottom: 3px;
+    text-align: left;
+    white-space: normal;
+}
+
+.label-sm {
+    font-size: 10px;
+}
+
+.label-md {
+    font-size: 13px;
+}
+
+.label-lg {
+    font-size: 15px;
+}
+
+.favorito {
+    color: #b38e23;
+}
+
+.favorito:hover {
+    cursor: pointer;
+}
+
+.equal-height {
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+}
+
+.multiselect-container .active label {
+    color: #fff !important;
+}
+
+.dropdown-menu li {
+    padding: 5px 0;
+}
+
+.popover {
+    max-width: 500px;
+    width: 500px;
+}
+
+.confirmation-buttons .btn-group a:first-child {
+    margin-right: 5px;
+}
+
+.box-interna {
+    margin: 35px 5px 30px 5px;
+}
+
+.botoes-flutuantes {
+    position:fixed;
+    bottom:20px;
+    right:20px;
+}
+
+
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+}
+
+.areas-tree ul{ list-style: none; }
+.areas-tree > ul{ padding-left:0; }
+
+#carregando {
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    z-index:99999;
+    width: 350px;
+}
+
+#carregando > div {
+    position: relative;
+    left: -50%;
+    top:-20%;
+    background:white;
+    -webkit-box-shadow: 0 17px 17px 0 rgba(0, 0, 0, 0.15), 0 27px 55px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 17px 17px 0 rgba(0, 0, 0, 0.15), 0 27px 55px 0 rgba(0, 0, 0, 0.3);
+    text-align: center;
+    padding: 20px 0;
+}
+
+.dt-center {text-align: center;}

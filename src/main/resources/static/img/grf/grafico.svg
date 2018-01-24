@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	width="62px" height="59px" viewBox="0 0 62 59">
+<filter filterUnits="objectBoundingBox" x="-3.33" y="-3.57" width="106.67" height="108.93" id="filter0">
+<feGaussianBlur in="SourceAlpha" stdDeviation="1.00" result="dsBlurOut1"/>
+<feFlood flood-color="rgb(0,0,0)" flood-opacity="0.20" result="dsFloodOut1"/>
+<feComposite in="dsFloodOut1" in2="dsBlurOut1" operator="in" result="dsShadow1"/>
+<feOffset in="dsShadow1" dx="-0.00" dy="2.00" result="dsOffset1"/>
+<feComposite in="dsOffset1" in2="SourceAlpha" operator="out" result="dropShadow1"/>
+<feBlend in="dropShadow1" in2="SourceGraphic" mode="normal" result="sourceGraphic"/>
+<feImage x="1" y="0" width="60" height="56" preserveApectRatio="none" xlink:href="#symbol0"/>
+<feComposite in="grImage1" in2="SourceAlpha" operator="in" result="grOverlay1"/>
+<feBlend in="grOverlay1" in2="sourceGraphic" mode="multiply" result="gradientOverlay1"/>
+</filter>
+<linearGradient id="linear_PSgrad_0" x1="50%" y1="100%" x2="50%" y2="0%">
+    <stop offset="0%" stop-color="rgb(215,215,215)" stop-opacity="1" />
+    <stop offset="100%" stop-color="rgb(255,255,255)" stop-opacity="1" />
+</linearGradient>
+
+<defs>
+<rect x="0" y="0" width="60" height="56" id="symbol0" fill="url(#linear_PSgrad_0)"/></defs>
+<path fillRule="evenodd" d="M 1 55.6C 1 55.6 1 53.19 1 53.19 1 53.19 61 53.19 61 53.19 61 53.19 61 55.6 61 55.6 61 55.6 1 55.6 1 55.6ZM 43.12 50.19C 43.12 50.19 34 50.19 34 50.19 34 50.19 34 0.4 34 0.4 34 0.4 45.52 0.4 45.52 0.4 45.52 0.4 45.52 15.43 45.52 15.43 45.52 15.43 54.64 15.43 54.64 15.43 54.64 15.43 54.64 50.19 54.64 50.19 54.64 50.19 45.52 50.19 45.52 50.19 45.52 50.19 43.12 50.19 43.12 50.19ZM 43.12 15.43C 43.12 15.43 43.12 2.8 43.12 2.8 43.12 2.8 36.4 2.8 36.4 2.8 36.4 2.8 36.4 47.78 36.4 47.78 36.4 47.78 43.12 47.78 43.12 47.78 43.12 47.78 43.12 15.43 43.12 15.43ZM 17.92 50.19C 17.92 50.19 8.8 50.19 8.8 50.19 8.8 50.19 8.8 15.43 8.8 15.43 8.8 15.43 20.32 15.43 20.32 15.43 20.32 15.43 20.32 30.46 20.32 30.46 20.32 30.46 29.44 30.46 29.44 30.46 29.44 30.46 29.44 50.19 29.44 50.19 29.44 50.19 20.32 50.19 20.32 50.19 20.32 50.19 17.92 50.19 17.92 50.19ZM 17.92 30.46C 17.92 30.46 17.92 17.83 17.92 17.83 17.92 17.83 11.2 17.83 11.2 17.83 11.2 17.83 11.2 47.78 11.2 47.78 11.2 47.78 17.92 47.78 17.92 47.78 17.92 47.78 17.92 30.46 17.92 30.46Z" fill="rgb(169,215,113)" filter="url(#filter0)"/></svg>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitiesDescriptor Name="urn:mace:shibboleth:testshib:two"
+					xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
+>
+	<EntityDescriptor entityID="http://@adfs.idp-sig.url@/adfs/services/trust">
+		<IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:1.1:protocol urn:oasis:names:tc:SAML:2.0:protocol" WantAuthnRequestsSigned="true">
+			<KeyDescriptor use="signing">
+				<dsig:KeyInfo xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+					<dsig:X509Data>
+						<!--
+							PEM da chave pública do ADFS, extraído no ADFS, em Service > Certificates > Token Signing
+						-->
+						<dsig:X509Certificate>
+							@adfs.idp-x509@
+						</dsig:X509Certificate>
+					</dsig:X509Data>
+				</dsig:KeyInfo>
+			</KeyDescriptor>
+			<KeyDescriptor>
+				<dsig:KeyInfo xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+					<dsig:X509Data>
+						<dsig:X509Certificate>
+							@adfs.idp-x509@
+						</dsig:X509Certificate>
+					</dsig:X509Data>
+				</dsig:KeyInfo>
+			</KeyDescriptor>
+			<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://@adfs.idp-sig.url@/adfs/ls/"/>
+			<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://@adfs.idp-sig.url@/adfs/ls/"/>
+			<NameIDFormat>
+				urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
+			</NameIDFormat>
+			<NameIDFormat>
+				urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+			</NameIDFormat>
+			<NameIDFormat>
+				urn:oasis:names:tc:SAML:2.0:nameid-format:transient
+			</NameIDFormat>
+			<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://@adfs.idp-sig.url@/adfs/ls/"/>
+			<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://@adfs.idp-sig.url@/adfs/ls/"/>
+		</IDPSSODescriptor>
+		<Organization>
+			<OrganizationName xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
+							  xml:lang="en">CGU</OrganizationName>
+			<OrganizationDisplayName xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
+									 xml:lang="en">Controladoria-Geral da Uniao</OrganizationDisplayName>
+			<OrganizationURL xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
+							 xml:lang="en">http://www.cgu.gov.br</OrganizationURL>
+		</Organization>
+		<ContactPerson contactType="technical">
+			<GivenName>COSIS</GivenName>
+			<SurName>Equipe</SurName>
+			<EmailAddress>cosis</EmailAddress>
+		</ContactPerson>
+	</EntityDescriptor>
+</EntitiesDescriptor>

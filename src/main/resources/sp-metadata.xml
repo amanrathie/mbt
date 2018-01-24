@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitiesDescriptor Name="urn:mace:shibboleth:testshib:two"
+					xmlns="urn:oasis:names:tc:SAML:2.0:metadata">
+	<EntityDescriptor entityID="@adfs.urlAplicacao@">
+		<SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol http://schemas.xmlsoap.org/ws/2003/07/secext">
+			<KeyDescriptor use="signing">
+				<dsig:KeyInfo xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+					<!--
+                        PEM da chave pública do par criado para a aplicação, mantido dentro de jbosslab1_adfs_sign.jks.
+                        Mesma chave que foi carregada no signing do Relying Party no ADFS.
+                        Deve ser atualizado sempre que a chave for substituida.
+                    -->
+					<dsig:X509Data>
+						<dsig:X509Certificate>
+							@adfs.sp-x509@
+						</dsig:X509Certificate>
+					</dsig:X509Data>
+				</dsig:KeyInfo>
+			</KeyDescriptor>
+			<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="@adfs.urlAplicacao@index.jsp?GLO=true"/>
+			<!-- ATENÇÃO! O formato aqui especificado deve ser o mesmo informado no Relying Party do ADFS -->
+			<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</NameIDFormat>
+			<AssertionConsumerService
+					Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="@adfs.urlAplicacao@saml/SSO"
+					index="1" isDefault="true" />
+		</SPSSODescriptor>
+		<Organization>
+			<OrganizationName xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
+							  xml:lang="en">CGU</OrganizationName>
+			<OrganizationDisplayName xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
+									 xml:lang="en">Controladoria-Geral da Uniao</OrganizationDisplayName>
+			<OrganizationURL xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
+							 xml:lang="en">@adfs.urlAplicacao@</OrganizationURL>
+		</Organization>
+		<ContactPerson contactType="technical">
+			<GivenName>COSIS</GivenName>
+			<SurName>Equipe</SurName>
+			<EmailAddress>cosis@cgu.gov.br</EmailAddress>
+		</ContactPerson>
+	</EntityDescriptor>
+</EntitiesDescriptor>

@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    run: @kubectl.rc.name@
+  name: @kubectl.rc.name@
+spec:
+  replicas: 1
+  selector:
+    run: @kubectl.rc.name@
+  template:
+    metadata:
+      labels:
+        run: @kubectl.rc.name@
+    spec:
+      dnsPolicy: Default
+      containers:
+      - image: TODO-configurar-ip-e-porta/@kubectl.rc.name@:@project.version@
+        name: @kubectl.rc.name@
+        ports:
+            - containerPort: 8080
+              name: @kubectl.rc.name@
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 3200Mi
+          requests:
+            cpu: 1000m
+            memory: 3200Mi
+        imagePullPolicy: Always
+        readinessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 5
+          failureThreshold: 50
+          httpGet:
+            path: /
+            port: 8080

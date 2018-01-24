@@ -1,0 +1,69 @@
+/*
+ * Encontre detalhes sobre essas e outras options em: http://www.jshint.com/docs/options/
+ */
+{
+	/*
+	 * Enforcing options
+	 */
+	"bitwise": true, //proíbe operadores de bits como ^ (XOR), | (OR), & and others.
+	"camelcase": true, //variáveis devem estar em camelCase style ou UPPER_CASE com underscores.
+	"curly": true, // Obriga {} em loops and conditionals
+	"eqeqeq": true, //proíbe o uso de  == and != em favor de === and !==.
+	"forin": false, //requer que todos loops "for in"  usem "for (key in obj) { if (obj.hasOwnProperty(key)) { ..."
+	"freeze": true, // This options prohibits overwriting prototypes of native objects such as Array, Date and so on.
+	"immed": true, //proíbe a invocação de immediate functions sem parâmetros. (function() { /* code */ })() --> (function() { /* code */ }())
+	"indent": false, //forca uma indentacao especifica. indent:4 exige que a indentacao seja de 4 chars
+	"latedef": true, //proíbe o uso de uma variável antes de ela ter sido definida. Setting this option to "nofunc" will allow function declarations to be ignored.
+	"newcap": true, //obriga a capitalizaçãode funções que sao construtores
+	"noarg": true, // This option prohibits the use of arguments.caller and arguments.callee. Both.caller and .callee make quite a few optimizations impossible so they were deprecated in future versions of JavaScript. In fact, ECMAScript 5 forbids the use of arguments.callee in strict mode.
+	"noempty": true, //avisa warns when you have an empty block in your code.
+	// "nonbsp": true, // PARECE QUE NAO EH SUPORTADA PELO PLUGIN MAVEN //This option warns about "non-breaking whitespace" characters. These characters can be entered with option-space on Mac computers and have a potential of breaking non-UTF8 web pages.
+	"nonew": true, // This option prohibits the use of constructor functions for side-effects.
+	"plusplus": false, //permite o uso de ++ e --.
+	"quotmark": true, //forca consistência nas aspas usadas no código. It accepts three values: true if you don't want to enforce one particular style but want some consistency,"single" if you want to allow only single quotes and "double" if you want to allow only double quotes.
+	"undef": true, //This option prohibits the use of explicitly undeclared variables. If your variable is defined in another file, you can use /*global ... */ directive to tell JSHint about it.
+	"unused": true, //This option warns when you define and never use your variables. This can be set to vars to only check for variables, not function parameters, or strict to check all variables and parameters. The default (true) behavior is to allow unused parameters that are followed by a used parameter.
+	"strict": false, /* This option requires all functions to run in ECMAScript 5's strict mode. Strict mode is a way to opt in to a restricted variant of JavaScript. Strict mode eliminates some JavaScript pitfalls that didn't cause errors by changing them to produce errors. It also fixes mistakes that made it difficult for the JavaScript engines to perform certain optimizations. Note: This option enables strict mode for function scope only. It prohibits the global scoped strict mode because it might break third-party widgets on your page. If you really want to use global strict mode, see the globalstrict option.*/
+	// "trailing": true, // This option makes it an error to leave a trailing whitespace in your code
+	"maxparams": 5, //This option lets you set the max number of formal parameters allowed per function:
+	"maxdepth": 3, //This option lets you control how nested do you want your blocks to be:
+	"maxstatements": 100, // This option lets you set the max number of statements allowed per function:
+	"maxcomplexity": 10, // This option lets you control cyclomatic complexity throughout your code. Cyclomatic complexity measures the number of linearly independent paths through a program's source code. Read more about cyclomatic complexity on Wikipedia.
+	"maxlen": 170, // This option lets you set the maximum length of a line.
+	"varstmt":false,
+	"esversion":6,
+
+	/*
+	 * Relaxing options
+	 */
+	 "laxcomma":true,
+	"eqnull": true, // This option suppresses warnings about == null comparisons. Such comparisons are often useful when you want to check if a variable is null or undefined.
+	"smarttabs": true,	// This option suppresses warnings about mixed tabs and spaces when the latter are used for alignmnent only. The technique is called SmartTabs.
+	"-W099": true, // PERMITIR tabs e espacos! ver: http://stackoverflow.com/a/16528068/1850609
+	"-W100": true,
+	"globalstrict": true,
+
+	/*
+	 * Environment
+	 */
+	"browser": true,
+	"jquery": true,
+	"devel": true,
+	
+	/*
+	 * Globals
+	 */
+	"globals": {
+		"$": false,
+		"d3": false,
+		"Grafico": false,
+        "springUrl": false,
+        "ga" : false,
+		"History":false,
+		"cgu" : false,
+		"usuarioLogado":false,
+		"toastr":false,
+		"introJs":false,
+		"dataTables":false
+	}
+}

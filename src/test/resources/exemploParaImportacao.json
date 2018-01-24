@@ -1,0 +1,44 @@
+[
+  {
+    "codigoSubclasse": "RECOMENDACAO",
+    "campos": {
+      "descricao": "minha descricao de teste 1",
+      "prazo": "01/01/2017",
+      "processo": "00190.12345/2015-01",
+      "valor": 2000
+    },
+    "compartilhamentos": [
+      {
+        "idUnidade": 1,
+        "idPapel": 1
+      },
+      {
+        "idUsuario": 3,
+        "idPapel": 2
+      },
+      {
+        "idUnidade": 2,
+        "idPapel": 2
+      }
+    ]
+  },
+  {
+    "codigoSubclasse": "RECOMENDACAO",
+    "campos": {
+      "descricao": "minha descricao de teste 2",
+      "prazo": "02/01/2017",
+      "processo": "00190.12345/2015-02",
+      "valor": 5000
+    },
+    "compartilhamentos": [
+      {
+        "idUnidade": 21,
+        "idPapel": 1
+      },
+      {
+        "idUnidade": 3,
+        "idPapel": 2
+      }
+    ]
+  }
+]

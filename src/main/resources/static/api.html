@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>@app.context@ - API de Serviços</title>
+  <link rel="icon" type="image/png" href="webjars/springfox-swagger-ui/images/favicon-32x32.png" sizes="32x32"/>
+  <link rel="icon" type="image/png" href="webjars/springfox-swagger-ui/images/favicon-16x16.png" sizes="16x16"/>
+  <link href='webjars/springfox-swagger-ui/css/typography.css' media='screen' rel='stylesheet' type='text/css'/>
+  <link href='webjars/springfox-swagger-ui/css/reset.css' media='screen' rel='stylesheet' type='text/css'/>
+  <link href='webjars/springfox-swagger-ui/css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
+  <link href='webjars/springfox-swagger-ui/css/reset.css' media='print' rel='stylesheet' type='text/css'/>
+  <link href='webjars/springfox-swagger-ui/css/print.css' media='print' rel='stylesheet' type='text/css'/>
+
+  <script src='webjars/springfox-swagger-ui/lang/translator.js' type='text/javascript'></script>
+  <script type='text/javascript'>
+    window.SwaggerTranslator.learn({
+          "Warning: Deprecated":"Aviso: Depreciado",
+          "Implementation Notes":"Notas de Implementação",
+          "Response Class":"Classe de resposta",
+          "Status":"Status",
+          "Parameters":"Parâmetros",
+          "Parameter":"Parâmetro",
+          "Value":"Valor",
+          "Description":"Descrição",
+          "Parameter Type":"Tipo de parâmetro",
+          "Data Type":"Tipo de dados",
+          "Response Messages":"Mensagens de resposta",
+          "HTTP Status Code":"Código de status HTTP",
+          "Reason":"Razão",
+          "Response Model":"Modelo resposta",
+          "Request URL":"URL requisição",
+          "Response Body":"Corpo da resposta",
+          "Response Code":"Código da resposta",
+          "Response Headers":"Cabeçalho da resposta",
+          "Headers":"Cabeçalhos",
+          "Hide Response":"Esconder resposta",
+          "Try it out!":"Tente agora!",
+          "Show/Hide":"Mostrar/Esconder",
+          "List Operations":"Listar operações",
+          "Expand Operations":"Expandir operações",
+          "Raw":"Cru",
+          "can't parse JSON.  Raw result":"Falha ao analisar JSON.  Resulto cru",
+          "Model Schema":"Modelo esquema",
+          "Model":"Modelo",
+          "apply":"Aplicar",
+          "Username":"Usuário",
+          "Password":"Senha",
+          "Terms of service":"Termos do serviço",
+          "Created by":"Criado por",
+          "See more at":"Veja mais em",
+          "See more at <a href=\"http://www.cgu.gov.br\">http://www.cgu.gov.br</a>" : "Veja mais em <a href=\"http://www.cgu.gov.br\">http://www.cgu.gov.br</a>",
+          "Contact the developer":"Contate o desenvolvedor",
+          "api version":"Versão api",
+          "Response Content Type":"Tipo de conteúdo da resposta",
+          "fetching resource":"busca recurso",
+          "fetching resource list":"buscando lista de recursos",
+          "Explore":"Explorar",
+          "Show Swagger Petstore Example Apis":"Show Swagger Petstore Example Apis",
+          "Can't read from server.  It may not have the appropriate access-control-origin settings.":"Não é possível ler do servidor. Pode não ter as apropriadas configurações access-control-origin",
+          "Please specify the protocol for":"Por favor especifique o protocolo",
+          "Can't read swagger JSON from":"Não é possível ler o JSON Swagger de",
+          "Finished Loading Resource Information. Rendering Swagger UI":"Carregar informação de recurso finalizada. Renderizando Swagger UI",
+          "Unable to read api":"Não foi possível ler api",
+          "from path":"do caminho",
+          "server returned":"servidor retornou"
+      });
+  </script>
+  <script src='webjars/springfox-swagger-ui/lib/object-assign-pollyfill.js' type='text/javascript'></script>
+  <script src='webjars/springfox-swagger-ui/lib/jquery-1.8.0.min.js' type='text/javascript'></script>
+  <script src='webjars/springfox-swagger-ui/lib/jquery.slideto.min.js' type='text/javascript'></script>
+  <script src='webjars/springfox-swagger-ui/lib/jquery.wiggle.min.js' type='text/javascript'></script>
+  <script src='webjars/springfox-swagger-ui/lib/jquery.ba-bbq.min.js' type='text/javascript'></script>
+  <script src='webjars/springfox-swagger-ui/lib/handlebars-4.0.5.js' type='text/javascript'></script>
+  <script src='webjars/springfox-swagger-ui/lib/lodash.min.js' type='text/javascript'></script>
+  <script src='webjars/springfox-swagger-ui/lib/backbone-min.js' type='text/javascript'></script>
+  <script src='webjars/springfox-swagger-ui/swagger-ui.min.js' type='text/javascript'></script>
+  <script src='webjars/springfox-swagger-ui/lib/highlight.9.1.0.pack.js' type='text/javascript'></script>
+  <script src='webjars/springfox-swagger-ui/lib/highlight.9.1.0.pack_extended.js' type='text/javascript'></script>
+  <script src='webjars/springfox-swagger-ui/lib/jsoneditor.min.js' type='text/javascript'></script>
+  <script src='webjars/springfox-swagger-ui/lib/marked.js' type='text/javascript'></script>
+  <script src='webjars/springfox-swagger-ui/lib/swagger-oauth.js' type='text/javascript'></script>
+
+  <script src='webjars/springfox-swagger-ui/springfox.js' type='text/javascript'></script>
+</head>
+
+<body class="swagger-section">
+<div id='header'>
+  <div class="swagger-ui-wrap">
+    <a id="logo" href="http://swagger.io"><img class="logo__img" alt="swagger" height="30" width="30" src="webjars/springfox-swagger-ui/images/logo_small.png" /><span class="logo__title">@app.context@ - API de Serviços</span></a>
+    <form id='api_selector'>
+      <div class='input'>
+        <select id="select_baseUrl" name="select_baseUrl"/>
+      </div>
+      <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
+      <div id='auth_container'></div>
+      <div class='input'><a id="explore" class="header__btn" href="#" data-sw-translate>Explorar</a></div>
+    </form>
+  </div>
+</div>
+
+<div id="message-bar" class="swagger-ui-wrap" data-sw-translate>&nbsp;</div>
+<div id="swagger-ui-container" class="swagger-ui-wrap"></div>
+</body>
+</html>

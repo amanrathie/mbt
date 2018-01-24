@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+     xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+     updateCheck="false">  
+
+    <diskStore path="${ehcahce.diskstore.path}" />
+
+	<defaultCache
+		maxElementsInMemory="5000"
+	    eternal="false"
+		timeToIdleSeconds="10800"
+	    overflowToDisk="false" />
+
+</ehcache>

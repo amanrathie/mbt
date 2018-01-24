@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>br.gov.cgu</groupId>
+    <artifactId>projetoexemplosb</artifactId>
+    <name>ProjExSB</name>
+    <description>${project.name} versão spring boot</description>
+    <version>1.0-SNAPSHOT</version>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.8.RELEASE</version>
+    </parent>
+
+    <properties>
+        <!-- Contexto da aplicação, sem / -->
+        <app.context>projeto-exemplo-sb</app.context>
+        <!-- Propriedades do Sonar e Code Coverage -->
+        <sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <!-- The destination file for the code coverage report has to be set to
+            the same value in the parent pom and in each module pom. Then JaCoCo will
+            add up information in the same report, so that, it will give the cross-module
+            code coverage. -->
+        <sonar.surefire.reportsPath>${project.basedir}/target/surefire-reports</sonar.surefire.reportsPath>
+        <sonar.cobertura.reportPath>${project.basedir}/target/site/cobertura/coverage.xml</sonar.cobertura.reportPath>
+        <sonar.language>java</sonar.language>
+
+        <maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
+        <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
+        <versao.querydsl>4.1.3</versao.querydsl>
+        <main.basedir>${basedir}/../..</main.basedir>
+        <!-- Forçando a versão do hibernate pra mesma versão do componentes - persistencia, pra evitar alguns erros. -->
+        <hibernate.version>5.2.1.Final</hibernate.version>
+
+        <adfs.urlAplicacao>https://localhost:8443/${app.context}/</adfs.urlAplicacao>
+        <adfs.sp-x509>
+            MIIDbTCCAlUCBFoyZGMwDQYJKoZIhvcNAQELBQAwezEfMB0GCSqGSIb3DQEJARYQ
+            Y29zaXNAY2d1Lmdvdi5icjELMAkGA1UEBhMCQlIxCzAJBgNVBAgMAkRGMQwwCgYD
+            VQQHDANDR1UxDDAKBgNVBAoMA0RUSTEOMAwGA1UECwwFQ0dTSVMxEjAQBgNVBAMM
+            CWxvY2FsaG9zdDAeFw0xNzEyMTQxMTQ1MzlaFw0yMzA2MDYxMTQ1MzlaMHsxHzAd
+            BgkqhkiG9w0BCQEWEGNvc2lzQGNndS5nb3YuYnIxCzAJBgNVBAYTAkJSMQswCQYD
+            VQQIDAJERjEMMAoGA1UEBwwDQ0dVMQwwCgYDVQQKDANEVEkxDjAMBgNVBAsMBUNH
+            U0lTMRIwEAYDVQQDDAlsb2NhbGhvc3QwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
+            ggEKAoIBAQCrqySFzhxUwal1fQKxhnP7zBmssooQHjTL0nZKSTtTYyYc6utTDBqD
+            S814mRAi9IJCCAW1BkMUh0S6yFEI7ptlReGN8fyD85mtJtRY4Z06VA4oLcP8u51e
+            hRKb+Iq44BRned6MEJY/TOiywuC34YTaQYMAXe+n/FkNzBdDDgT0S0pMoEzVhXsl
+            eoKPcCiMwVMhnjJ2Aam7zcG3La4UeyxeDzyBfLuL4n6iHCjXAaP6nEedmSeKGlLX
+            RIw2j6LHQ1xIATevMAnTrgvKfg0eVbEWBhlsVjUPPO73G8CKUzxH9mHH2dpHUriB
+            ht3f4dRP8i4guXEYr1HOr4T6QhInTcY/AgMBAAEwDQYJKoZIhvcNAQELBQADggEB
+            AD+JMTiTRzDkV1Y+CBbNNBo/L55LNsTLhTUn+SBklfm6YkVEYjWH6Zq7f+JkTNcH
+            CgaHHv4moqWpvhOQt+F4E7T1NvaxYEafJ0B0zGDJ9fMYnl2CRuPdOOZ6dB5fhwjK
+            QFfhEGTrwbClO3qoqSKjM9HAMRxYSPZcwzlsPm9da9ivsRMUPGklicdepTO5oOP7
+            WHLoeUzwLyNPZjSIiqSjmQxPDtRLS0YlxTsY14tdVwompSwnPYyC0lEezzDU0ADJ
+            AIdM3QmsTZb+AKUMBHZwmccAbgMf0A0tJyCwdvQfncH6HwEFe64ojasR08dOEAYP
+            3S5HgyDsBfcr+V0djUnzB7w=
+        </adfs.sp-x509>
+
+        <adfs.idp-sig.url>adfs-h.cgu.gov.br</adfs.idp-sig.url>
+        <adfs.idp-x509>
+            MIIC3jCCAcagAwIBAgIQGF7+KeBg9IRLJgesCPFdMDANBgkqhkiG9w0BAQsFADAr
+            MSkwJwYDVQQDEyBBREZTIFNpZ25pbmcgLSBhZGZzLWguY2d1Lmdvdi5icjAeFw0x
+            NzA3MDYxOTQwNDJaFw0xODA3MDYxOTQwNDJaMCsxKTAnBgNVBAMTIEFERlMgU2ln
+            bmluZyAtIGFkZnMtaC5jZ3UuZ292LmJyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A
+            MIIBCgKCAQEA095qTe0s1f/Ec2zzI/gWV0s3TooYBaNvzmTIV3jqbf3UArnEggcc
+            DewKPXJOq3u/r6YynN4hOSy6AlTHglMoDroioRN3bRlsgvatzvBD3EfWHJ47reTS
+            Csn5giMndrWWXMinaQ+Wtmu3o2Gv++lUZSFM9wPdIIZnrbUQuu1xKMmWrfSkmlt2
+            NiNuyBvhN+ycJ433EVxilGNyw2ohALEmkaAiwMAP57XW7jhflRdCxnpAHX/QOnij
+            zPxb4eJNnMtinnuXaXoPl9eTRHyHpPWH+76lrqEnhIxybasgYXO0JdC2cgXhXb/E
+            HogbEUvHW+HtOQE1KqXO5YYES2puWmlBlQIDAQABMA0GCSqGSIb3DQEBCwUAA4IB
+            AQCIFSmibobAgM5w8F+ajZhtqYTwMakHPo9hrMrcelLm5WtuNA7uC/snaFc3CKBK
+            x+ftgS7Q2YykXZ5YTyCZuLhSqooflZnXB7QusGaaXS9zz0j8WzA1NTcA45vCeRR8
+            lGRr5uNiEoPjftD6MtceISUsLZj/02G/9951imLd5zueZtz5mAlqS0Ao5X1kk5/z
+            ztG6p4zW6+I0sdx4XQ6AeKI+Hf0wzikTt6KCFGYr+B9F2BuCzkxEvMexYOt55Xns
+            9bAsUnTeZba39Zihu23hrZFCXA7whAhHUlOeFEsyXhx7BSoGQjK8+JcWi/t/cJ6T
+            bLFJv4xDvKrK9Ziu5zmoToOg
+        </adfs.idp-x509>
+        <adfs.jks.alias>localhost</adfs.jks.alias>
+        <adfs.jks.senha>localhost</adfs.jks.senha>
+
+        <contextProvider.serverName>localhost</contextProvider.serverName>
+        <contextProvider.serverPort>8443</contextProvider.serverPort>
+        <contextProvider.includeServerPortInRequestURL>true</contextProvider.includeServerPortInRequestURL>
+        <contextProvider.contextPath>/${app.context}</contextProvider.contextPath>
+
+        <flyway.locations>classpath:/flyway</flyway.locations>
+        <flyway.baselineOnMigrate>true</flyway.baselineOnMigrate>
+    </properties>
+
+    <dependencies>
+        <!-- Compile -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <version>1.0.1.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-sql</artifactId>
+            <version>${versao.querydsl}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>${versao.querydsl}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <version>${versao.querydsl}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security.extensions</groupId>
+            <artifactId>spring-security-saml2-core</artifactId>
+            <version>1.0.2.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-security-core</artifactId>
+                    <groupId>org.springframework.security</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-security-web</artifactId>
+                    <groupId>org.springframework.security</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-security-config</artifactId>
+                    <groupId>org.springframework.security</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-envers</artifactId>
+            <version>5.2.12.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.196</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vividsolutions</groupId>
+            <artifactId>jts</artifactId>
+            <version>1.13</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>br.gov.cgu</groupId>
+            <artifactId>persistencia</artifactId>
+            <version>6.7.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>br.gov.cgu</groupId>
+            <artifactId>componentes-mvc</artifactId>
+            <version>8.2.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>br.gov.cgu</groupId>
+            <artifactId>componentes-utils</artifactId>
+            <version>4.2.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>br.gov.cgu</groupId>
+            <artifactId>componentes-test</artifactId>
+            <version>7.1.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.jtds</groupId>
+            <artifactId>jtds</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+        <!-- INÍCIO - Componente de Email -->
+        <dependency>
+            <groupId>br.gov.cgu</groupId>
+            <artifactId>componentes-email-client</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <!-- FINAL  - Componente de Email -->
+
+        <!-- INICIO SHEDLOCK - Controle de Tarefas Agendadas por Servidor -->
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-spring</artifactId>
+            <version>0.16.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-provider-jdbc-template</artifactId>
+            <version>0.16.0</version>
+        </dependency>
+        <!-- FIM SHEDLOCK - (Controle de Tarefas Agendadas por Servidor) -->
+
+        <!-- INICIO: Swagger - Documentação da API Rest -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <!-- FIM: Swagger - Documentação da API Rest -->
+
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <!-- INICIO - Querydsl - Plugin que gerarah as classes dos queries -->
+            <!-- https://github.com/querydsl/apt-maven-plugin/wiki/m2e-usage -->
+            <plugin>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-maven-plugin</artifactId>
+                <version>${versao.querydsl}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>export</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jdbcDriver>org.h2.Driver</jdbcDriver>
+                    <jdbcUrl>jdbc:h2:mem:NOMECATALOGO;DATABASE_TO_UPPER=FALSE;INIT=RUNSCRIPT FROM 'file:src/main/resources/sql/h2.sql'</jdbcUrl>
+                    <packageName>br.gov.cgu.projetoexemplosb.nucleo.negocio.sqlentities</packageName>
+                    <schemaToPackage>false</schemaToPackage>
+                    <namePrefix>S</namePrefix>
+                    <targetFolder>${project.basedir}/target/generated-sources/java</targetFolder>
+                    <sourceFolder/>
+                    <jdbcUser>sa</jdbcUser>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>1.4.187</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>com.mysema.maven</groupId>
+                <artifactId>apt-maven-plugin</artifactId>
+                <version>1.1.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/generated-sources/java</outputDirectory>
+                            <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+                            <options>
+                                <!--<querydsl.excludedClasses>br.gov.cgu.maladireta.gestor.negocio.log.Revisao</querydsl.excludedClasses>-->
+                            </options>
+                        </configuration>
+                    </execution>
+                </executions>
+
+            </plugin>
+            <!-- FIM - Querydsl -->
+
+            <!-- Plugin do Sonar -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.3.0.603</version>
+            </plugin>
+
+
+            <!-- Cobertura de codigo -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <instrumentation>
+                        <excludes>
+                            <exclude>br/gov/cgu/**/Q*.class</exclude>
+                            <exclude>br/gov/cgu/**/sqlentities/S*.class</exclude>
+                            <exclude>br/gov/cgu/${project.artifactId}/*Config.class</exclude>
+                            <exclude>br/gov/cgu/${project.artifactId}/Constantes.class</exclude>
+                            <exclude>br/gov/cgu/${project.artifactId}/Application.class</exclude>
+                            <exclude>br/gov/cgu/${project.artifactId}/infraestrutura/adfs/AdfsProcessingFilter.class</exclude>
+                        </excludes>
+                    </instrumentation>
+                    <check>
+                        <branchRate>80</branchRate>
+                        <lineRate>80</lineRate>
+                        <haltOnFailure>false</haltOnFailure>
+                        <totalBranchRate>80</totalBranchRate>
+                        <totalLineRate>80</totalLineRate>
+                        <packageLineRate>80</packageLineRate>
+                        <packageBranchRate>80</packageBranchRate>
+                    </check>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>4.2.0</version>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>*.jks</exclude>
+                    <exclude>static/**</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>*.jks</include>
+                    <include>static/**</include>
+                </includes>
+            </resource>
+        </resources>
+
+    </build>
+
+    <profiles>
+        <profile>
+            <id>hom</id>
+            <properties>
+                <profiles.spring>http,banco-hom,swagger,notificar-erros,login</profiles.spring>
+                <kubectl.rc.name>${app.context}-h</kubectl.rc.name>
+                <adfs.urlAplicacao>https://${app.context}-h.cgu.gov.br/</adfs.urlAplicacao>
+                <adfs.sp-x509>
+                    TODO-configurar-pem-sp
+                </adfs.sp-x509>
+
+                <adfs.idp-sig.url>adfs-h.cgu.gov.br</adfs.idp-sig.url>
+                <adfs.idp-x509>
+                    TODO-configurar-pem-idp
+                </adfs.idp-x509>
+                <adfs.jks.alias>TODO-configurar-jks-homolocacao.cgu.gov.br</adfs.jks.alias>
+                <adfs.jks.senha>TODO-configurar-senha-jks-adfs</adfs.jks.senha>
+
+                <contextProvider.serverName>${app.context}-h.cgu.gov.br</contextProvider.serverName>
+                <contextProvider.serverPort>443</contextProvider.serverPort>
+                <contextProvider.includeServerPortInRequestURL>false</contextProvider.includeServerPortInRequestURL>
+                <contextProvider.contextPath></contextProvider.contextPath>
+
+                <flyway.url>jdbc:jtds:sqlserver://hercules-h.df.cgu/${app.context}</flyway.url>
+                <flyway.user>TODO-configurar-usuario</flyway.user>
+                <flyway.password>TODO-configurar-senha</flyway.password>
+                <flyway.schemas>dbo</flyway.schemas>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profiles.spring>http,banco-prod,swagger,notificar-erros</profiles.spring>
+                <kubectl.rc.name>${app.context}</kubectl.rc.name>
+                <adfs.urlAplicacao>https://${app.context}.cgu.gov.br/</adfs.urlAplicacao>
+                <adfs.sp-x509>
+                    TODO-configurar-pem-sp
+                </adfs.sp-x509>
+
+                <adfs.idp-sig.url>adfs.cgu.gov.br</adfs.idp-sig.url>
+                <adfs.idp-x509>
+                    TODO-configurar-pem-idp
+                </adfs.idp-x509>
+                <adfs.jks.alias>TODO-configurar-jks-producao.cgu.gov.br</adfs.jks.alias>
+                <adfs.jks.senha>TODO-configurar-senha-jks-adfs</adfs.jks.senha>
+
+                <contextProvider.serverName>${app.context}.cgu.gov.br</contextProvider.serverName>
+                <contextProvider.serverPort>443</contextProvider.serverPort>
+                <contextProvider.includeServerPortInRequestURL>false</contextProvider.includeServerPortInRequestURL>
+                <contextProvider.contextPath></contextProvider.contextPath>
+
+                <flyway.url>jdbc:jtds:sqlserver://TODO-configurar-banco/${app.context}</flyway.url>
+                <flyway.user>TODO-configurar-senha</flyway.user>
+                <flyway.password>TODO-configurar-usuario</flyway.password>
+                <flyway.schemas>dbo</flyway.schemas>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>
