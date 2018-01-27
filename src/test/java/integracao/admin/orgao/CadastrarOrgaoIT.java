@@ -1,14 +1,15 @@
 package integracao.admin.orgao;
 
-import br.gov.cgu.projetoexemplosb.negocio.unidade.TipoOrgao;
 import integracao.BootIntegracaoTest;
 import integracao.AdminPage;
 import org.junit.Test;
 
+import br.gov.cgu.mbt.negocio.unidade.TipoOrgao;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import static br.gov.cgu.projetoexemplosb.Constantes.OPERACAO_REALIZADA_COM_SUCESSO;
+import static br.gov.cgu.mbt.Constantes.OPERACAO_REALIZADA_COM_SUCESSO;
 import static integracao.AdminPage.MENSAGEM_ERRO_CAMPO_OBRIGATORIO;
 import static integracao.admin.orgao.CadastrarOrgaoPage.ir;
 import static org.hamcrest.MatcherAssert.assertThat;

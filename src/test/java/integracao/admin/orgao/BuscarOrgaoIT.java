@@ -1,13 +1,14 @@
 package integracao.admin.orgao;
 
-import br.gov.cgu.projetoexemplosb.negocio.unidade.TipoOrgao;
 import integracao.BootIntegracaoTest;
 import org.junit.Test;
+
+import br.gov.cgu.mbt.negocio.unidade.TipoOrgao;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import static br.gov.cgu.projetoexemplosb.Constantes.OPERACAO_REALIZADA_COM_SUCESSO;
+import static br.gov.cgu.mbt.Constantes.OPERACAO_REALIZADA_COM_SUCESSO;
 import static integracao.AdminPage.esperarLoadingsSumirem;
 import static integracao.TestadorDeDataTables.assertColunaFiltradaPorTexto;
 import static org.hamcrest.MatcherAssert.assertThat;

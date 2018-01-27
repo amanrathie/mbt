@@ -4,7 +4,7 @@ import integracao.BootIntegracaoTest;
 import integracao.AdminPage;
 import org.junit.Test;
 
-import static br.gov.cgu.projetoexemplosb.Constantes.OPERACAO_REALIZADA_COM_SUCESSO;
+import static br.gov.cgu.mbt.Constantes.OPERACAO_REALIZADA_COM_SUCESSO;
 import static integracao.AdminPage.esperarLoadingsSumirem;
 import static integracao.admin.usuario.BuscarUsuarioPage.ir;
 import static org.hamcrest.MatcherAssert.assertThat;

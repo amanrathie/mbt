@@ -1,7 +1,5 @@
 package integracao;
 
-import br.gov.cgu.projetoexemplosb.BancoH2AppConfig;
-import br.gov.cgu.projetoexemplosb.Application;
 import io.github.seleniumquery.SeleniumQuery;
 import org.apache.commons.lang3.SystemUtils;
 import org.hibernate.Cache;
@@ -19,6 +17,9 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+
+import br.gov.cgu.mbt.Application;
+import br.gov.cgu.mbt.BancoH2AppConfig;
 
 import static io.github.seleniumquery.SeleniumQuery.$;
 import static org.hamcrest.MatcherAssert.assertThat;

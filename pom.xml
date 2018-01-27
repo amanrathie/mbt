@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>br.gov.cgu</groupId>
-    <artifactId>projetoexemplosb</artifactId>
-    <name>ProjExSB</name>
-    <description>${project.name} versão spring boot</description>
+    <artifactId>mbt</artifactId>
+    <name>MBT - Mapa Brasil Transparente</name>
+    <description>${project.name} versão do projeto MBT</description>
     <version>1.0-SNAPSHOT</version>
 
     <parent>

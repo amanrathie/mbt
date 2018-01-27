@@ -1,11 +1,12 @@
 package integracao.admin.usuario;
 
-import br.gov.cgu.projetoexemplosb.web.auth.GerenciarUsuarioController;
 import integracao.BootIntegracaoTest;
 import integracao.AdminPage;
 import org.junit.Test;
 
-import static br.gov.cgu.projetoexemplosb.web.auth.GerenciarUsuarioController.OPERACAO_COM_SUCESSO;
+import br.gov.cgu.mbt.web.auth.GerenciarUsuarioController;
+
+import static br.gov.cgu.mbt.web.auth.GerenciarUsuarioController.OPERACAO_COM_SUCESSO;
 import static integracao.AdminPage.MENSAGEM_ERRO_CAMPO_OBRIGATORIO;
 import static integracao.admin.usuario.CadastrarUsuarioPage.ir;
 import static io.github.seleniumquery.SeleniumQuery.$;
