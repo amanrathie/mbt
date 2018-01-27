@@ -15,7 +15,7 @@ public class HomeController {
     @RequestMapping(value = "/", method= RequestMethod.GET)
     @Cacheable
     public ModelAndView paginaInicial() {
-        return new ModelAndView("index/index");
+        return new ModelAndView("publico/index");
     }
 
     @RequestMapping(value = "/_exception", method= RequestMethod.GET)

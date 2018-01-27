@@ -54,8 +54,8 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled=true)
-@EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled=true)
+//@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired private Autenticador autenticador;

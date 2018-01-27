@@ -21,11 +21,8 @@
     
 - Rode um ```clean compile test``` para compilar e rodar os testes do projeto. Se tudo estiver configurado corretamente esse comando vai ser executado com sucesso.
 
-- Rodar a classe Application usando VMOptions: ```-Dspring.profiles.active=default,h2``` para subir a aplicação com o banco de dados local na url ```https://localhost:8443/@app.context@/```
+- Rodar a classe Application usando VMOptions: ```-Dspring.profiles.active=default,h2``` para subir a aplicação com o banco de dados local na url ```https://localhost:8443/mbt/```
 
-##ADFS
-Em caso de erro ```SAMLException: Response doesn't have any valid assertion which would pass subject validation```
-limpe o cache do navegador ou abra uma janela anonima.
 
 ##Terminologias
 - Classes de serviços são nomeadas com *Adjetivos Substantivos*: Buscador, Gerenciador, Instalador, etc.
@@ -43,7 +40,5 @@ limpe o cache do navegador ou abra uma janela anonima.
 
 ##Configurações
 - Substituir parâmetros de usuário e senha, procurando por "TODO-configurar-*".
-- O nome genérico utilizado para o sistema de exemplo foi "@app.context@". Substituir pelo nome correto da aplicação. Este nome esta parametrizado no pom.xml (app.context)
-- Ajustar nome e artifactId no pom.xml
 - Arquivos JKS de homologação e produção são apenas exemplificativos e devem ser substituídos. Nos arquivos devem ser gerados para cada sistema. Vide Wiki.
 - Arquivos SQL do Flyway são apenas exemplificativos e devem ser substituídos.
