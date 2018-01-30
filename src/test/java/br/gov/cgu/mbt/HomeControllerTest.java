@@ -24,7 +24,7 @@ public class HomeControllerTest extends ControllerTest {
         mockMvc.perform(get(""))
                // then
                .andExpect(status().isOk())
-               .andExpect(view().name("index/index"));
+               .andExpect(view().name("publico/index"));
     }
 
 
