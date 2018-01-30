@@ -1,17 +1,16 @@
 package br.gov.cgu.mbt;
 
+import java.time.Duration;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import net.javacrumbs.shedlock.core.LockProvider;
 import net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider;
 import net.javacrumbs.shedlock.spring.ScheduledLockConfiguration;
 import net.javacrumbs.shedlock.spring.ScheduledLockConfigurationBuilder;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import br.gov.cgu.mbt.web.auth.APIAuthenticationFilter;
-
-import javax.sql.DataSource;
-import java.time.Duration;
 
 @Configuration
 public class AppConfig {
@@ -31,12 +30,4 @@ public class AppConfig {
     public LockProvider lockProvider(DataSource devDataSource) {
         return new JdbcTemplateLockProvider(devDataSource, Constantes.SCHEMA_APLICACAO + ".Shedlock");
     }
-
-    @Bean
-    public FilterRegistrationBean someFilterRegistration(APIAuthenticationFilter filter) {
-        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
-        registration.setEnabled(false);
-        return registration;
-    }
-
 }

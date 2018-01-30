@@ -1,22 +1,29 @@
 package br.gov.cgu.mbt;
 
-import com.querydsl.sql.SQLServer2012Templates;
-import com.querydsl.sql.SQLTemplates;
+import java.util.Properties;
+
+import javax.persistence.ValidationMode;
+import javax.sql.DataSource;
+
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import javax.persistence.ValidationMode;
-import javax.sql.DataSource;
-import java.util.Properties;
+import com.querydsl.sql.SQLServer2012Templates;
+import com.querydsl.sql.SQLTemplates;
 
 @SpringBootApplication(scanBasePackages = "br.gov.cgu")
 @EnableScheduling
 @EnableAsync
+// Desabilitando segurança temporariamente
+@EnableAutoConfiguration(exclude = { 
+    org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration.class 
+})
 public class Application {
 
 	public static void main(String[] args) {

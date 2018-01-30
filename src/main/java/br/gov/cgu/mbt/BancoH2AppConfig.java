@@ -1,22 +1,10 @@
 package br.gov.cgu.mbt;
 
-import com.querydsl.sql.H2Templates;
-import com.querydsl.sql.SQLTemplates;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-
-import javax.sql.DataSource;
-
-@Configuration
-@Profile(value = "h2")
+//@Configuration
+//@Profile(value = "h2")
 public class BancoH2AppConfig {
 
-    public static EmbeddedDatabase datasource;
+   /* public static EmbeddedDatabase datasource;
 
     @Bean
     public DataSource devDataSource() {
@@ -36,5 +24,5 @@ public class BancoH2AppConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         return Application.entityManagerFactory(devDataSource(), "true", "br.gov.cgu.persistencia.jpa.h2.PortalH2Dialect");
-    }
+    }*/
 }
