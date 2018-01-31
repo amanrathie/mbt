@@ -16,15 +16,17 @@ import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @ToString
+@EqualsAndHashCode
+@Entity
 public class Avaliacao {
 	
 	@Id
@@ -36,6 +38,9 @@ public class Avaliacao {
 	@Column(name="nomAvaliacao")
 	@NotBlank(message = "Nome da avaliação é obrigatório")
 	private String nome;
+	
+	@Column(name="numEdicao")
+	private Integer numEdicao;
 	
 	@OneToOne(mappedBy = "avaliacao", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Questionario questionario;

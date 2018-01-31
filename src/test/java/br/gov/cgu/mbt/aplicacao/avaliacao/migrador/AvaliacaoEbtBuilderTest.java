@@ -11,9 +11,8 @@ public class AvaliacaoEbtBuilderTest {
 	
 	private AvaliacaoEbtBuilder avaliacaoEbtBuilder = new AvaliacaoEbtBuilder();
 	
-	//https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/StreamAssertionsExamples.java
 	@Test
-	public void avaliacoes_sao_construidas_corretamente() {
+	public void blocos_sao_construidos_corretamente() {
 		assertThat(avaliacaoEbtBuilder.build())
 			.isNotEmpty()
 			.hasSize(3)

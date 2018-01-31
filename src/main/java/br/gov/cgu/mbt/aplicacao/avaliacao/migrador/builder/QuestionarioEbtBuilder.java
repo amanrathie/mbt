@@ -1,5 +1,6 @@
 package br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder;
 
+import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
 
 /**
@@ -7,9 +8,11 @@ import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
  */
 public class QuestionarioEbtBuilder {
 
-	public Questionario build() {
+	public Questionario build(Avaliacao avaliacao) {
 		Questionario questionario = 
-				Questionario.builder().build();
+				Questionario.builder()
+					.avaliacao(avaliacao)
+					.build();
 		
 		return questionario;
 	}
