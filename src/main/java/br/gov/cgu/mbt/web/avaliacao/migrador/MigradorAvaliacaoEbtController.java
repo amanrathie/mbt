@@ -15,7 +15,7 @@ public class MigradorAvaliacaoEbtController {
 	private MigradorAvaliacaoEbtService migrador;
 
 	@GetMapping("/avaliacao/migrador")
-	public String migrarAvaliacoesIndependentes() {
+	public String migrarAvaliacoesIndependentes() {		
 		migrador.migrar();
 		return "Migrando avaliações independentes...";
 	}

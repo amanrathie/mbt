@@ -1,0 +1,30 @@
+/* GRID */
+
+.celula {
+	min-height: 50px;
+	line-height: 50px;
+	color: #000;
+	text-align: center;
+	border: 1px solid #000;
+	border-radius: 3px;
+	background-color: rgba(86,61,124,.15);
+}
+.col-1 { font-size: 11px; }
+
+/* CORES */
+
+.quadrado {
+	width: 100%;
+	max-width: 100px;
+	height: 100px;
+}
+
+.form-guide textarea {
+	width: 100%;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
+hr { border-top: 1px solid #ccc; }
+
+.block-title { margin-bottom: 0; }

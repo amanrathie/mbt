@@ -1,0 +1,107 @@
+/* LISTA DE PÁGINAS DO GUIA */
+
+.page-list {
+	position: fixed;
+	top: 20px;
+	left: 0;
+	z-index: 99999;
+	-webkit-transition: transform .2s ease-in-out;
+	-moz-transition: transform .2s ease-in-out;
+	-ms-transition: transform .2s ease-in-out;
+	-o-transition: transform .2s ease-in-out;
+	transition: transform .2s ease-in-out;
+}
+.page-list.closed {
+	-webkit-transform: translate(-100%,0);
+	-moz-transform: translate(-100%,0);
+	-ms-transform: translate(-100%,0);
+	-o-transform: translate(-100%,0);
+	transform: translate(-100%,0);
+}
+
+.page-list__control-view {
+	padding: 10px;
+	font-weight: 700;
+	font-size: 16px;
+	color: #222;
+	position: absolute;
+	top: 50%;
+	right: 0;
+	border-radius: 0 5px 5px 0;
+	border: none;
+	background-color: #eee;
+	box-shadow: 2px 2px 4px 0px rgba(50, 50, 50, 0.76);
+	-webkit-transform: translate(100%,-50%);
+	-moz-transform: translate(100%,-50%);
+	-ms-transform: translate(100%,-50%);
+	-o-transform: translate(100%,-50%);
+	transform: translate(100%,-50%);
+	-webkit-transition: background-color .2s ease-in-out, color .2s ease-in-out;
+	-moz-transition: background-color .2s ease-in-out, color .2s ease-in-out;
+	-ms-transition: background-color .2s ease-in-out, color .2s ease-in-out;
+	-o-transition: background-color .2s ease-in-out, color .2s ease-in-out;
+	transition: background-color .2s ease-in-out, color .2s ease-in-out;
+}
+.page-list__control-view:hover,
+.page-list__control-view:focus,
+.page-list__control-view.active {
+	color: #fff;
+	background-color: #222;
+}
+
+.page-list ul {
+	margin: 0;
+	padding: 20px 0;
+	list-style-type: none;
+	background-color: #eee;
+	border-radius: 0 5px 5px 0;
+	box-shadow: 2px 2px 9px 0px rgba(50, 50, 50, 0.76);
+}
+.page-list li + li { margin-top: 20px; }
+.page-list li a {
+	padding: 5px 20px 5px 45px;
+	font-size: 12px;
+	color: #222;
+	display: block;
+	position: relative;
+	-webkit-transition: background-color .2s ease-in-out, color .2s ease-in-out;
+	-moz-transition: background-color .2s ease-in-out, color .2s ease-in-out;
+	-ms-transition: background-color .2s ease-in-out, color .2s ease-in-out;
+	-o-transition: background-color .2s ease-in-out, color .2s ease-in-out;
+	transition: background-color .2s ease-in-out, color .2s ease-in-out;
+}
+.page-list li a:hover,
+.page-list li a:focus,
+.page-list li a.active {
+	font-weight: 700;
+	color: #fff;
+	text-decoration: underline;
+	background-color: #222;
+}
+.page-list li a .icon {
+	position: absolute;
+	top: 3px;
+	left: 20px;
+	font-size: 17px;
+}
+
+/* GRID */
+
+.celula {
+	min-height: 50px;
+	line-height: 50px;
+	color: #000;
+	text-align: center;
+	border: 1px solid #000;
+	border-radius: 3px;
+	background-color: rgba(86,61,124,.15);
+}
+.col-1 { font-size: 11px; }
+
+/* CORES */
+
+.quadrado {
+	width: 100%;
+	max-width: 100px;
+	height: 100px;
+}
