@@ -5,23 +5,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
-import br.gov.cgu.mbt.negocio.avaliacao.AvaliacaoRepository;
+import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoEbtService;
 
 @RestController
 @RequestMapping("/admin")
-public class MigradorAvaliacaoIndependenteController {
+public class MigradorAvaliacaoEbtController {
 	
 	@Autowired
-	private AvaliacaoRepository avaliacaoRepository;
+	private MigradorAvaliacaoEbtService migrador;
 
 	@GetMapping("/avaliacao/migrador")
 	public String migrarAvaliacoesIndependentes() {
-		// test
-		Avaliacao avaliacao = Avaliacao.builder().nome("Teste de avaliacao").build();
-		
-		avaliacaoRepository.save(avaliacao);
-		
+		migrador.migrar();
 		return "Migrando avaliações independentes...";
 	}
 	
