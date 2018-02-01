@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 
 
-public class TestandoIntegracaoTest extends BootIntegracaoTest {
+public class TestandoIntegracaoIT extends BootIntegracaoTest {
 	
 	public static String URL_BASE = "http://localhost:8080/";
 

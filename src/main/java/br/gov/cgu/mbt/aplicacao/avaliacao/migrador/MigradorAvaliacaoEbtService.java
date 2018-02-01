@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.AvaliacaoEbtBuilder;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.BlocoEbtBuilder;
@@ -24,24 +25,23 @@ public class MigradorAvaliacaoEbtService {
 		this.avaliacaoRepository = avaliacaoRepository;
 	}
 	
+	@Transactional
 	public void migrar() {
 		// Inicialmente só teremos as EBT's, então podemos obter todas
 		List<Avaliacao> avaliacoes = new AvaliacaoEbtBuilder().build();
+		List<Bloco> blocos = new BlocoEbtBuilder().build();
+		
+		for (Bloco bloco : blocos) {
+			List<Questao> questoes = new QuestaoEbtBuilder().build(bloco);
+			
+			for (Questao questao : questoes) {
+				bloco.addQuestao(questao);
+			}
+		}
 		
 		for (Avaliacao avaliacao : avaliacoes) {
-			List<Bloco> blocos = new BlocoEbtBuilder().build();
-			
-			for (Bloco bloco : blocos) {
-				avaliacao.addBloco(bloco);
-				
-				List<Questao> questoes = new QuestaoEbtBuilder().build(bloco);
-				
-				for (Questao questao : questoes) {
-					bloco.addQuestao(questao);
-				}
-			}
-			
-			avaliacaoRepository.save(avaliacao);
+			avaliacao.setBlocos(blocos);
+			avaliacaoRepository.put(avaliacao);
 		}
 	}
 }

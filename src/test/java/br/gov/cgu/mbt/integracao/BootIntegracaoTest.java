@@ -5,6 +5,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
 import org.apache.commons.lang3.SystemUtils;
+import org.hibernate.Cache;
+import org.hibernate.SessionFactory;
+import org.junit.Before;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,8 +16,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.jdbc.datasource.init.DatabasePopulator;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import br.gov.cgu.mbt.Application;
+import br.gov.cgu.mbt.BancoH2AppConfig;
 import io.github.seleniumquery.SeleniumQuery;
 
 public abstract class BootIntegracaoTest {
@@ -57,7 +65,7 @@ public abstract class BootIntegracaoTest {
         }
     }
 
-    /*@Before
+    @Before
     public void resetarDataSourceEntreOsTestes() throws Exception {
         logger.info("------------------- RESETANDO DADOS DO H2 ------------------------------");
         DefaultResourceLoader resourceLoader = new DefaultResourceLoader();
@@ -71,7 +79,7 @@ public abstract class BootIntegracaoTest {
 
         Cache cache = applicationContext.getBean(SessionFactory.class).getCache();
         cache.evictAllRegions();
-    }*/
+    }
 
     /**
      * Testa se a URL contém a string

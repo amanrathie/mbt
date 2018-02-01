@@ -1,5 +1,6 @@
 package br.gov.cgu.mbt.negocio.avaliacao.bloco;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+import br.gov.cgu.mbt.Constantes;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.questao.Questao;
+import br.gov.cgu.persistencia.jpa.Entidade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,7 +35,8 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Entity
-public class Bloco {
+@Table(name = "Bloco", schema = Constantes.SCHEMA_APLICACAO)
+public class Bloco implements Entidade<Integer>, Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,19 +50,19 @@ public class Bloco {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="bloco")
 	private List<Questao> questoes;
 	
-	@Column(name = "nomBloco")
+	@Column(name = "NomBloco")
 	private String nome;
 	
-	@Column(name = "descBloco")
+	@Column(name = "DescBloco")
 	private String descricao;
 	
-	@Column(name = "valPeso")
+	@Column(name = "ValPeso")
 	private BigDecimal peso;
 	
-	@Column(name = "flgObrigatorio")
+	@Column(name = "FlgObrigatorio")
 	private boolean obrigatorio;
 	
-	@Column(name = "numOrdem")
+	@Column(name = "NumOrdem")
 	private Integer ordem;
 	
 	public void addQuestao(Questao questao) {

@@ -1,11 +1,14 @@
 package br.gov.cgu.mbt.negocio.entidade;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import br.gov.cgu.persistencia.jpa.Entidade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +23,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Entity
-public class EntidadeAvaliadora {
+public class EntidadeAvaliadora implements Entidade<Integer>, Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
