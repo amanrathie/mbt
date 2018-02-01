@@ -4,7 +4,7 @@ import org.hibernate.envers.RevisionListener;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import br.gov.cgu.mbt.negocio.usuario.Usuario;
+import br.gov.cgu.mbt.negocio.auth.Usuario;
 
 public class RevisaoListener implements RevisionListener {
 
