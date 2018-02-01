@@ -15,8 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.questao.Questao;
-import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,8 +39,8 @@ public class Bloco {
 	private Integer id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="IdQuestionario")
-	private Questionario questionario;
+	@JoinColumn(name="IdAvaliacao")
+	private Avaliacao avaliacao;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="bloco")
 	private List<Questao> questoes;
@@ -62,7 +62,7 @@ public class Bloco {
 	
 	public void addQuestao(Questao questao) {
 		if (questoes == null) {
-			questoes = new ArrayList<>();
+			questoes = new ArrayList<Questao>();
 		}
 		questoes.add(questao);
 		questao.setBloco(this);

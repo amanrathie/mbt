@@ -1,18 +1,20 @@
 package br.gov.cgu.mbt.negocio.avaliacao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
+import br.gov.cgu.mbt.negocio.avaliacao.bloco.Bloco;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,7 +44,18 @@ public class Avaliacao {
 	@Column(name="numEdicao")
 	private Integer numEdicao;
 	
-	@OneToOne(mappedBy = "avaliacao", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Questionario questionario;
-
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="avaliacao")
+	private List<Bloco> blocos;
+	
+	public void addBloco(Bloco bloco) {
+		if (blocos == null) {
+			blocos = new ArrayList<Bloco>();
+		}
+		blocos.add(bloco);
+		bloco.setAvaliacao(this);
+	}
+	
+	public void removeBloco(Bloco bloco) {
+		blocos.remove(bloco);
+	}
 }

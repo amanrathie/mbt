@@ -2,6 +2,8 @@ package br.gov.cgu.mbt.negocio.avaliacao.questao;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +36,10 @@ public class Questao {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="IdBloco")
 	private Bloco bloco;
+	
+	@Column(name = "IdTipoQuestao")
+	@Enumerated(EnumType.ORDINAL)
+	private TipoQuestao tipo;
 	
 	@Column(name = "txtPergunta")
 	private String pergunta;

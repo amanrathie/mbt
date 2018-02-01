@@ -7,21 +7,17 @@ import org.springframework.stereotype.Service;
 
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.AvaliacaoEbtBuilder;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.BlocoEbtBuilder;
-import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.QuestionarioEbtBuilder;
+import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.QuestaoEbtBuilder;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.AvaliacaoRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.bloco.Bloco;
-import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
-import br.gov.cgu.mbt.negocio.avaliacao.questionario.QuestionarioRepository;
+import br.gov.cgu.mbt.negocio.avaliacao.questao.Questao;
 
 @Service
 public class MigradorAvaliacaoEbtService {
 	
 	@Autowired
 	private AvaliacaoRepository avaliacaoRepository;
-	
-	@Autowired
-	private QuestionarioRepository questionarioRepository;
 	
 	@Autowired
 	public MigradorAvaliacaoEbtService(AvaliacaoRepository avaliacaoRepository) {
@@ -33,13 +29,16 @@ public class MigradorAvaliacaoEbtService {
 		List<Avaliacao> avaliacoes = new AvaliacaoEbtBuilder().build();
 		
 		for (Avaliacao avaliacao : avaliacoes) {
-			Questionario questionario = new QuestionarioEbtBuilder().build(avaliacao);
-			avaliacao.setQuestionario(questionario);
-			
 			List<Bloco> blocos = new BlocoEbtBuilder().build();
 			
 			for (Bloco bloco : blocos) {
-				questionario.addBloco(bloco);
+				avaliacao.addBloco(bloco);
+				
+				List<Questao> questoes = new QuestaoEbtBuilder().build(bloco);
+				
+				for (Questao questao : questoes) {
+					bloco.addQuestao(questao);
+				}
 			}
 			
 			avaliacaoRepository.save(avaliacao);

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.header.RespostaQuestionarioEbtHeader;
-import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
 
 /**
  * Classe responsável somente por construir os objetos que serão migrados
@@ -26,7 +25,7 @@ public class RespostaEbtParser {
 	/**
 	 * Retorna uma avaliacao com 
 	 */
-	public Questionario parse(int rodada) throws Exception {
+	/*public Questionario parse(int rodada) throws Exception {
 		Iterable<CSVRecord> records = carregarArquivo();
 		
 		// TODO: criar avaliacao (via SQL)
@@ -35,7 +34,7 @@ public class RespostaEbtParser {
 		Questionario questionario = Questionario.builder().build();
 		
 		return questionario;
-	}
+	}*/
 	
 	private Iterable<CSVRecord> carregarArquivo() throws Exception {
 		FileReader in = new FileReader(new ClassPathResource(arquivoParaImportar).getFile());
