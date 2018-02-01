@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 import br.gov.cgu.mbt.Constantes;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.questao.Questao;
@@ -34,6 +36,7 @@ import lombok.ToString;
 @Builder
 @ToString
 @EqualsAndHashCode
+@Audited
 @Entity
 @Table(name = "Bloco", schema = Constantes.SCHEMA_APLICACAO)
 public class Bloco implements Entidade<Integer>, Serializable {

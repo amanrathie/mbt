@@ -29,6 +29,14 @@ CREATE TABLE dbo.Avaliacao
   CONSTRAINT PK_Avaliacao PRIMARY KEY (IdAvaliacao)
 );
 
+CREATE TABLE dbo.AvaliacaoLog
+(
+  REV             		INTEGER         NOT NULL,
+  REVTYPE         		TINYINT,
+  IdAvaliacao       	INTEGER  		NOT NULL,
+  NomAvaliacao      	VARCHAR(255)    NOT NULL,
+  NumEdicao         	INTEGER
+);
 
 CREATE TABLE dbo.Bloco (
    IdBloco              INTEGER IDENTITY NOT NULL,
@@ -45,6 +53,21 @@ CREATE TABLE dbo.Bloco (
    CONSTRAINT PK_Bloco PRIMARY KEY (IdBloco),
    CONSTRAINT FK_Bloco_Avaliacao FOREIGN KEY (IdAvaliacao) REFERENCES Avaliacao (IdAvaliacao)
 );
+
+CREATE TABLE dbo.BlocoLog (
+  REV             		INTEGER         NOT NULL,
+  REVTYPE         		TINYINT,
+   IdBloco              INTEGER  		 NOT NULL,
+   IdAvaliacao          INTEGER              NULL,
+   NomBloco             VARCHAR(255)         NULL,
+   DescBloco            VARCHAR(500)         NULL,
+   TxtIncentivo         VARCHAR(500)         NULL,
+   ValPeso              NUMERIC(4,2)         NULL,
+   FlgObrigatorio       BIT                  NULL,
+   FlgAtivo             BIT                  NULL,
+   NumOrdem             INTEGER              NULL,
+   ValSomaPesoQuestoes  NUMERIC(4,2)         NULL,
+);
       
 CREATE TABLE dbo.Questao (
    IdQuestao            INTEGER IDENTITY NOT NULL,
@@ -59,4 +82,27 @@ CREATE TABLE dbo.Questao (
    CONSTRAINT PK_Questao PRIMARY KEY (IdQuestao),
    CONSTRAINT Fk_Questao_TipoQuestao FOREIGN KEY (IdTipoQuestao) REFERENCES dbo.TipoQuestao (IdTipoQuestao),
    CONSTRAINT FK_Questao_Bloco FOREIGN KEY (IdBloco) REFERENCES dbo.Bloco (IdBloco)
+);
+
+CREATE TABLE dbo.QuestaoLog (
+   REV             		INTEGER          NOT NULL,
+   REVTYPE         		TINYINT,
+   IdQuestao            INTEGER  		 NOT NULL,
+   IdTipoQuestao        INTEGER              NULL,
+   IdBloco              INTEGER              NULL,
+   TxtPergunta          VARCHAR(255)         NULL,
+   NumOrdem             INTEGER              NULL,
+   FlgObrigatoria 		BIT                  NULL,
+   ValPeso              NUMERIC(4,2)         NULL,
+   TxtAjuda             VARCHAR(255)         NULL,
+);
+
+-- Envers
+CREATE TABLE dbo.Revisao
+(
+  id         INT IDENTITY NOT NULL,
+  dthRevisao DATETIME     NOT NULL,
+  idUsuario  INT,
+
+  CONSTRAINT PK_Revisao PRIMARY KEY (id)
 );

@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.gov.cgu.mbt.Constantes;
@@ -32,6 +33,7 @@ import lombok.ToString;
 @Builder
 @ToString
 @EqualsAndHashCode
+@Audited
 @Entity
 @Table(name = "Avaliacao", schema = Constantes.SCHEMA_APLICACAO)
 public class Avaliacao implements Entidade<Integer>, Serializable {
