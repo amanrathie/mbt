@@ -20,6 +20,25 @@ CREATE TABLE dbo.TipoQuestao
 
 -- Tabelas de negócio
 
+CREATE TABLE dbo.Perfil
+(
+  IdPerfil                    INTEGER IDENTITY NOT NULL,
+  DescPerfil                  VARCHAR(500)     NOT NULL,
+
+  CONSTRAINT PK_Perfil PRIMARY KEY (IdPerfil)
+);
+
+CREATE TABLE dbo.Usuario
+(
+  IdUsuario       INTEGER IDENTITY NOT NULL,
+  IdPerfil		  INTEGER, 		   
+  NomUsuario      VARCHAR(1000)    NOT NULL,
+  EmlUsuario      VARCHAR(200),
+
+  CONSTRAINT PK_Usuario PRIMARY KEY (IdUsuario),
+  CONSTRAINT FK_Usuario_Perfil FOREIGN KEY (IdPerfil) REFERENCES dbo.Perfil (IdPerfil)
+);
+
 CREATE TABLE dbo.Avaliacao
 (
   IdAvaliacao       	INTEGER IDENTITY NOT NULL,
