@@ -1,5 +1,6 @@
 package br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,11 +21,13 @@ public class QuestaoEbtBuilder {
 			Questao questao1 = Questao.builder()
 					.pergunta("O regulamento foi localizado na página eletrônica?")
 					.tipo(TipoQuestao.MULTIPLA_ESCOLHA)
+					.peso(new BigDecimal(11.11)) // Obtido dividindo 2,78 por 25 
 					.build();
 			
 			Questao questao3 = Questao.builder()
 					.pergunta("Regulamentou a criação do SIC?")
 					.tipo(TipoQuestao.MULTIPLA_ESCOLHA)
+					.peso(new BigDecimal(22.22))
 					.build();
 			
 			questoes = Arrays.asList(questao1, questao3);

@@ -1,5 +1,6 @@
 package br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,10 +18,12 @@ public class BlocoEbtBuilder {
 	public List<Bloco> build() {
 		Bloco bloco1 = Bloco.builder()
 				.nome(BLOCO_REGULAMENTACAO)
+				.peso(new BigDecimal(25))
 				.build();
 		
 		Bloco bloco2 = Bloco.builder()
 				.nome(BLOCO_TR_PASSIVA)
+				.peso(new BigDecimal(75))
 				.build();
 		
 		return Arrays.asList(bloco1, bloco2);

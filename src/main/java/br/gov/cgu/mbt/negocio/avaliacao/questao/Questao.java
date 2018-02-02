@@ -1,6 +1,7 @@
 package br.gov.cgu.mbt.negocio.avaliacao.questao;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,7 +51,10 @@ public class Questao implements Entidade<Integer>, Serializable {
 	@Enumerated(EnumType.ORDINAL)
 	private TipoQuestao tipo;
 	
-	@Column(name = "txtPergunta")
+	@Column(name = "TxtPergunta")
 	private String pergunta;
+	
+	@Column(name = "ValPeso")
+	private BigDecimal peso;
 	
 }
