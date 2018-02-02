@@ -364,7 +364,7 @@
 			<!-- Ver necessidade de usar as classes para queries nativas -->
             <!-- INICIO - Querydsl - Plugin que gerarah as classes dos queries -->
             <!-- https://github.com/querydsl/apt-maven-plugin/wiki/m2e-usage -->
-            <!-- <plugin>
+            <plugin>
                 <groupId>com.querydsl</groupId>
                 <artifactId>querydsl-maven-plugin</artifactId>
                 <version>${versao.querydsl}</version>
@@ -378,7 +378,7 @@
                 <configuration>
                     <jdbcDriver>org.h2.Driver</jdbcDriver>
                     <jdbcUrl>jdbc:h2:mem:db;DATABASE_TO_UPPER=FALSE;INIT=RUNSCRIPT FROM 'file:src/main/resources/sql/h2.sql'</jdbcUrl>
-                    <packageName>br.gov.cgu.mbt.nucleo.negocio.sqlentities</packageName>
+                    <packageName>br.gov.cgu.mbt.negocio.sqlentities</packageName>
                     <schemaToPackage>false</schemaToPackage>
                     <namePrefix>S</namePrefix>
                     <targetFolder>${project.basedir}/target/generated-sources/java</targetFolder>
@@ -392,7 +392,7 @@
                         <version>1.4.196</version>
                     </dependency>
                 </dependencies>
-            </plugin> -->
+            </plugin>
 
             <plugin>
                 <groupId>com.mysema.maven</groupId>
