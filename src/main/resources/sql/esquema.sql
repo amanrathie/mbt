@@ -10,6 +10,14 @@ CREATE TABLE dbo.TipoAvaliacao
   CONSTRAINT PK_TipoAvaliacao PRIMARY KEY (IdTipoAvaliacao)
 );
 
+CREATE TABLE dbo.TipoFaseAvaliacao
+(
+  IdTipoFaseAvaliacao        INTEGER IDENTITY NOT NULL,
+  DescTipoFaseAvaliacao      VARCHAR(255)    NOT NULL,
+
+  CONSTRAINT PK_TipoFaseAvaliacao PRIMARY KEY (IdTipoFaseAvaliacao)
+);
+
 CREATE TABLE dbo.TipoQuestao
 (
   IdTipoQuestao        	INTEGER IDENTITY NOT NULL,

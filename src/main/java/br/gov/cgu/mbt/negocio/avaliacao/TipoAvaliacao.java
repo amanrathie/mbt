@@ -1,14 +1,13 @@
-package br.gov.cgu.mbt.negocio.avaliacao.questao;
+package br.gov.cgu.mbt.negocio.avaliacao;
 
-public enum TipoQuestao {
-	DESCRITIVA("Descritiva"), 
-	MULTIPLA_ESCOLHA("Múltipla Escolha"), 
-	ESCALA("Escala"), 
-	MATRIZ("Matriz");
+public enum TipoAvaliacao {
+	INDEPENDENTE("Avaliação Independente"), 
+	CIDADA("Avaliação Cidadã"), 
+	AUTOAVALIACAO("Auto Avaliação");
 	
 	private final String descricao;
 
-	TipoQuestao(String descricao) {
+	TipoAvaliacao(String descricao) {
         this.descricao = descricao;
     }
 
