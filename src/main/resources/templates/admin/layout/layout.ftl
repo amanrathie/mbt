@@ -17,7 +17,7 @@
 
 		<link rel="shortcut icon" href="assets/media/img/ico/favicon.ico" type="image/x-icon" />
 		
-		<link rel="stylesheet" href="<@spring.url '/static/libs/bootstrap/css/bootstrap.min.css'/>" media="all" />
+		<link rel="stylesheet" href="<@spring.url '/static/libs/bootstrap/css/bootstrap.css'/>" media="all" />
 		<link rel="stylesheet" href="<@spring.url '/static/libs/bootstrap-datepicker/bootstrap-datepicker3.min.css'/>" media="all" />
 		<link rel="stylesheet" href="<@spring.url '/static/libs/font-awesome-4.7.0/css/font-awesome.min.css'/>" media="all" />
 		<link rel="stylesheet" href="<@spring.url '/static/css/admin/base.css'/>" media="all" />
@@ -117,8 +117,9 @@
 <main id="main" class="main">
 	<div class="block-title">
 		<div class="container">
-			<span class="breadcrumb"><strong>Você está aqui: ${breadcrumb}</strong></span>
-			<h2 class="title-page">${titulo}</h2>
+			<span class="breadcrumb"><strong>Você está aqui:</strong> ${breadcrumb}</span>
+			<h2 class="title-page pull-left">${titulo}</h2>
+			<a href="criando_avaliacao_da_gestao.php" class="button--primary-a pull-right" role="button">Nova avaliação</a>
 		</div>
 	</div>
 

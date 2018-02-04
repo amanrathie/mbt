@@ -2,7 +2,7 @@
 <#include "../_formulario.ftl">
 
 <#assign breadcrumb>
-    <a href="#">Administrativo</a> > <a href="#">Painel Geral de Avaliações</a>
+<a href="#">Administrativo</a> > <a href="#">Painel Geral de Avaliações</a>
 </#assign>
 
 <@admin titulo="Painel Geral de Avaliações" breadcrumb=breadcrumb>
