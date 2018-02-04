@@ -1,9 +1,9 @@
-package br.gov.cgu.mbt.aplicacao.avaliacao.migrador.header;
+package br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util;
 
 /**
  * Contém os headers do arquivo CSV de migração das avaliações EBT
  */
-public enum RespostaQuestionarioEbtHeader {
+public enum QuestionarioEbtHeader {
 	rodada, posicao_ebt, nota, dt_inicio_avaliacao, dt_fim_avaliacao, 
 	uf, nome_uf, municipio, cod_ibge, populacao, site_municipal, site_esic, 
 	regulamento_pagina_prefeitura, regulamento_pagina_prefeiturap, regulamentou_lai, 

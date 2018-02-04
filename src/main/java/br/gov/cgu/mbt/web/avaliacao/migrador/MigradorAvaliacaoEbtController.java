@@ -11,13 +11,23 @@ import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoEbtService;
 @RequestMapping("/admin")
 public class MigradorAvaliacaoEbtController {
 	
-	@Autowired
 	private MigradorAvaliacaoEbtService migrador;
+	
+	@Autowired
+	public MigradorAvaliacaoEbtController(MigradorAvaliacaoEbtService migrador) {
+		this.migrador = migrador;
+	}
 
-	@GetMapping("/avaliacao/migrador")
-	public String migrarAvaliacoesIndependentes() {		
-		migrador.migrar();
-		return "Migrando avaliações independentes...";
+	@GetMapping("/avaliacao/migracao/criar")
+	public String criarAvaliacoesIndependentes() throws Exception {		
+		migrador.criarAvaliacoesIndependentes();
+		return "Formulários EBT's criados com sucesso...";
+	}
+	
+	@GetMapping("/avaliacao/migracao/migrar")
+	public String migrarAvaliacoesIndependentes() throws Exception {		
+		migrador.migrarAvaliacoesIndependentes();
+		return "Migração das respostas EBT's realizada com sucesso";
 	}
 	
 }

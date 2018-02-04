@@ -67,7 +67,6 @@ CREATE TABLE dbo.AvaliacaoLog
 
 CREATE TABLE dbo.Bloco (
    IdBloco              INTEGER IDENTITY NOT NULL,
-   IdAvaliacao          INTEGER              NULL,
    NomBloco             VARCHAR(255)         NULL,
    DescBloco            VARCHAR(500)         NULL,
    TxtIncentivo         VARCHAR(500)         NULL,
@@ -78,14 +77,12 @@ CREATE TABLE dbo.Bloco (
    ValSomaPesoQuestoes  NUMERIC(4,2)         NULL,
    
    CONSTRAINT PK_Bloco PRIMARY KEY (IdBloco),
-   CONSTRAINT FK_Bloco_Avaliacao FOREIGN KEY (IdAvaliacao) REFERENCES Avaliacao (IdAvaliacao)
 );
 
 CREATE TABLE dbo.BlocoLog (
-  REV             		INTEGER         NOT NULL,
-  REVTYPE         		TINYINT,
+   REV             		INTEGER         NOT NULL,
+   REVTYPE         		TINYINT,
    IdBloco              INTEGER  		 NOT NULL,
-   IdAvaliacao          INTEGER              NULL,
    NomBloco             VARCHAR(255)         NULL,
    DescBloco            VARCHAR(500)         NULL,
    TxtIncentivo         VARCHAR(500)         NULL,
@@ -94,6 +91,21 @@ CREATE TABLE dbo.BlocoLog (
    FlgAtivo             BIT                  NULL,
    NumOrdem             INTEGER              NULL,
    ValSomaPesoQuestoes  NUMERIC(4,2)         NULL,
+);
+
+CREATE TABLE dbo.Avaliacao_Bloco (
+   IdBloco              INTEGER  		 NOT NULL,
+   IdAvaliacao          INTEGER              NULL,
+   
+   CONSTRAINT FK_AvaliacaoBloco FOREIGN KEY (IdAvaliacao) REFERENCES Avaliacao (IdAvaliacao),
+   CONSTRAINT FK_BlocoAvaliacao FOREIGN KEY (IdBloco) REFERENCES Bloco (IdBloco)
+);
+
+CREATE TABLE dbo.Avaliacao_BlocoLog (
+   REV             		INTEGER          NOT NULL,
+   REVTYPE         		TINYINT,
+   IdBloco              INTEGER  		 NOT NULL,
+   IdAvaliacao          INTEGER              NULL,
 );
       
 CREATE TABLE dbo.Questao (
@@ -105,6 +117,7 @@ CREATE TABLE dbo.Questao (
    FlgObrigatoria 		BIT                  NULL,
    ValPeso              NUMERIC(4,2)         NULL,
    TxtAjuda             VARCHAR(255)         NULL,
+   TxtEstrutura			VARCHAR(2000)        NULL,
    
    CONSTRAINT PK_Questao PRIMARY KEY (IdQuestao),
    CONSTRAINT Fk_Questao_TipoQuestao FOREIGN KEY (IdTipoQuestao) REFERENCES dbo.TipoQuestao (IdTipoQuestao),
@@ -122,6 +135,26 @@ CREATE TABLE dbo.QuestaoLog (
    FlgObrigatoria 		BIT                  NULL,
    ValPeso              NUMERIC(4,2)         NULL,
    TxtAjuda             VARCHAR(255)         NULL,
+   TxtEstrutura  		VARCHAR(2000)        NULL,
+);
+
+CREATE TABLE dbo.Resposta (
+   IdResposta           INTEGER IDENTITY NOT NULL,
+   IdQuestao        	INTEGER              NULL,
+   TxtEstrutura			VARCHAR(2000)        NULL,
+   municipio			VARCHAR(100)		 NULL,
+   
+   CONSTRAINT PK_Resposta PRIMARY KEY (IdResposta),
+   CONSTRAINT FK_Resposta_Questao FOREIGN KEY (IdQuestao) REFERENCES dbo.Questao (IdQuestao)
+);
+
+CREATE TABLE dbo.RespostaLog (
+   REV             		INTEGER          NOT NULL,
+   REVTYPE         		TINYINT,
+   IdResposta           INTEGER IDENTITY NOT NULL,
+   IdQuestao        	INTEGER              NULL,
+   TxtEstrutura			VARCHAR(2000)        NULL,
+   municipio			VARCHAR(100)		 NULL
 );
 
 -- Envers

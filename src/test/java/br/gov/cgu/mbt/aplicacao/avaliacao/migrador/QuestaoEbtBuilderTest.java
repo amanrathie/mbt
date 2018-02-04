@@ -14,7 +14,7 @@ public class QuestaoEbtBuilderTest {
 	private QuestaoEbtBuilder questaoEbtBuildr = new QuestaoEbtBuilder();
 	
 	@Test
-	public void questoes_regulamentacao_construido_corretamente() {
+	public void questoes_regulamentacao_construido_corretamente() throws Exception {
 		Bloco bloco = Bloco.builder()
 				.nome(BlocoEbtBuilder.BLOCO_REGULAMENTACAO)
 				.build();
@@ -26,7 +26,7 @@ public class QuestaoEbtBuilderTest {
 	}
 	
 	@Test
-	public void questoes_tr_passiva_construido_corretamente() {
+	public void questoes_tr_passiva_construido_corretamente() throws Exception {
 		Bloco bloco = Bloco.builder()
 				.nome(BlocoEbtBuilder.BLOCO_TR_PASSIVA)
 				.build();

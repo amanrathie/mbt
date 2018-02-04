@@ -4,13 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -51,10 +52,13 @@ public class Avaliacao implements Entidade<Integer>, Serializable {
 	@Column(name="NumEdicao")
 	private Integer numEdicao;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="avaliacao")
+	@ManyToMany
+	@JoinTable(name="Avaliacao_Bloco", schema = Constantes.SCHEMA_APLICACAO,
+			joinColumns=@JoinColumn(name="IdAvaliacao", referencedColumnName="IdAvaliacao"),
+			inverseJoinColumns=@JoinColumn(name="IdBloco", referencedColumnName="IdBloco"))
 	private List<Bloco> blocos;
 	
-	public void addBloco(Bloco bloco) {
+	/*public void addBloco(Bloco bloco) {
 		if (blocos == null) {
 			blocos = new ArrayList<Bloco>();
 		}
@@ -64,5 +68,5 @@ public class Avaliacao implements Entidade<Integer>, Serializable {
 	
 	public void removeBloco(Bloco bloco) {
 		blocos.remove(bloco);
-	}
+	}*/
 }
