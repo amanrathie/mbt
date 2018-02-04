@@ -1,4 +1,5 @@
 <#include "layout/layout.ftl">
+<#include "../_formulario.ftl">
 
 <#assign breadcrumb>
     <a href="#">Administrativo</a> > <a href="#">Painel Geral de Avaliações</a>
@@ -10,57 +11,27 @@
 				<div class="block-rate position-relative block-rate--gray">
 					<h4 class="block-rate__title-iconed btn-mostrar-filtro"><i class="fa fa-filter" aria-hidden="true"></i>Filtros de pesquisa</h4>
 				</div>
-			</div>
+			</div>		
+			
 			<div class="status-do-filtro-ativo">
 				<div class="block-rate position-relative block-rate--gray">
 					<h4 class="block-rate__title-iconed"><i class="fa fa-filter" aria-hidden="true"></i>Filtros de pesquisa</h4>
 					<a class="btn-mostrar-filtro a--position-left dml-300 dmt-22"><b>Ocultar filtros</b></a>
-					<div class="dmt-30 dmb-30 dml-20 dmr-20">
+					<div class="dmt-30 dmb-30 dml-20 dmr-20">					
 						<form action="#" method="post">
 							<fieldset>
 								<div class="row">
 									<div class="col-xs-3">
-										<label for="tipo-de-avaliacao">Tipo de avaliação</label>
-										<select id="tipo-de-avaliacao" name="tipo-de-avaliacao" class="form-control">
-											<option value="">Selecione</option>
-											<option value="Todos">Todos</option>
-											<option value="Avaliação Independente">Avaliação Independente</option>
-											<option value="Avaliação Cidadã">Avaliação Cidadã</option>
-											<option value="Autoavaliação da Gestão">Autoavaliação da Gestão</option>
-										</select>
+										<@campoSelectFormulario label="Tipo de avaliação" id="tipo" opcoes=tipos valorSelecionado=filtro.tipo opcaoPadrao="Selecione" opcaoTodos=true />
 									</div>
 									<div class="col-xs-3">
-										<label for="fase-da-avaliacao">Fase da avaliação</label>
-										<select id="fase-da-avaliacao" name="fase-da-avaliacao" class="form-control">
-											<option value="">Selecione</option>
-											<option value="Todos">Todos</option>
-											<option value="Questionário em aprovação">Questionário em aprovação</option>
-											<option value="Questionário aprovado (sem andamento)">Questionário aprovado (sem andamento)</option>
-											<option value="Em planejamento">Em planejamento</option>
-											<option value="Em andamento">Em andamento</option>
-											<option value="Aguardando publicação">Aguardando publicação</option>
-											<option value="Publicada">Publicada</option>
-										</select>
+										<@campoSelectFormulario label="Fase de avaliação" id="fase" opcoes=fases valorSelecionado=filtro.fases opcaoPadrao="Selecione" opcaoTodos=true />
+									</div>
+									<div class="col-xs-3">										
+										<@campoSelectFormulario label="Poder" id="poder" opcoes=poderes valorSelecionado=filtro.poder opcaoPadrao="Selecione" opcaoTodos=true opcaoNenhum=true />
 									</div>
 									<div class="col-xs-3">
-										<label for="poder">Poder</label>
-										<select id="poder" name="poder" class="form-control">
-											<option value="">Selecione</option>
-											<option value="Todos">Todos</option>
-											<option value="Legislativo">Legislativo</option>
-											<option value="Judiciário">Judiciário</option>
-											<option value="Executivo">Executivo</option>
-											<option value="Nenhum">Nenhum</option>
-										</select>
-									</div>
-									<div class="col-xs-3">
-										<label for="status-da-avaliacao">Status da avaliação</label>
-										<select id="status-da-avaliacao" name="status-da-avaliacao" class="form-control">
-											<option value="">Selecione</option>
-											<option value="Todos">Todos</option>
-											<option value="Ativo">Ativo</option>
-											<option value="Inativo">Inativo</option>
-										</select>
+										<@campoSelectFormulario label="Status da avaliação" id="status" opcoes=status valorSelecionado=filtro.status opcaoPadrao="Selecione" opcaoTodos=true />
 									</div>
 								</div>
 								<div class="row dmt-30">
@@ -83,7 +54,7 @@
 							</fieldset>
 						</form>
 					</div>
-				</div>
+				</div>	
 			</div>
 		</section>
 
