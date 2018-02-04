@@ -19,11 +19,13 @@ public class BlocoEbtBuilder {
 		Bloco bloco1 = Bloco.builder()
 				.nome(BLOCO_REGULAMENTACAO)
 				.peso(new BigDecimal(25))
+				.ordem(1)
 				.build();
 		
 		Bloco bloco2 = Bloco.builder()
 				.nome(BLOCO_TR_PASSIVA)
 				.peso(new BigDecimal(75))
+				.ordem(2)
 				.build();
 		
 		return Arrays.asList(bloco1, bloco2);

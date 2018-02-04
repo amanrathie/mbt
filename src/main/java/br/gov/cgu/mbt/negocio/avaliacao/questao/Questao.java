@@ -63,6 +63,9 @@ public class Questao implements Entidade<Integer>, Serializable {
 	@Column(name = "TxtEstrutura")
 	private String estrutura;
 	
+	@Column(name = "NumOrdem")
+	private Integer ordem;
+	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="questao")
 	private List<Resposta> respostas;
 	

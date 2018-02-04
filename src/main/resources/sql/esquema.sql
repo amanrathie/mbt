@@ -52,8 +52,10 @@ CREATE TABLE dbo.Avaliacao
   IdAvaliacao       	INTEGER IDENTITY NOT NULL,
   NomAvaliacao      	VARCHAR(255)    NOT NULL,
   NumEdicao         	INTEGER,
+  IdTipoFaseAvaliacao	INTEGER			NOT NULL,
 
-  CONSTRAINT PK_Avaliacao PRIMARY KEY (IdAvaliacao)
+  CONSTRAINT PK_Avaliacao PRIMARY KEY (IdAvaliacao),
+  CONSTRAINT FK_Avaliacao_TipoFaseAv FOREIGN KEY (IdTipoFaseAvaliacao) REFERENCES TipoFaseAvaliacao (IdTipoFaseAvaliacao)
 );
 
 CREATE TABLE dbo.AvaliacaoLog
@@ -62,7 +64,8 @@ CREATE TABLE dbo.AvaliacaoLog
   REVTYPE         		TINYINT,
   IdAvaliacao       	INTEGER  		NOT NULL,
   NomAvaliacao      	VARCHAR(255)    NOT NULL,
-  NumEdicao         	INTEGER
+  NumEdicao         	INTEGER,
+  IdTipoFaseAvaliacao	INTEGER			NOT NULL
 );
 
 CREATE TABLE dbo.Bloco (

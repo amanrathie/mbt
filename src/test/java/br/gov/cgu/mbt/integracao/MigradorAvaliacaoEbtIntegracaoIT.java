@@ -1,5 +1,7 @@
 package br.gov.cgu.mbt.integracao;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
 import org.junit.Test;
@@ -11,10 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoEbtService;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.AvaliacaoRepository;
+import br.gov.cgu.mbt.negocio.avaliacao.TipoFaseAvaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.bloco.Bloco;
-import br.gov.cgu.mbt.negocio.avaliacao.questao.QuestaoRepository;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import br.gov.cgu.mbt.negocio.avaliacao.bloco.BlocoRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -30,7 +31,7 @@ public class MigradorAvaliacaoEbtIntegracaoIT {
 	private AvaliacaoRepository avaliacaoRepository;
 	
 	@Autowired
-	private QuestaoRepository questaoRepository; // mock
+	private BlocoRepository blocoRepository;
 	
 	@Test
 	public void avaliacoes_migradas_corretamente() throws Exception {
@@ -39,24 +40,20 @@ public class MigradorAvaliacaoEbtIntegracaoIT {
 		
 		List<Avaliacao> avaliacoes = avaliacaoRepository.getAll();
 		
-		
-		
-		/*List<Questao> questoes = questaoRepository.getAll();
-		
-		for (Questao questao : questoes) {
-			Questao eagerLoaded = questaoRepository.getEagerLoaded(questao.getId());
-			assertThat(eagerLoaded.getBloco().getAvaliacao()).isNotNull();
-		}*/
-		
 		for (Avaliacao avaliacao : avaliacoes) {
-			Avaliacao avaliacaoEager = avaliacaoRepository.get(avaliacao.getId());
+			Avaliacao avaliacaoEager = avaliacaoRepository.getEagerLoaded(avaliacao.getId());
+			
+			assertThat(avaliacao.getFase()).isEqualTo(TipoFaseAvaliacao.PUBLICADA);
 			
 			assertThat(avaliacaoEager.getBlocos())
 				.isNotEmpty()
 				.hasSize(2);
 			
-			for (Bloco bloco : avaliacaoEager.getBlocos()) {
-				assertThat(bloco.getQuestoes())
+			List<Bloco> blocos = avaliacaoEager.getBlocos();
+			for (Bloco bloco : blocos) {
+				Bloco eagerBloco = blocoRepository.getEagerLoaded(bloco.getId());
+				
+				assertThat(eagerBloco.getQuestoes())
 					.isNotEmpty()
 					.hasSize(2);
 			}

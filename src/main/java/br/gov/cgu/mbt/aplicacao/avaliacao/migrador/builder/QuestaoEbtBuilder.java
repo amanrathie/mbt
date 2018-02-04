@@ -8,7 +8,6 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.QuestaoQuestionarioEbtHeaderMapper;
 import br.gov.cgu.mbt.negocio.avaliacao.bloco.Bloco;
 import br.gov.cgu.mbt.negocio.avaliacao.questao.Questao;
 import br.gov.cgu.mbt.negocio.avaliacao.questao.TipoQuestao;
@@ -30,15 +29,15 @@ public class QuestaoEbtBuilder {
 					.tipo(TipoQuestao.MULTIPLA_ESCOLHA)
 					.peso(new BigDecimal(11.11)) // Obtido dividindo 2,78 por 25
 					.estrutura(mapper.writeValueAsString(getQuestaoMultiplaEscolhaSimNao()))
+					.ordem(3)
 					.build();
-			
-			//QuestaoQuestionarioEbtHeaderMapper.mapper.put(questao3, value)
 			
 			Questao questao5 = Questao.builder()
 					.pergunta("Regulamentou a criação do SIC?")
 					.tipo(TipoQuestao.MULTIPLA_ESCOLHA)
 					.peso(new BigDecimal(22.22))
 					.estrutura(mapper.writeValueAsString(getQuestaoMultiplaEscolhaSimNao()))
+					.ordem(5)
 					.build();
 			
 			questoes = Arrays.asList(questao3, questao5);

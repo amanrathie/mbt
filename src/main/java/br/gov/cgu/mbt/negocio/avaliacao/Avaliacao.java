@@ -1,11 +1,12 @@
 package br.gov.cgu.mbt.negocio.avaliacao;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,6 +58,10 @@ public class Avaliacao implements Entidade<Integer>, Serializable {
 			joinColumns=@JoinColumn(name="IdAvaliacao", referencedColumnName="IdAvaliacao"),
 			inverseJoinColumns=@JoinColumn(name="IdBloco", referencedColumnName="IdBloco"))
 	private List<Bloco> blocos;
+	
+	@Column(name="IdTipoFaseAvaliacao")
+	@Enumerated(EnumType.ORDINAL)
+	private TipoFaseAvaliacao fase;
 	
 	/*public void addBloco(Bloco bloco) {
 		if (blocos == null) {
