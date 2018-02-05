@@ -1,7 +1,6 @@
 package br.gov.cgu.mbt.negocio.avaliacao;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -20,7 +18,7 @@ import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.gov.cgu.mbt.Constantes;
-import br.gov.cgu.mbt.negocio.avaliacao.bloco.Bloco;
+import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
 import br.gov.cgu.persistencia.jpa.Entidade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,27 +49,14 @@ public class Avaliacao implements Entidade<Integer>, Serializable {
 	private String nome;
 	
 	@Column(name="NumEdicao")
-	private Integer numEdicao;
-	
-	@ManyToMany
-	@JoinTable(name="Avaliacao_Bloco", schema = Constantes.SCHEMA_APLICACAO,
-			joinColumns=@JoinColumn(name="IdAvaliacao", referencedColumnName="IdAvaliacao"),
-			inverseJoinColumns=@JoinColumn(name="IdBloco", referencedColumnName="IdBloco"))
-	private List<Bloco> blocos;
+	private Integer edicao;
 	
 	@Column(name="IdTipoFaseAvaliacao")
 	@Enumerated(EnumType.ORDINAL)
 	private TipoFaseAvaliacao fase;
 	
-	/*public void addBloco(Bloco bloco) {
-		if (blocos == null) {
-			blocos = new ArrayList<Bloco>();
-		}
-		blocos.add(bloco);
-		bloco.setAvaliacao(this);
-	}
+	@ManyToOne
+	@JoinColumn(name="IdQuestionario")
+	private Questionario questionario;
 	
-	public void removeBloco(Bloco bloco) {
-		blocos.remove(bloco);
-	}*/
 }

@@ -1,2 +1,2 @@
-RUNSCRIPT FROM 'file:src/main/resources/sql/esquema.sql';
+RUNSCRIPT FROM 'file:src/main/resources/db/migration/V1__tabelas_e_dados_iniciais_H2.sql';
 

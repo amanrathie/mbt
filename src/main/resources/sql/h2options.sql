@@ -1,2 +1,0 @@
-SET IGNORECASE true;
-SET MODE MSSQLServer;

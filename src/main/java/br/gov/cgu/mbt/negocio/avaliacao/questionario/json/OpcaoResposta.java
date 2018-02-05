@@ -1,4 +1,4 @@
-package br.gov.cgu.mbt.negocio.avaliacao.questao.json;
+package br.gov.cgu.mbt.negocio.avaliacao.questionario.json;
 
 import java.math.BigDecimal;
 

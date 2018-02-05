@@ -4,12 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
@@ -38,10 +35,6 @@ public class Resposta implements Entidade<Integer>, Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="IdResposta")
 	private Integer id;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="IdQuestao")
-	private Questao questao;
 	
 	@Column(name = "TxtEstrutura")
 	private String estrutura;

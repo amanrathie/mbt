@@ -71,8 +71,7 @@ public abstract class BootIntegracaoTest {
         DefaultResourceLoader resourceLoader = new DefaultResourceLoader();
         DatabasePopulator populator = new ResourceDatabasePopulator(
                 resourceLoader.getResource("classpath:sql/reset.sql"),
-                resourceLoader.getResource("classpath:sql/esquema.sql"),
-                resourceLoader.getResource("classpath:sql/dados.sql")
+                resourceLoader.getResource("classpath:sql/h2.sql';")
         );
 
         DatabasePopulatorUtils.execute(populator, BancoH2AppConfig.datasource);

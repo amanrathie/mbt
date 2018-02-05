@@ -14,14 +14,17 @@ public class AvaliacaoEbtBuilder {
 	public List<Avaliacao> build() {
 		Avaliacao v1 = Avaliacao.builder()
 				.nome("Escala Brasil Transparente v1")
+				.edicao(1)
 				.fase(TipoFaseAvaliacao.PUBLICADA)
 				.build();
 		Avaliacao v2 = Avaliacao.builder()
 				.nome("Escala Brasil Transparente v2")
+				.edicao(2)
 				.fase(TipoFaseAvaliacao.PUBLICADA)
 				.build();
 		Avaliacao v3 = Avaliacao.builder()
 				.nome("Escala Brasil Transparente v3")
+				.edicao(3)
 				.fase(TipoFaseAvaliacao.PUBLICADA)
 				.build();
 		

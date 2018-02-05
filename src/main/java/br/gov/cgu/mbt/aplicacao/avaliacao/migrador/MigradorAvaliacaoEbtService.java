@@ -7,31 +7,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.AvaliacaoEbtBuilder;
-import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.BlocoEbtBuilder;
-import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.QuestaoEbtBuilder;
+import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.QuestionarioEbtBuilder;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.AvaliacaoRepository;
-import br.gov.cgu.mbt.negocio.avaliacao.bloco.Bloco;
-import br.gov.cgu.mbt.negocio.avaliacao.bloco.BlocoRepository;
-import br.gov.cgu.mbt.negocio.avaliacao.questao.Questao;
-import br.gov.cgu.mbt.negocio.avaliacao.questao.Resposta;
 import br.gov.cgu.mbt.negocio.avaliacao.questao.RespostaRepository;
+import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
+import br.gov.cgu.mbt.negocio.avaliacao.questionario.QuestionarioRepository;
 
 @Service
 public class MigradorAvaliacaoEbtService {
 	
 	private AvaliacaoRepository avaliacaoRepository;
 	
-	private BlocoRepository blocoRepository;
+	private QuestionarioRepository questionarioRepository;
 	
 	private RespostaRepository respostaRepository;
 	
 	@Autowired
 	public MigradorAvaliacaoEbtService(AvaliacaoRepository avaliacaoRepository,
-			BlocoRepository blocoRepository,
+			QuestionarioRepository questionarioRepository,
 			RespostaRepository respostaRepository) {
 		this.avaliacaoRepository = avaliacaoRepository;
-		this.blocoRepository = blocoRepository;
+		this.questionarioRepository = questionarioRepository;
 		this.respostaRepository = respostaRepository;
 	}
 	
@@ -39,12 +36,30 @@ public class MigradorAvaliacaoEbtService {
 	public void criarAvaliacoesIndependentes() throws Exception {
 		// Inicialmente só teremos as EBT's, então podemos obter todas
 		List<Avaliacao> avaliacoes = new AvaliacaoEbtBuilder().build();
-		List<Bloco> blocos = new BlocoEbtBuilder().build();
+		/*for (Avaliacao avaliacao : avaliacoes) {
+			avaliacaoRepository.put(avaliacao);
+		}*/
 		
-		for (Bloco bloco : blocos) {
-			List<Questao> questoes = new QuestaoEbtBuilder().build(bloco);
+		Questionario questionario = Questionario.builder()
+			.estrutura(new QuestionarioEbtBuilder().build())
+			.build();
+		
+		questionarioRepository.put(questionario);
+		
+		for (Avaliacao avaliacao : avaliacoes) {
+			//questionario.addAvaliacao(avaliacao);
+			avaliacao.setQuestionario(questionario);
+			avaliacaoRepository.put(avaliacao);
+		}
+		
+		
+		
+		/*List<BlocoASerExcluido> blocos = new BlocoEbtBuilder().build();
+		
+		for (BlocoASerExcluido bloco : blocos) {
+			List<QuestaoASerExcluida> questoes = new QuestaoEbtBuilder().build(bloco);
 			
-			for (Questao questao : questoes) {
+			for (QuestaoASerExcluida questao : questoes) {
 				bloco.addQuestao(questao);
 			}
 			
@@ -55,22 +70,22 @@ public class MigradorAvaliacaoEbtService {
 			avaliacao.setBlocos(blocos);
 
 			avaliacaoRepository.put(avaliacao);
-		}
+		}*/
 	}
 	
 	@Transactional
 	public void migrarAvaliacoesIndependentes() throws Exception {
-		RespostaEbtParser respostasParser = new RespostaEbtParser("/ebt/ebt_respostas.csv");
+		/*RespostaEbtParser respostasParser = new RespostaEbtParser("/ebt/ebt_respostas.csv");
 		
 		List<Avaliacao> avaliacoes = avaliacaoRepository.getAll(); // TODO: pegar apenas as corretas para não ter riscos
 		
 		for (Avaliacao avaliacao : avaliacoes) {
-			List<Bloco> blocos = avaliacao.getBlocos();
+			List<BlocoASerExcluido> blocos = avaliacao.getBlocos();
 		
-			for (Bloco bloco : blocos) {
-				List<Questao> questoes = bloco.getQuestoes();
+			for (BlocoASerExcluido bloco : blocos) {
+				List<QuestaoASerExcluida> questoes = bloco.getQuestoes();
 				
-				for (Questao questao : questoes) {
+				for (QuestaoASerExcluida questao : questoes) {
 				
 					// Para cada questão, monta as respostas que foram dadas no arquivo
 					List<Resposta> respostas = respostasParser.parse(1, questao);
@@ -80,6 +95,6 @@ public class MigradorAvaliacaoEbtService {
 					}
 				}
 			}
-		}
+		}*/
 	}
 }

@@ -1,5 +1,7 @@
 package br.gov.cgu.mbt.web.avaliacao.migrador;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,8 @@ import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoEbtService;
 @RequestMapping("/admin")
 public class MigradorAvaliacaoEbtController {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(MigradorAvaliacaoEbtController.class);
+	
 	private MigradorAvaliacaoEbtService migrador;
 	
 	@Autowired
@@ -19,7 +23,8 @@ public class MigradorAvaliacaoEbtController {
 	}
 
 	@GetMapping("/avaliacao/migracao/criar")
-	public String criarAvaliacoesIndependentes() throws Exception {		
+	public String criarAvaliacoesIndependentes() throws Exception {	
+		LOGGER.info("Iniciando migração de avaliações EBT's");
 		migrador.criarAvaliacoesIndependentes();
 		return "Formulários EBT's criados com sucesso...";
 	}

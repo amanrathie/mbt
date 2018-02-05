@@ -1,21 +1,13 @@
 package br.gov.cgu.mbt.aplicacao.avaliacao.migrador;
 
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.QuestaoQuestionarioEbtHeaderMapper;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.QuestionarioEbtHeader;
-import br.gov.cgu.mbt.negocio.avaliacao.questao.Questao;
-import br.gov.cgu.mbt.negocio.avaliacao.questao.Resposta;
-import br.gov.cgu.mbt.negocio.avaliacao.questao.json.QuestaoMultiplaEscolha;
 
 
 public class RespostaEbtParser {
@@ -34,7 +26,7 @@ public class RespostaEbtParser {
 	/**
 	 * Retorna uma lista de respostas de uma EBT especifica
 	 */
-	public List<Resposta> parse(int rodadaAvaliacao, Questao questao) throws Exception {
+	/*public List<Resposta> parse(int rodadaAvaliacao, QuestaoASerExcluida questao) throws Exception {
 		List<Resposta> respostas = new ArrayList<Resposta>();
 		ObjectMapper mapper = new ObjectMapper();
 		
@@ -56,6 +48,6 @@ public class RespostaEbtParser {
 		}
  		
 		return respostas;
-	}
+	}*/
 
 }
