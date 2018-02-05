@@ -1,12 +1,12 @@
-package br.gov.cgu.mbt.negocio.avaliacao;
+package br.gov.cgu.mbt.negocio;
 
-public enum TipoStatusAvaliacao {
+public enum TipoStatus {
 	ATIVO("Ativo"),
 	INATIVO("Inativo");
 	
 	private final String descricao;
 
-	private TipoStatusAvaliacao(String descricao) {
+	private TipoStatus(String descricao) {
 		this.descricao = descricao;
 	}
 

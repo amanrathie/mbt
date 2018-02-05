@@ -3,7 +3,7 @@ package br.gov.cgu.mbt.negocio.avaliacao;
 public enum TipoAvaliacao {
 	INDEPENDENTE("Avaliação Independente"), 
 	CIDADA("Avaliação Cidadã"), 
-	AUTOAVALIACAO("Auto Avaliação");
+	AUTOAVALIACAO("Autoavaliação da Gestão");
 	
 	private final String descricao;
 

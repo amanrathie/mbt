@@ -1,13 +1,13 @@
-package br.gov.cgu.mbt.negocio.avaliacao;
+package br.gov.cgu.mbt.negocio;
 
-public enum TipoPoderAvaliacao {
+public enum TipoPoder {
 	LEGISLATIVO("Legislativo"), 
 	JUDICIARIO("Judiciário"), 
 	EXECUTIVO("Executivo");
 
 	private final String descricao;
 
-	private TipoPoderAvaliacao(String descricao) {
+	private TipoPoder(String descricao) {
 		this.descricao = descricao;
 	}
 
