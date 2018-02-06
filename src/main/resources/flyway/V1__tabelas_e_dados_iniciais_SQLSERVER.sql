@@ -1,1 +1,0 @@
--- Script equivalente do SQL Server com os mesmos dados do H2

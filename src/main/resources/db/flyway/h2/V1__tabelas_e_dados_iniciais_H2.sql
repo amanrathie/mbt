@@ -7,7 +7,7 @@ SET MODE MSSQLServer;
 
 CREATE TABLE dbo.TipoAvaliacao
 (
-  IdTipoAvaliacao        INTEGER IDENTITY NOT NULL,
+  IdTipoAvaliacao        INTEGER  NOT NULL,
   DescTipoAvaliacao      VARCHAR(255)    NOT NULL,
 
   CONSTRAINT PK_TipoAvaliacao PRIMARY KEY (IdTipoAvaliacao)
@@ -15,7 +15,7 @@ CREATE TABLE dbo.TipoAvaliacao
 
 CREATE TABLE dbo.TipoFaseAvaliacao
 (
-  IdTipoFaseAvaliacao        INTEGER IDENTITY NOT NULL,
+  IdTipoFaseAvaliacao        INTEGER  NOT NULL,
   DescTipoFaseAvaliacao      VARCHAR(255)    NOT NULL,
 
   CONSTRAINT PK_TipoFaseAvaliacao PRIMARY KEY (IdTipoFaseAvaliacao)
@@ -23,7 +23,7 @@ CREATE TABLE dbo.TipoFaseAvaliacao
 
 CREATE TABLE dbo.TipoQuestao
 (
-  IdTipoQuestao        	INTEGER IDENTITY NOT NULL,
+  IdTipoQuestao        	INTEGER  NOT NULL,
   DescTipoQuestao      	VARCHAR(255)    NOT NULL,
 
   CONSTRAINT PK_TipoQuestao PRIMARY KEY (IdTipoQuestao)
@@ -60,7 +60,7 @@ CREATE TABLE dbo.Questionario (
 CREATE TABLE dbo.QuestionarioLog (
    REV             		INTEGER         	 NOT NULL,
    REVTYPE         		TINYINT,
-   IdQuestionario           INTEGER IDENTITY NOT NULL,
+   IdQuestionario           INTEGER 	 NOT NULL,
    TxtEstrutura				VARCHAR(2000)        NULL,
 );
 
