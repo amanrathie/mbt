@@ -51,6 +51,10 @@ public class Avaliacao implements Entidade<Integer>, Serializable {
 	@Column(name="NumEdicao")
 	private Integer edicao;
 	
+	@Column(name="IdTipoAvaliacao")
+	@Enumerated(EnumType.ORDINAL)
+	private TipoAvaliacao tipo;
+	
 	@Column(name="IdTipoFaseAvaliacao")
 	@Enumerated(EnumType.ORDINAL)
 	private TipoFaseAvaliacao fase;

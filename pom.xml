@@ -377,7 +377,7 @@
                 </executions>
                 <configuration>
                     <jdbcDriver>org.h2.Driver</jdbcDriver>
-                    <jdbcUrl>jdbc:h2:mem:db;DATABASE_TO_UPPER=FALSE;INIT=RUNSCRIPT FROM 'file:src/main/resources/sql/h2.sql'</jdbcUrl>
+                    <jdbcUrl>jdbc:h2:mem:db;DATABASE_TO_UPPER=FALSE;INIT=RUNSCRIPT FROM 'file:src/main/resources/sql/esquema.sql'</jdbcUrl>
                     <packageName>br.gov.cgu.mbt.negocio.sqlentities</packageName>
                     <schemaToPackage>false</schemaToPackage>
                     <namePrefix>S</namePrefix>

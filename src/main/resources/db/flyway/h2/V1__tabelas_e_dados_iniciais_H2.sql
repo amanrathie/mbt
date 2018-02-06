@@ -69,10 +69,12 @@ CREATE TABLE dbo.Avaliacao
   IdAvaliacao       	INTEGER IDENTITY NOT NULL,
   NomAvaliacao      	VARCHAR(255)    NOT NULL,
   NumEdicao         	INTEGER,
+  IdTipoAvaliacao		INTEGER			NOT NULL,
   IdTipoFaseAvaliacao	INTEGER			NOT NULL,
   IdQuestionario		INTEGER,
 
   CONSTRAINT PK_Avaliacao PRIMARY KEY (IdAvaliacao),
+  CONSTRAINT FK_Avaliacao_TipoAvaliacao FOREIGN KEY (IdTipoAvaliacao) REFERENCES TipoAvaliacao (IdTipoAvaliacao),
   CONSTRAINT FK_Avaliacao_TipoFaseAv FOREIGN KEY (IdTipoFaseAvaliacao) REFERENCES TipoFaseAvaliacao (IdTipoFaseAvaliacao),
   CONSTRAINT FK_Avaliacao_Questionario FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario)
 );
@@ -84,6 +86,7 @@ CREATE TABLE dbo.AvaliacaoLog
   IdAvaliacao       	INTEGER  		NOT NULL,
   NomAvaliacao      	VARCHAR(255)    NOT NULL,
   NumEdicao         	INTEGER,
+  IdTipoAvaliacao		INTEGER			NOT NULL,
   IdTipoFaseAvaliacao	INTEGER			NOT NULL,
   IdQuestionario		INTEGER,
 );

@@ -1,0 +1,1 @@
+RUNSCRIPT FROM 'file:src/main/resources/db/dados-teste.sql';
