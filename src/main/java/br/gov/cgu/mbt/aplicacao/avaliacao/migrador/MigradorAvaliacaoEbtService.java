@@ -10,7 +10,6 @@ import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.AvaliacaoEbtBuilder;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.QuestionarioEbtBuilder;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.AvaliacaoRepository;
-import br.gov.cgu.mbt.negocio.avaliacao.questao.RespostaRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.QuestionarioRepository;
 
@@ -21,25 +20,18 @@ public class MigradorAvaliacaoEbtService {
 	
 	private QuestionarioRepository questionarioRepository;
 	
-	private RespostaRepository respostaRepository;
-	
 	@Autowired
 	public MigradorAvaliacaoEbtService(AvaliacaoRepository avaliacaoRepository,
-			QuestionarioRepository questionarioRepository,
-			RespostaRepository respostaRepository) {
+			QuestionarioRepository questionarioRepository) {
 		this.avaliacaoRepository = avaliacaoRepository;
 		this.questionarioRepository = questionarioRepository;
-		this.respostaRepository = respostaRepository;
 	}
 	
 	@Transactional
 	public void criarAvaliacoesIndependentes() throws Exception {
 		// Inicialmente só teremos as EBT's, então podemos obter todas
 		List<Avaliacao> avaliacoes = new AvaliacaoEbtBuilder().build();
-		/*for (Avaliacao avaliacao : avaliacoes) {
-			avaliacaoRepository.put(avaliacao);
-		}*/
-		
+
 		Questionario questionario = Questionario.builder()
 			.estrutura(new QuestionarioEbtBuilder().build())
 			.build();
@@ -47,30 +39,10 @@ public class MigradorAvaliacaoEbtService {
 		questionarioRepository.put(questionario);
 		
 		for (Avaliacao avaliacao : avaliacoes) {
-			//questionario.addAvaliacao(avaliacao);
 			avaliacao.setQuestionario(questionario);
 			avaliacaoRepository.put(avaliacao);
 		}
 		
-		
-		
-		/*List<BlocoASerExcluido> blocos = new BlocoEbtBuilder().build();
-		
-		for (BlocoASerExcluido bloco : blocos) {
-			List<QuestaoASerExcluida> questoes = new QuestaoEbtBuilder().build(bloco);
-			
-			for (QuestaoASerExcluida questao : questoes) {
-				bloco.addQuestao(questao);
-			}
-			
-			blocoRepository.put(bloco);
-		}
-		
-		for (Avaliacao avaliacao : avaliacoes) {
-			avaliacao.setBlocos(blocos);
-
-			avaliacaoRepository.put(avaliacao);
-		}*/
 	}
 	
 	@Transactional

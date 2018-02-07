@@ -52,7 +52,7 @@ CREATE TABLE dbo.Usuario
 
 CREATE TABLE dbo.Questionario (
    IdQuestionario           INTEGER IDENTITY NOT NULL,
-   TxtEstrutura				VARCHAR(2000)        NULL,
+   TxtEstrutura				TEXT        NULL,
    
    CONSTRAINT PK_Questionario PRIMARY KEY (IdQuestionario)
 );
@@ -61,7 +61,7 @@ CREATE TABLE dbo.QuestionarioLog (
    REV             		INTEGER         	 NOT NULL,
    REVTYPE         		TINYINT,
    IdQuestionario           INTEGER 	 NOT NULL,
-   TxtEstrutura				VARCHAR(2000)        NULL,
+   TxtEstrutura				TEXT        NULL,
 );
 
 CREATE TABLE dbo.Avaliacao
@@ -95,7 +95,7 @@ CREATE TABLE dbo.AvaliacaoLog
 /*CREATE TABLE dbo.QuestionarioResposta (
    IdResposta           INTEGER IDENTITY NOT NULL,
    IdQuestao        	INTEGER              NULL,
-   TxtEstrutura			VARCHAR(2000)        NULL,
+   TxtEstrutura			TEXT        NULL,
    municipio			VARCHAR(100)		 NULL,
    
    CONSTRAINT PK_Resposta PRIMARY KEY (IdResposta),
@@ -107,7 +107,7 @@ CREATE TABLE dbo.RespostaLog (
    REVTYPE         		TINYINT,
    IdResposta           INTEGER IDENTITY NOT NULL,
    IdQuestao        	INTEGER              NULL,
-   TxtEstrutura			VARCHAR(2000)        NULL,
+   TxtEstrutura			TEXT        NULL,
    municipio			VARCHAR(100)		 NULL
 );*/
 

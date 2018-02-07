@@ -46,12 +46,14 @@ public class QuestionarioEbtBuilder {
 	}
 	
 	// TODO: mover para QuestaoBuilder
-	private List<Questao> buildQuestoesBlocoRegulamentacao() {
+	private List<Questao> buildQuestoesBlocoRegulamentacao() throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		
 		Questao questao3 = Questao.builder()
 				.pergunta("O regulamento foi localizado na página eletrônica?")
 				.tipo(TipoQuestao.MULTIPLA_ESCOLHA)
 				.peso(new BigDecimal(11.11)) // Obtido dividindo 2,78 por 25
-				//.estrutura(mapper.writeValueAsString(getQuestaoMultiplaEscolhaSimNao()))
+				.estrutura(mapper.writeValueAsString(getQuestaoMultiplaEscolhaSimNao()))
 				.ordem(3)
 				.build();
 		
@@ -59,7 +61,7 @@ public class QuestionarioEbtBuilder {
 				.pergunta("Regulamentou a criação do SIC?")
 				.tipo(TipoQuestao.MULTIPLA_ESCOLHA)
 				.peso(new BigDecimal(22.22))
-				//.estrutura(mapper.writeValueAsString(getQuestaoMultiplaEscolhaSimNao()))
+				.estrutura(mapper.writeValueAsString(getQuestaoMultiplaEscolhaSimNao()))
 				.ordem(5)
 				.build();
 		
