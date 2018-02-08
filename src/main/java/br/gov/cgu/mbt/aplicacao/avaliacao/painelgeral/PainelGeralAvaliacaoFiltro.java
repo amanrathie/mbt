@@ -1,4 +1,4 @@
-package br.gov.cgu.mbt.aplicacao.avaliacao;
+package br.gov.cgu.mbt.aplicacao.avaliacao.painelgeral;
 
 import br.gov.cgu.mbt.negocio.TipoPoder;
 import br.gov.cgu.mbt.negocio.TipoStatus;
@@ -8,7 +8,7 @@ import br.gov.cgu.persistencia.querybuilder.Filtro;
 import lombok.Data;
 
 @Data
-public class AvaliacaoFiltro extends Filtro {
+public class PainelGeralAvaliacaoFiltro extends Filtro {
 	
 	private TipoAvaliacao tipo;
 	private TipoFaseAvaliacao fase;

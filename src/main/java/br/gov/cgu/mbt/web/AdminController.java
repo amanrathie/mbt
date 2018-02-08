@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.gov.cgu.mbt.aplicacao.avaliacao.AvaliacaoFiltro;
+import br.gov.cgu.mbt.aplicacao.avaliacao.painelgeral.PainelGeralAvaliacaoFiltro;
 import br.gov.cgu.mbt.negocio.TipoPoder;
 import br.gov.cgu.mbt.negocio.TipoStatus;
 import br.gov.cgu.mbt.negocio.avaliacao.TipoAvaliacao;
@@ -16,7 +16,7 @@ import br.gov.cgu.mbt.negocio.avaliacao.TipoFaseAvaliacao;
 public class AdminController {
 
 	@GetMapping("/painel_geral_avaliacoes")
-	public String painelGeralAvaliacoes(AvaliacaoFiltro filtro, Model m) {
+	public String painelGeralAvaliacoes(PainelGeralAvaliacaoFiltro filtro, Model m) {
 		m.addAttribute("filtro", filtro);
 		m.addAttribute("tipos", TipoAvaliacao.values());
 		m.addAttribute("fases", TipoFaseAvaliacao.values());
