@@ -16,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 
 public abstract class QueryBuilderTest<F extends Filtro, DTO> {
-
+ 
     @Before
     public void before() {
         System.setProperty("spring.profiles.active", "h2");

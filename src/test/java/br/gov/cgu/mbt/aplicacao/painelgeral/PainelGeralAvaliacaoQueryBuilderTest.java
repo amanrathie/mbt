@@ -13,7 +13,7 @@ import br.gov.cgu.test.entitymanager.InjetarEntityManagerRule;
 import br.gov.cgu.test.entitymanager.InjetarEntityManagerRuleBuilder;
 
 public class PainelGeralAvaliacaoQueryBuilderTest extends QueryBuilderTest<PainelGeralAvaliacaoFiltro, PainelGeralAvaliacaoDTO> {
-
+ 
     private static final int MAXIMO_REGISTROS_NO_DADOS = 3;
 
     @Rule
