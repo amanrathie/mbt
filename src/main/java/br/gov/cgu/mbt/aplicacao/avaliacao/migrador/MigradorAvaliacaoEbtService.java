@@ -8,10 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.AvaliacaoEbtBuilder;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.QuestionarioEbtBuilder;
+import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.ConversorQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.AvaliacaoRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.QuestionarioRepository;
+import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Bloco;
+import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Questao;
 
 @Service
 public class MigradorAvaliacaoEbtService {
@@ -47,12 +50,25 @@ public class MigradorAvaliacaoEbtService {
 	
 	@Transactional
 	public void migrarAvaliacoesIndependentes() throws Exception {
-		/*RespostaEbtParser respostasParser = new RespostaEbtParser("/ebt/ebt_respostas.csv");
+		RespostaEbtParser respostasParser = new RespostaEbtParser("/ebt/ebt_respostas.csv");
 		
-		List<Avaliacao> avaliacoes = avaliacaoRepository.getAll(); // TODO: pegar apenas as corretas para não ter riscos
+		List<Avaliacao> avaliacoes = avaliacaoRepository.getAll();
 		
 		for (Avaliacao avaliacao : avaliacoes) {
-			List<BlocoASerExcluido> blocos = avaliacao.getBlocos();
+			
+			String jsonQuestionario = avaliacao.getQuestionario().getEstrutura();
+			
+			List<Bloco> blocos = ConversorQuestionario.toBlocos(jsonQuestionario);
+			
+			for (Bloco bloco : blocos) {
+				List<Questao> questoes = bloco.getQuestoes();
+				
+				for (Questao questao : questoes) {
+					
+				}
+			}
+			
+			/*List<Bloco> blocos = avaliacao.getBlocos();
 		
 			for (BlocoASerExcluido bloco : blocos) {
 				List<QuestaoASerExcluida> questoes = bloco.getQuestoes();
@@ -66,7 +82,7 @@ public class MigradorAvaliacaoEbtService {
 						respostaRepository.put(resposta);
 					}
 				}
-			}
-		}*/
+			}*/
+		}
 	}
 }

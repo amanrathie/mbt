@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.ConversorQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.questao.TipoQuestao;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Bloco;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.OpcaoResposta;
@@ -23,9 +24,7 @@ public class QuestionarioEbtBuilder {
 	
 
 	// TODO: mudar o builder para ser estatico, seguindo o padrão builder
-	public String build() throws Exception {
-		ObjectMapper mapper = new ObjectMapper();
-		
+	public String build() {
 		Bloco bloco1 = Bloco.builder()
 				.nome(BLOCO_REGULAMENTACAO)
 				.peso(new BigDecimal(25))
@@ -42,30 +41,12 @@ public class QuestionarioEbtBuilder {
 		
 		List<Bloco> blocos = Arrays.asList(bloco1, bloco2);
 		
-		return mapper.writeValueAsString(blocos);
+		return ConversorQuestionario.toJson(blocos);
 	}
 	
 	// TODO: mover para QuestaoBuilder
-	private List<Questao> buildQuestoesBlocoRegulamentacao() throws Exception {
-		ObjectMapper mapper = new ObjectMapper();
-		
-		Questao questao3 = Questao.builder()
-				.pergunta("O regulamento foi localizado na página eletrônica?")
-				.tipo(TipoQuestao.MULTIPLA_ESCOLHA)
-				.peso(new BigDecimal(11.11)) // Obtido dividindo 2,78 por 25
-				.estrutura(mapper.writeValueAsString(getQuestaoMultiplaEscolhaSimNao()))
-				.ordem(3)
-				.build();
-		
-		Questao questao5 = Questao.builder()
-				.pergunta("Regulamentou a criação do SIC?")
-				.tipo(TipoQuestao.MULTIPLA_ESCOLHA)
-				.peso(new BigDecimal(22.22))
-				.estrutura(mapper.writeValueAsString(getQuestaoMultiplaEscolhaSimNao()))
-				.ordem(5)
-				.build();
-		
-		List<Questao> questoes = Arrays.asList(questao3, questao5);
+	private List<Questao> buildQuestoesBlocoRegulamentacao() {		
+		List<Questao> questoes = Arrays.asList(getQuestaoMultiplaEscolhaSimNao(), getQuestaoMultiplaEscolhaSimNao());
 		
 		return questoes;
 	}
@@ -86,6 +67,9 @@ public class QuestionarioEbtBuilder {
 				.build();
 		
 		QuestaoMultiplaEscolha questaoMultiplaEscolha = QuestaoMultiplaEscolha.builder()
+				.pergunta("O regulamento foi localizado na página eletrônica?")
+				.peso(new BigDecimal(11.11)) // Obtido dividindo 2,78 por 25
+				.ordem(3)
 				.selecaoUnica(true)
 				.opcaoResposta(opcaoRespostaSim)
 				.opcaoResposta(opcaoRespostaNao)

@@ -2,9 +2,12 @@ package br.gov.cgu.mbt.negocio.avaliacao.questionario.json;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import br.gov.cgu.mbt.negocio.avaliacao.questao.TipoQuestao;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,9 +16,15 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
 @EqualsAndHashCode
+@JsonTypeInfo(
+  use = JsonTypeInfo.Id.NAME, 
+  include = JsonTypeInfo.As.PROPERTY, 
+  property = "type")
+@JsonSubTypes({ 
+  @Type(value = QuestaoMultiplaEscolha.class, name = "questaoMultiplaEscolha"), 
+})
 public class Questao {
 	
 	private Integer id;
@@ -25,8 +34,6 @@ public class Questao {
 	private String pergunta;
 	
 	private BigDecimal peso;
-	
-	private String estrutura;
 	
 	private Integer ordem;
 	

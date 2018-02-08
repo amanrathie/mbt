@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoEbtService;
+import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.ConversorQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.AvaliacaoRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
@@ -33,7 +34,6 @@ public class MigradorAvaliacaoEbtIntegracaoIT {
 	
 	@Test
 	public void avaliacoes_migradas_corretamente() throws Exception {
-		ObjectMapper mapper = new ObjectMapper();
 		migradorAvaliacaoEbtService.criarAvaliacoesIndependentes();
 		
 		List<Avaliacao> avaliacoes = avaliacaoRepository.getAll();
@@ -45,7 +45,7 @@ public class MigradorAvaliacaoEbtIntegracaoIT {
 			
 			String jsonQuestionario = questionario.getEstrutura();
 			
-			List<Bloco> blocos = mapper.readValue(jsonQuestionario, mapper.getTypeFactory().constructCollectionType(List.class, Bloco.class));
+			List<Bloco> blocos = ConversorQuestionario.toBlocos(jsonQuestionario);
 
 			assertThat(blocos)
 			.isNotEmpty()
