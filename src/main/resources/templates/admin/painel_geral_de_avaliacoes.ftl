@@ -1,8 +1,18 @@
 <#include "layout/layout.ftl">
 <#include "../_formulario.ftl">
+<#include "../_breadcrumb.ftl">
+
 
 <#assign breadcrumb>
-<a href="#">Administrativo</a> > <a href="#">Painel Geral de Avaliações</a>
+	<#assign path>
+		<a href="#">Administrativo</a> > <a href="#">Painel Geral de Avaliações</a>		
+	</#assign>
+	<#assign buttonNovaAvaliacao>
+		<a href="#" class="button--primary-a pull-right" role="button">Nova avaliação</a>
+	</#assign>
+	<@breadcrumb path=path title="Painel Geral de Avaliações" titleClass="title-page pull-left" hasTitleButtonDiv=false hasComplement=false hasSubtitle=false hasButtons=true buttons=[buttonNovaAvaliacao]>
+		
+	</@breadcrumb>>
 </#assign>
 
 <@admin titulo="Painel Geral de Avaliações" breadcrumb=breadcrumb>

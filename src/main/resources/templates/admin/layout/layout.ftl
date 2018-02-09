@@ -115,13 +115,7 @@
 			</div>
 		</header>
 <main id="main" class="main">
-	<div class="block-title">
-		<div class="container">
-			<span class="breadcrumb"><strong>Você está aqui:</strong> ${breadcrumb}</span>
-			<h2 class="title-page pull-left">${titulo}</h2>
-			<a href="criando_avaliacao_da_gestao.php" class="button--primary-a pull-right" role="button">Nova avaliação</a>
-		</div>
-	</div>
+	${breadcrumb}
 
 	<div class="container">
 		<#nested/>		
