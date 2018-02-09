@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,8 +46,9 @@ public class Questionario implements Entidade<Integer>, Serializable {
 	
 	@OneToMany(mappedBy="questionario")
 	private List<Avaliacao> avaliacoes;
-	//@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="questao")
-	//private List<Resposta> respostas;
+	
+	@OneToMany(mappedBy="questionario", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<RespostaQuestionario> respostas;
 	
 	public void addAvaliacao(Avaliacao avaliacao) {
 		if (avaliacoes == null) {
@@ -60,6 +62,20 @@ public class Questionario implements Entidade<Integer>, Serializable {
 	public void removeAvaliacao(Avaliacao avaliacao) {
 		avaliacoes.remove(avaliacao);
 		avaliacao.setQuestionario(null);
+	}
+	
+	public void addResposta(RespostaQuestionario resposta) {
+		if (respostas == null) {
+			respostas = new ArrayList<RespostaQuestionario>();
+		}
+		
+		respostas.add(resposta);
+		resposta.setQuestionario(this);
+	}
+	
+	public void removeAvaliacao(RespostaQuestionario resposta) {
+		respostas.remove(resposta);
+		resposta.setQuestionario(null);
 	}
 	
 }

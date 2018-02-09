@@ -12,7 +12,6 @@ public class ConversorQuestionario {
 	
 	private static ObjectMapper mapper = new ObjectMapper();
 	
-	
 	public static List<Bloco> toBlocos(String jsonQuestionario) {
 		try {
 			List<Bloco> blocos = mapper.readValue(jsonQuestionario, mapper.getTypeFactory().constructCollectionType(List.class, Bloco.class));
@@ -23,9 +22,9 @@ public class ConversorQuestionario {
 		}
 	}
 	
-	public static String toJson(Object object) {
+	public static String toJson(List<Bloco> blocos) {
 		try {
-			return mapper.writeValueAsString(object);
+			return mapper.writeValueAsString(blocos);
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException();
 		}

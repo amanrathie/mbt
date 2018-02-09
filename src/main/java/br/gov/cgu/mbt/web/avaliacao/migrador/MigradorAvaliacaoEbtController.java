@@ -29,10 +29,4 @@ public class MigradorAvaliacaoEbtController {
 		return "Formulários EBT's criados com sucesso...";
 	}
 	
-	@GetMapping("/avaliacao/migracao/migrar")
-	public String migrarAvaliacoesIndependentes() throws Exception {		
-		migrador.migrarAvaliacoesIndependentes();
-		return "Migração das respostas EBT's realizada com sucesso";
-	}
-	
 }

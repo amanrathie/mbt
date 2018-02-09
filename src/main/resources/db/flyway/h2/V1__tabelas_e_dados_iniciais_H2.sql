@@ -92,24 +92,25 @@ CREATE TABLE dbo.AvaliacaoLog
 );
 
 
-/*CREATE TABLE dbo.QuestionarioResposta (
-   IdResposta           INTEGER IDENTITY NOT NULL,
-   IdQuestao        	INTEGER              NULL,
+CREATE TABLE dbo.RespostaQuestionario (
+   IdRespostaQuestionario INTEGER IDENTITY NOT NULL,
+   IdQuestionario        	INTEGER              NULL, -- not null
    TxtEstrutura			TEXT        NULL,
-   municipio			VARCHAR(100)		 NULL,
+   municipio			VARCHAR(100)		 NULL, -- temporario
    
-   CONSTRAINT PK_Resposta PRIMARY KEY (IdResposta),
-   CONSTRAINT FK_Resposta_Questao FOREIGN KEY (IdQuestao) REFERENCES dbo.Questao (IdQuestao)
+   CONSTRAINT PK_RespostaQuestionario PRIMARY KEY (IdRespostaQuestionario),
+   CONSTRAINT FK_RespostaQuest_Quest FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario)
 );
 
-CREATE TABLE dbo.RespostaLog (
-   REV             		INTEGER          NOT NULL,
+CREATE TABLE dbo.RespostaQuestionarioLog (
+   REV             		INTEGER         NOT NULL,
    REVTYPE         		TINYINT,
-   IdResposta           INTEGER IDENTITY NOT NULL,
-   IdQuestao        	INTEGER              NULL,
+   IdRespostaQuestionario INTEGER  NOT NULL,
+   IdQuestionario        	INTEGER              NULL, -- not null
    TxtEstrutura			TEXT        NULL,
-   municipio			VARCHAR(100)		 NULL
-);*/
+   municipio			VARCHAR(100)		 NULL, -- temporario
+);
+
 
 -- Envers
 CREATE TABLE dbo.Revisao

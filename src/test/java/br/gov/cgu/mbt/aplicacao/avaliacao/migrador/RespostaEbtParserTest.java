@@ -1,44 +1,40 @@
 package br.gov.cgu.mbt.aplicacao.avaliacao.migrador;
 
-import java.math.BigDecimal;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.OpcaoResposta;
-import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.QuestaoMultiplaEscolha;
+import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.EbtUtil;
 
 public class RespostaEbtParserTest {
 	
 	
 	
 	@Test
-	public void parser_feito_corretamente() throws Exception {
+	public void parser_ebt_rodada_1() throws Exception {
 		RespostaEbtParser parser = new RespostaEbtParser("/ebt/ebt_respostas.csv");
-		ObjectMapper mapper = new ObjectMapper();
 		
-		OpcaoResposta opcaoRespostaSim = OpcaoResposta.builder()
-				.opcao("SIM")
-				.peso(new BigDecimal(100))
-				.build();
+		assertThat(parser.parse(EbtUtil.RODADA_1))
+			.isNotEmpty()
+			.hasSize(519);
+	}
+	
+	@Test
+	public void parser_ebt_rodada_2() throws Exception {
+		RespostaEbtParser parser = new RespostaEbtParser("/ebt/ebt_respostas.csv");
 		
-		OpcaoResposta opcaoRespostaNao = OpcaoResposta.builder()
-				.opcao("NAO")
-				.peso(new BigDecimal(0))
-				.build();
+		assertThat(parser.parse(EbtUtil.RODADA_2))
+			.isNotEmpty()
+			.hasSize(1614);
+	}
+	
+	@Test
+	public void parser_ebt_rodada_3() throws Exception {
+		RespostaEbtParser parser = new RespostaEbtParser("/ebt/ebt_respostas.csv");
 		
-		QuestaoMultiplaEscolha questaoMultiplaEscolha = QuestaoMultiplaEscolha.builder()
-				.selecaoUnica(true)
-				.opcaoResposta(opcaoRespostaSim)
-				.opcaoResposta(opcaoRespostaNao)
-				.build();
-		
-		/*QuestaoASerExcluida questao = new QuestaoASerExcluida();
-		questao.setEstrutura(mapper.writeValueAsString(questaoMultiplaEscolha));
-		
-		assertThat(parser.parse(1, questao))
-			.isNotEmpty();*/
+		assertThat(parser.parse(EbtUtil.RODADA_3))
+			.isNotEmpty()
+			.hasSize(2355);
 		
 	}
 

@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoEbtService;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.ConversorQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
@@ -22,9 +20,6 @@ import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Bloco;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MigradorAvaliacaoEbtIntegracaoIT {
-	
-	/*private EBTRespostaParser ebtQuestionarioParser = 
-			new EBTRespostaParser("ebt/ebt_questionario.csv");*/
 	
 	@Autowired
 	private MigradorAvaliacaoEbtService migradorAvaliacaoEbtService;

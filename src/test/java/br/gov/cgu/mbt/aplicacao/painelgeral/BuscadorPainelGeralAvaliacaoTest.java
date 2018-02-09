@@ -1,7 +1,6 @@
 package br.gov.cgu.mbt.aplicacao.painelgeral;
 
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -26,11 +25,9 @@ public class BuscadorPainelGeralAvaliacaoTest {
 		PainelGeralAvaliacaoFiltro filtro = new PainelGeralAvaliacaoFiltro();
 		RespostaConsulta<PainelGeralAvaliacaoDTO> respostaConsulta = new RespostaConsulta<>(Collections.emptyList(), 0L);
 		
-		given(queryBuilder.build(filtro)).willReturn(respostaConsulta);
+		when(queryBuilder.build(filtro)).thenReturn(respostaConsulta);
 		
-		when(buscador.buscar(filtro));
-		
-		then(respostaConsulta);
+		assertThat(buscador.buscar(filtro)).isEqualTo(respostaConsulta);
 	}
 
 }

@@ -20,17 +20,8 @@ public class MigradorAvaliacaoEbtControllerTest extends ControllerTest {
 	}
 	
 	@Test
-	public void deve_retornar_status_ok_ao_criar() throws Exception {
+	public void deve_retornar_status_ok_ao_migrar() throws Exception {
 		mockMvc.perform(get("/admin/avaliacao/migracao/criar"))
 			.andExpect(status().isOk());
 	}
-	
-	@Test
-	public void deve_retornar_status_ok_ao_migrar() throws Exception {
-		mockMvc.perform(get("/admin/avaliacao/migracao/migrar"))
-			.andExpect(status().isOk());
-	}
-	
-	 
-
 }

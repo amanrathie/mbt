@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.EbtUtil;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.ConversorQuestionario;
-import br.gov.cgu.mbt.negocio.avaliacao.questao.TipoQuestao;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Bloco;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.OpcaoResposta;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Questao;
@@ -17,23 +15,19 @@ import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.QuestaoMultiplaEscolha
 /**
  * Constrói o questionário da EBT a ser migrado (1,2,3)
  */
-public class QuestionarioEbtBuilder {
+public class BlocoEbtBuilder {
 	
-	public final static String BLOCO_REGULAMENTACAO = "Regulamentação";
-	public final static String BLOCO_TR_PASSIVA = "Transparência Passiva";
-	
-
 	// TODO: mudar o builder para ser estatico, seguindo o padrão builder
-	public String build() {
+	public List<Bloco> build() {
 		Bloco bloco1 = Bloco.builder()
-				.nome(BLOCO_REGULAMENTACAO)
+				.nome(EbtUtil.BLOCO_REGULAMENTACAO)
 				.peso(new BigDecimal(25))
 				.ordem(1)
 				.questoes(buildQuestoesBlocoRegulamentacao())
 				.build();
 		
 		Bloco bloco2 = Bloco.builder()
-				.nome(BLOCO_TR_PASSIVA)
+				.nome(EbtUtil.BLOCO_TR_PASSIVA)
 				.peso(new BigDecimal(75))
 				.ordem(2)
 				.questoes(buildQuestoesBlocoTransparenciaPassiva())
@@ -41,12 +35,12 @@ public class QuestionarioEbtBuilder {
 		
 		List<Bloco> blocos = Arrays.asList(bloco1, bloco2);
 		
-		return ConversorQuestionario.toJson(blocos);
+		return blocos;
 	}
 	
 	// TODO: mover para QuestaoBuilder
 	private List<Questao> buildQuestoesBlocoRegulamentacao() {		
-		List<Questao> questoes = Arrays.asList(getQuestaoMultiplaEscolhaSimNao(), getQuestaoMultiplaEscolhaSimNao());
+		List<Questao> questoes = Arrays.asList(getQuestaoRegulamentoLAIP());
 		
 		return questoes;
 	}
@@ -55,26 +49,29 @@ public class QuestionarioEbtBuilder {
 		return new ArrayList<Questao>();
 	}
 	
-	private QuestaoMultiplaEscolha getQuestaoMultiplaEscolhaSimNao() {	
+	private QuestaoMultiplaEscolha getQuestaoRegulamentoLAIP() {		
+		QuestaoMultiplaEscolha questaoMultiplaEscolha = QuestaoMultiplaEscolha.builder()
+				.pergunta(EbtUtil.QUESTAO_regulamentou_laip)
+				.peso(new BigDecimal(11.11)) // Obtido dividindo 2,78 por 25
+				.ordem(3)
+				.selecaoUnica(true)
+				.opcoesResposta(getQuestaoMultiplaEscolhaSimNao())
+				.build();
+		
+		return questaoMultiplaEscolha;
+	}
+	
+	private List<OpcaoResposta> getQuestaoMultiplaEscolhaSimNao() {	
 		OpcaoResposta opcaoRespostaSim = OpcaoResposta.builder()
-				.opcao("SIM")
+				.opcao(EbtUtil.OPCAO_SIM)
 				.peso(new BigDecimal(100))
 				.build();
 		
 		OpcaoResposta opcaoRespostaNao = OpcaoResposta.builder()
-				.opcao("NAO")
+				.opcao(EbtUtil.OPCAO_NAO)
 				.peso(new BigDecimal(0))
 				.build();
 		
-		QuestaoMultiplaEscolha questaoMultiplaEscolha = QuestaoMultiplaEscolha.builder()
-				.pergunta("O regulamento foi localizado na página eletrônica?")
-				.peso(new BigDecimal(11.11)) // Obtido dividindo 2,78 por 25
-				.ordem(3)
-				.selecaoUnica(true)
-				.opcaoResposta(opcaoRespostaSim)
-				.opcaoResposta(opcaoRespostaNao)
-				.build();
-		
-		return questaoMultiplaEscolha;
+		return Arrays.asList(opcaoRespostaSim, opcaoRespostaNao);
 	}
 }
