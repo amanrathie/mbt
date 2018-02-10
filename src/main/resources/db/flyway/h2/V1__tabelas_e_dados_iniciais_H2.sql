@@ -111,6 +111,15 @@ CREATE TABLE dbo.RespostaQuestionarioLog (
    municipio			VARCHAR(100)		 NULL, -- temporario
 );
 
+CREATE TABLE dbo.ResultadoAvaliacao (
+   IdResultadoAvaliacao INTEGER IDENTITY NOT NULL,
+   IdAvaliacao        	INTEGER          NOT NULL,
+   NomLocalidade			TEXT        NULL,
+   
+   CONSTRAINT PK_ResultadoAvaliacao PRIMARY KEY (IdResultadoAvaliacao),
+   CONSTRAINT FK_ResultadoAvaliacao_Av FOREIGN KEY (IdAvaliacao) REFERENCES dbo.Avaliacao (IdAvaliacao)
+);
+
 
 -- Envers
 CREATE TABLE dbo.Revisao
