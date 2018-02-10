@@ -30,12 +30,12 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Audited
 @Entity
-@Table(name = "RespostaQuestionario", schema = Constantes.SCHEMA_APLICACAO)
+@Table(name = "Resposta", schema = Constantes.SCHEMA_APLICACAO)
 public class RespostaQuestionario implements Entidade<Integer>, Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="IdRespostaQuestionario")
+	@Column(name="IdResposta")
 	private Integer id;
 	
 	@ManyToOne

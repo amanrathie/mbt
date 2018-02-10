@@ -13,12 +13,12 @@ CREATE TABLE dbo.TipoAvaliacao
   CONSTRAINT PK_TipoAvaliacao PRIMARY KEY (IdTipoAvaliacao)
 );
 
-CREATE TABLE dbo.TipoFaseAvaliacao
+CREATE TABLE dbo.Fase
 (
-  IdTipoFaseAvaliacao        INTEGER  NOT NULL,
-  DescTipoFaseAvaliacao      VARCHAR(255)    NOT NULL,
+  IdFase        INTEGER  NOT NULL,
+  DescFase      VARCHAR(255)    NOT NULL,
 
-  CONSTRAINT PK_TipoFaseAvaliacao PRIMARY KEY (IdTipoFaseAvaliacao)
+  CONSTRAINT PK_Fase PRIMARY KEY (IdFase)
 );
 
 CREATE TABLE dbo.TipoQuestao
@@ -70,12 +70,12 @@ CREATE TABLE dbo.Avaliacao
   NomAvaliacao      	VARCHAR(255)    NOT NULL,
   NumEdicao         	INTEGER,
   IdTipoAvaliacao		INTEGER			NOT NULL,
-  IdTipoFaseAvaliacao	INTEGER			NOT NULL,
+  IdFase				INTEGER			NOT NULL,
   IdQuestionario		INTEGER,
 
   CONSTRAINT PK_Avaliacao PRIMARY KEY (IdAvaliacao),
-  CONSTRAINT FK_Avaliacao_TipoAvaliacao FOREIGN KEY (IdTipoAvaliacao) REFERENCES TipoAvaliacao (IdTipoAvaliacao),
-  CONSTRAINT FK_Avaliacao_TipoFaseAv FOREIGN KEY (IdTipoFaseAvaliacao) REFERENCES TipoFaseAvaliacao (IdTipoFaseAvaliacao),
+  CONSTRAINT FK_Avaliacao_TipoAvaliacao FOREIGN KEY (IdTipoAvaliacao) REFERENCES dbo.TipoAvaliacao (IdTipoAvaliacao),
+  CONSTRAINT FK_Avaliacao_Fase FOREIGN KEY (IdFase) REFERENCES dbo.Fase (IdFase),
   CONSTRAINT FK_Avaliacao_Questionario FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario)
 );
 
@@ -87,26 +87,26 @@ CREATE TABLE dbo.AvaliacaoLog
   NomAvaliacao      	VARCHAR(255)    NOT NULL,
   NumEdicao         	INTEGER,
   IdTipoAvaliacao		INTEGER			NOT NULL,
-  IdTipoFaseAvaliacao	INTEGER			NOT NULL,
+  IdFase				INTEGER			NOT NULL,
   IdQuestionario		INTEGER,
 );
 
 
-CREATE TABLE dbo.RespostaQuestionario (
-   IdRespostaQuestionario INTEGER IDENTITY NOT NULL,
+CREATE TABLE dbo.Resposta (
+   IdResposta INTEGER IDENTITY NOT NULL,
    IdQuestionario        	INTEGER              NULL, -- not null
    TxtEstrutura			TEXT        NULL,
    municipio			VARCHAR(100)		 NULL, -- temporario
    
-   CONSTRAINT PK_RespostaQuestionario PRIMARY KEY (IdRespostaQuestionario),
-   CONSTRAINT FK_RespostaQuest_Quest FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario)
+   CONSTRAINT PK_Resposta PRIMARY KEY (IdResposta),
+   CONSTRAINT FK_Resposta_Questionario FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario)
 );
 
-CREATE TABLE dbo.RespostaQuestionarioLog (
+CREATE TABLE dbo.RespostaLog (
    REV             		INTEGER         NOT NULL,
    REVTYPE         		TINYINT,
-   IdRespostaQuestionario INTEGER  NOT NULL,
-   IdQuestionario        	INTEGER             NULL, -- not null
+	IdResposta INTEGER  NOT NULL,
+   IdQuestionario        	INTEGER              NULL, -- not null
    TxtEstrutura			TEXT        NULL,
    municipio			VARCHAR(100)		 NULL, -- temporario
 );
@@ -118,7 +118,7 @@ CREATE TABLE dbo.ResultadoAvaliacao (
    ValNota				NUMBER(4,2),
    
    CONSTRAINT PK_ResultadoAvaliacao PRIMARY KEY (IdResultadoAvaliacao),
-   CONSTRAINT FK_ResultadoAvaliacao_Av FOREIGN KEY (IdAvaliacao) REFERENCES dbo.Avaliacao (IdAvaliacao)
+   CONSTRAINT FK_ResultadoAv_Avaliacao FOREIGN KEY (IdAvaliacao) REFERENCES dbo.Avaliacao (IdAvaliacao)
 );
 
 
@@ -139,12 +139,12 @@ INSERT INTO dbo.TipoAvaliacao VALUES (1, 'Avaliação Cidadã');
 INSERT INTO dbo.TipoAvaliacao VALUES (2, 'Auto Avaliação');
 
 -- Fase Avaliação
-INSERT INTO dbo.TipoFaseAvaliacao VALUES (0, 'Em planejamento');
-INSERT INTO dbo.TipoFaseAvaliacao VALUES (1, 'Questionário em aprovação');
-INSERT INTO dbo.TipoFaseAvaliacao VALUES (2, 'Questionário aprovado');
-INSERT INTO dbo.TipoFaseAvaliacao VALUES (3, 'Em andamento');
-INSERT INTO dbo.TipoFaseAvaliacao VALUES (4, 'Aguardando publicação');
-INSERT INTO dbo.TipoFaseAvaliacao VALUES (5, 'Publicada');
+INSERT INTO dbo.Fase VALUES (0, 'Em planejamento');
+INSERT INTO dbo.Fase VALUES (1, 'Questionário em aprovação');
+INSERT INTO dbo.Fase VALUES (2, 'Questionário aprovado');
+INSERT INTO dbo.Fase VALUES (3, 'Em andamento');
+INSERT INTO dbo.Fase VALUES (4, 'Aguardando publicação');
+INSERT INTO dbo.Fase VALUES (5, 'Publicada');
 
 -- Tipo Questão
 INSERT INTO dbo.TipoQuestao VALUES (0, 'Descritiva');
