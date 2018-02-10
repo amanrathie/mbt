@@ -69,7 +69,7 @@ public class BlocoEbtBuilder {
 		
 		OpcaoResposta opcaoRespostaNao = OpcaoResposta.builder()
 				.opcao(EbtUtil.OPCAO_NAO)
-				.peso(new BigDecimal(0))
+				.peso(BigDecimal.ZERO)
 				.build();
 		
 		return Arrays.asList(opcaoRespostaSim, opcaoRespostaNao);

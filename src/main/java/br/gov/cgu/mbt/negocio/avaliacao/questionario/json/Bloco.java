@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Singular;
 import lombok.ToString;
 
 @Data
@@ -20,6 +21,7 @@ public class Bloco {
 	// TODO: gerar automaticamente
 	private Integer id;
 	
+	@Singular("questao")
 	private List<Questao> questoes;
 	
 	private String nome;
@@ -32,14 +34,4 @@ public class Bloco {
 	
 	private Integer ordem;
 	
-	public void addQuestao(Questao questao) {
-		if (questoes == null) {
-			questoes = new ArrayList<Questao>();
-		}
-		questoes.add(questao);
-	}
-	
-	public void removeQuestao(Questao questao) {
-		questoes.remove(questao);
-	}
 }
