@@ -3,9 +3,7 @@ package br.gov.cgu.mbt.aplicacao.avaliacao.questionario;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Test;
 

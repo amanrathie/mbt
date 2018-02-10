@@ -106,7 +106,7 @@ CREATE TABLE dbo.RespostaQuestionarioLog (
    REV             		INTEGER         NOT NULL,
    REVTYPE         		TINYINT,
    IdRespostaQuestionario INTEGER  NOT NULL,
-   IdQuestionario        	INTEGER              NULL, -- not null
+   IdQuestionario        	INTEGER             NULL, -- not null
    TxtEstrutura			TEXT        NULL,
    municipio			VARCHAR(100)		 NULL, -- temporario
 );
@@ -114,7 +114,8 @@ CREATE TABLE dbo.RespostaQuestionarioLog (
 CREATE TABLE dbo.ResultadoAvaliacao (
    IdResultadoAvaliacao INTEGER IDENTITY NOT NULL,
    IdAvaliacao        	INTEGER          NOT NULL,
-   NomLocalidade			TEXT        NULL,
+   NomMunicipio			TEXT        NULL,
+   ValNota				NUMBER(4,2),
    
    CONSTRAINT PK_ResultadoAvaliacao PRIMARY KEY (IdResultadoAvaliacao),
    CONSTRAINT FK_ResultadoAvaliacao_Av FOREIGN KEY (IdAvaliacao) REFERENCES dbo.Avaliacao (IdAvaliacao)

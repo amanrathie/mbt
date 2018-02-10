@@ -1,6 +1,7 @@
-package br.gov.cgu.mbt.negocio.avaliacao;
+package br.gov.cgu.mbt.negocio.avaliacao.resultado;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 import org.hibernate.envers.Audited;
 
 import br.gov.cgu.mbt.Constantes;
+import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.persistencia.jpa.Entidade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +30,7 @@ import lombok.ToString;
 @Builder
 @ToString
 @EqualsAndHashCode
-@Audited
+//@Audited
 @Entity
 @Table(name = "ResultadoAvaliacao", schema = Constantes.SCHEMA_APLICACAO)
 public class ResultadoAvaliacao implements Entidade<Integer>, Serializable {
@@ -40,6 +42,9 @@ public class ResultadoAvaliacao implements Entidade<Integer>, Serializable {
 	
 	@Column(name="NomMunicipio")
 	private String nomeMunicipio;
+	
+	@Column(name="ValNota")
+	private BigDecimal nota;
 	
 	@ManyToOne
 	@JoinColumn(name="IdAvaliacao")

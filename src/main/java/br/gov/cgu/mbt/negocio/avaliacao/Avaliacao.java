@@ -17,10 +17,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.gov.cgu.mbt.Constantes;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
+import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacao;
 import br.gov.cgu.persistencia.jpa.Entidade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -66,6 +68,7 @@ public class Avaliacao implements Entidade<Integer>, Serializable {
 	private Questionario questionario;
 	
 	@OneToMany(mappedBy="avaliacao")
+	@NotAudited
 	private List<ResultadoAvaliacao> resultados;
 	
 }

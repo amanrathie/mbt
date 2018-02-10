@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.gov.cgu.mbt.aplicacao.avaliacao.PublicadorDeAvaliacao;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.AvaliacaoEbtBuilder;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.BlocoEbtBuilder;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.EbtUtil;
@@ -29,12 +30,16 @@ public class MigradorAvaliacaoEbtService {
 	private AvaliacaoRepository avaliacaoRepository;
 
 	private QuestionarioRepository questionarioRepository;
+	
+	private PublicadorDeAvaliacao publicadorDeAvaliacao;
 
 	@Autowired
 	public MigradorAvaliacaoEbtService(AvaliacaoRepository avaliacaoRepository,
-			QuestionarioRepository questionarioRepository) {
+			QuestionarioRepository questionarioRepository,
+			PublicadorDeAvaliacao publicadorDeAvaliacao) {
 		this.avaliacaoRepository = avaliacaoRepository;
 		this.questionarioRepository = questionarioRepository;
+		this.publicadorDeAvaliacao = publicadorDeAvaliacao;
 	}
 
 	@Transactional
@@ -53,11 +58,15 @@ public class MigradorAvaliacaoEbtService {
 			avaliacaoRepository.put(avaliacao);
 		}
 
-		migrarAvaliacoesIndependentes();
+		migrarRespostasAvaliacoesIndependentes();
+		
+		for (Avaliacao avaliacao : avaliacoes) {
+			publicadorDeAvaliacao.publicar(avaliacao);
+		}
 	}
 
 	@Transactional
-	private void migrarAvaliacoesIndependentes() throws Exception {
+	private void migrarRespostasAvaliacoesIndependentes() throws Exception {
 		RespostaEbtParser respostasParser = new RespostaEbtParser("/ebt/ebt_respostas.csv");
 
 		List<Avaliacao> avaliacoes = avaliacaoRepository.getAll();

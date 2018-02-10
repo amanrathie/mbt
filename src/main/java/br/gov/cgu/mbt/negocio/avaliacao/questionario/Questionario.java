@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,10 +45,13 @@ public class Questionario implements Entidade<Integer>, Serializable {
 	@Column(name = "TxtEstrutura")
 	private String estrutura;
 	
-	@OneToMany(mappedBy="questionario")
+	@OneToMany(mappedBy="questionario", fetch = FetchType.LAZY)
 	private List<Avaliacao> avaliacoes;
 	
-	@OneToMany(mappedBy="questionario", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="questionario",
+			fetch = FetchType.LAZY,
+			cascade = CascadeType.ALL, 
+			orphanRemoval = true)
 	private List<RespostaQuestionario> respostas;
 	
 	public void addAvaliacao(Avaliacao avaliacao) {
