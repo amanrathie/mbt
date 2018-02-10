@@ -1,6 +1,7 @@
 package br.gov.cgu.mbt.aplicacao.avaliacao.questionario;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class CalculadorQuestionario {
 						if (opcaoResposta.isResposta()) {
 							BigDecimal pesoResposta = opcaoResposta.getPeso();
 							
-							BigDecimal notaNaQuestao = pesoResposta.multiply(pesoQuestao).divide(valor100);
+							BigDecimal notaNaQuestao = pesoResposta.multiply(pesoQuestao).divide(valor100, 6, RoundingMode.HALF_UP);
 							notaNoBloco = notaNoBloco.add(notaNaQuestao);
 						}
 					}	
@@ -49,4 +50,4 @@ public class CalculadorQuestionario {
 		
 		return notaFinal;
 	}
-	}
+}

@@ -11,22 +11,18 @@ import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.CalculadorQuestionario;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.ConversorQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
-import br.gov.cgu.mbt.negocio.avaliacao.questionario.QuestionarioRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.RespostaQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacaoRepository;
 
 @Service
 public class PublicadorDeAvaliacao {
-	private QuestionarioRepository questionarioRepository;
 	private CalculadorQuestionario calculadorQuestionario;
 	private ResultadoAvaliacaoRepository resultadoAvaliacaoRepository;
 	
 	@Autowired
-	public PublicadorDeAvaliacao(QuestionarioRepository questionarioRepository,
-			CalculadorQuestionario calculadorQuestionario,
+	public PublicadorDeAvaliacao(CalculadorQuestionario calculadorQuestionario,
 			ResultadoAvaliacaoRepository resultadoAvaliacaoRepository) {
-		this.questionarioRepository = questionarioRepository;
 		this.calculadorQuestionario = calculadorQuestionario;
 		this.resultadoAvaliacaoRepository = resultadoAvaliacaoRepository;
 	}
@@ -34,18 +30,16 @@ public class PublicadorDeAvaliacao {
 	@Transactional
 	public void publicar(Avaliacao avaliacao) {
 		// TODO: avaliacao deve ir para status publicada
-		// TODO: tirar questionarioRepository
-		//Questionario questionario = questionarioRepository.get(avaliacao.getQuestionario().getId());
 		Questionario questionario = avaliacao.getQuestionario();
 		List<RespostaQuestionario> respostas = questionario.getRespostas();
 		
 		for (RespostaQuestionario resposta : respostas) {
-			BigDecimal notaFinal = calculadorQuestionario.calculaNota(ConversorQuestionario.toBlocos(questionario.getEstrutura()));
+			BigDecimal notaFinal = calculadorQuestionario.calculaNota(ConversorQuestionario.toBlocos(resposta.getEstrutura()));
 			
 			ResultadoAvaliacao resultado = 
 					ResultadoAvaliacao.builder()
 					.avaliacao(avaliacao)
-					.nomeMunicipio("Nome temporario de municipio")
+					.nomeMunicipio(resposta.getMunicipio())
 					.nota(notaFinal)
 					.build();
 			

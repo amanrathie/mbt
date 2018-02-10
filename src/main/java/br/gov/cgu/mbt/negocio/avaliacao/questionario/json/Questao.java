@@ -23,7 +23,9 @@ import lombok.ToString;
   include = JsonTypeInfo.As.PROPERTY, 
   property = "type")
 @JsonSubTypes({ 
-  @Type(value = QuestaoMultiplaEscolha.class, name = "questaoMultiplaEscolha"), 
+  @Type(value = QuestaoMultiplaEscolha.class, name = "qme"),
+  @Type(value = QuestaoDescritiva.class, name = "qd"),
+  @Type(value = QuestaoMatriz.class, name = "qm")
 })
 public class Questao {
 	
@@ -36,5 +38,7 @@ public class Questao {
 	private BigDecimal peso;
 	
 	private Integer ordem;
+	
+	private boolean obrigatoria;
 	
 }

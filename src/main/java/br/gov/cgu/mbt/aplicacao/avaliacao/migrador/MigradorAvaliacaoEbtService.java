@@ -20,8 +20,11 @@ import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.QuestionarioRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.RespostaQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Bloco;
+import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.OpcaoMultiplaEscolha;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.OpcaoResposta;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Questao;
+import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.QuestaoDescritiva;
+import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.QuestaoMatriz;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.QuestaoMultiplaEscolha;
 
 @Service
@@ -79,9 +82,7 @@ public class MigradorAvaliacaoEbtService {
 
 			List<CSVRecord> csvRecords = respostasParser.parse(avaliacao.getEdicao());
 
-			// TODO: get todas as respostas do CSV por avaliação
-			// TODO: para cada linha das respostas:
-
+			// Para cada respostsa
 			for (CSVRecord record : csvRecords) {
 				List<Bloco> blocos = ConversorQuestionario.toBlocos(jsonQuestionario);
 
@@ -89,26 +90,50 @@ public class MigradorAvaliacaoEbtService {
 					List<Questao> questoes = bloco.getQuestoes();
 					
 					for (Questao questao : questoes) {
-						QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA
-								.get(questao.getPergunta());
-						String resposta = record.get(questionarioEbtHeader);
-						// Na migração da EBT só temos dois tipos de resposta
-						// que interessam
-						resposta = resposta.equalsIgnoreCase(EbtUtil.OPCAO_SIM) ? EbtUtil.OPCAO_SIM : EbtUtil.OPCAO_NAO;
-
 						if (questao.getTipo() == TipoQuestao.MULTIPLA_ESCOLHA) {
+							QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA // TODO: extrair em método
+									.get(questao.getPergunta());
+							String respostaQuestao = record.get(questionarioEbtHeader);
+							respostaQuestao = respostaQuestao.equalsIgnoreCase(EbtUtil.OPCAO_SIM) ? EbtUtil.OPCAO_SIM : EbtUtil.OPCAO_NAO;
+							
 							QuestaoMultiplaEscolha qme = (QuestaoMultiplaEscolha) questao;
 							List<OpcaoResposta> opcoesResposta = qme.getOpcoesResposta();
 
 							for (OpcaoResposta opcaoResposta : opcoesResposta) {
-								if (opcaoResposta.getOpcao().equalsIgnoreCase(resposta)) {
+								if (opcaoResposta.getOpcao().equalsIgnoreCase(respostaQuestao)) {
 									opcaoResposta.setResposta(true);
+								}
+							}
+						} else if (questao.getTipo() == TipoQuestao.DESCRITIVA) {
+							QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA
+									.get(questao.getPergunta());
+							String respostaQuestao = record.get(questionarioEbtHeader);
+							QuestaoDescritiva qd = (QuestaoDescritiva) questao;
+							qd.setResposta(respostaQuestao);
+						} else if (questao.getTipo() == TipoQuestao.MATRIZ) {
+							QuestaoMatriz qm = (QuestaoMatriz) questao;
+							List<OpcaoMultiplaEscolha> opcoesMultiplaEscolha = qm.getOpcoesMultiplaEscolha();
+							
+							for (OpcaoMultiplaEscolha opcaoMultiplaEscolha : opcoesMultiplaEscolha) {
+								// No caso de questao matriz, devemos escolher a pergunta da questão múltipla escolha, e não da pergunta mãe (que é apenas um agrupador)
+								QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA.get(opcaoMultiplaEscolha.getPergunta());
+								String respostaQuestao = record.get(questionarioEbtHeader);
+								respostaQuestao = respostaQuestao.equalsIgnoreCase(EbtUtil.OPCAO_SIM) ? EbtUtil.OPCAO_SIM : EbtUtil.OPCAO_NAO;
+								
+								List<OpcaoResposta> opcoesResposta = opcaoMultiplaEscolha.getOpcoesResposta();
+								
+								for (OpcaoResposta opcaoResposta : opcoesResposta) {
+									if (opcaoResposta.getOpcao().equalsIgnoreCase(respostaQuestao)) {
+										opcaoResposta.setResposta(true);
+									}
 								}
 							}
 						}
 					}
 				}
 				
+				System.out.println(ConversorQuestionario.toJson(blocos));
+				// Monta a resposta do questionario e grava
 				RespostaQuestionario respostaQuestionario = RespostaQuestionario.builder()
 					.questionario(avaliacao.getQuestionario())
 					.estrutura(ConversorQuestionario.toJson(blocos))
@@ -118,19 +143,6 @@ public class MigradorAvaliacaoEbtService {
 				Questionario questionarioDoBanco = questionarioRepository.get(questionario.getId());
 				questionarioDoBanco.addResposta(respostaQuestionario);
 			}
-
-			// TODO: gera novo Json daquele bloco para aquela linha de resposta
-			// TODO: grava resposta em RespostaQuestionario
-
 		}
 	}
 }
-
-/*
- * for (Questao questao : questoes) { if (questao.getTipo() ==
- * TipoQuestao.MULTIPLA_ESCOLHA) { QuestaoMultiplaEscolha qme =
- * (QuestaoMultiplaEscolha) questao; List<OpcaoResposta> opcoesResposta =
- * qme.getOpcoesResposta(); for (OpcaoResposta opcaoResposta : opcoesResposta) {
- * if (opcaoResposta.isResposta()) {
- * System.out.println(opcaoResposta.getOpcao()); } } } }
- */

@@ -20,8 +20,9 @@ public class QuestaoMultiplaEscolha extends Questao {
 	
 	@Builder
 	public QuestaoMultiplaEscolha(String pergunta, BigDecimal peso, Integer ordem,
-			boolean selecaoUnica, boolean respostaComplementar, @Singular("opcaoResposta")List<OpcaoResposta> opcoesResposta) {
-		super(null, TipoQuestao.MULTIPLA_ESCOLHA, pergunta, peso, ordem);
+			boolean selecaoUnica, boolean respostaComplementar, @Singular("opcaoResposta")List<OpcaoResposta> opcoesResposta,
+			boolean obrigatoria) {
+		super(null, TipoQuestao.MULTIPLA_ESCOLHA, pergunta, peso, ordem, obrigatoria);
 		
 		this.selecaoUnica = selecaoUnica;
 		this.respostaComplementar = respostaComplementar;

@@ -26,7 +26,7 @@ public class MigradorAvaliacaoEbtController {
 	public String criarAvaliacoesIndependentes() throws Exception {	
 		LOGGER.info("Iniciando migração de avaliações EBT's");
 		migrador.criarAvaliacoesIndependentes();
-		return "Formulários EBT's criados com sucesso...";
+		return "Avaliações independentes importadas com sucesso";
 	}
 	
 }
