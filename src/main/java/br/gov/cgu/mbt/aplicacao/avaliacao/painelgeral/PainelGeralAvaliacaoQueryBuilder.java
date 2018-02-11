@@ -19,8 +19,8 @@ public class PainelGeralAvaliacaoQueryBuilder extends QueryBuilderJPASQL<PainelG
 		
 		query
 		.select(avaliacao.nomAvaliacao)
-		.from(avaliacao)
-		.orderBy(avaliacao.idTipoAvaliacao.asc());
+		.from(avaliacao);
+		//.orderBy(avaliacao.idTipoAvaliacao.asc());
 		
 		return query;
 	}
@@ -28,7 +28,7 @@ public class PainelGeralAvaliacaoQueryBuilder extends QueryBuilderJPASQL<PainelG
 	@Override
 	public Expression<? extends Comparable> getOrderByExpression(String coluna) {
 		// TODO Auto-generated method stub
-		return null;
+		return avaliacao.idAvaliacao;
 	}
 
 }
