@@ -1,4 +1,4 @@
-# Projeto Exemplo Spring Boot
+# Projeto Mapa Brasil Transparente
 
 ## Configuração do Ambiente
 
