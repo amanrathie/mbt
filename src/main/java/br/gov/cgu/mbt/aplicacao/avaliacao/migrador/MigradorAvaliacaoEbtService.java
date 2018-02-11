@@ -91,17 +91,37 @@ public class MigradorAvaliacaoEbtService {
 					
 					for (Questao questao : questoes) {
 						if (questao.getTipo() == TipoQuestao.MULTIPLA_ESCOLHA) {
-							QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA // TODO: extrair em método
-									.get(questao.getPergunta());
-							String respostaQuestao = record.get(questionarioEbtHeader);
-							respostaQuestao = respostaQuestao.equalsIgnoreCase(EbtUtil.OPCAO_SIM) ? EbtUtil.OPCAO_SIM : EbtUtil.OPCAO_NAO;
 							
-							QuestaoMultiplaEscolha qme = (QuestaoMultiplaEscolha) questao;
-							List<OpcaoResposta> opcoesResposta = qme.getOpcoesResposta();
+							// Essa pergunta necessitou um tratamento especial, pois a pontuação não era por item
+							if (questao.getPergunta().equals(EbtUtil.QUESTAO_alternativa_sic_eletronico)) {
+								
+								String valor = record.get(QuestionarioEbtHeader.nao_exige_identificacaop);
+								QuestaoMultiplaEscolha qme = (QuestaoMultiplaEscolha) questao;
+								List<OpcaoResposta> opcoesResposta = qme.getOpcoesResposta();
 
-							for (OpcaoResposta opcaoResposta : opcoesResposta) {
-								if (opcaoResposta.getOpcao().equalsIgnoreCase(respostaQuestao)) {
-									opcaoResposta.setResposta(true);
+								for (OpcaoResposta opcaoResposta : opcoesResposta) {
+									if (opcaoResposta.getOpcao().equalsIgnoreCase(EbtUtil.OPCAO_SIM) && valor.equals("300")) {
+										opcaoResposta.setResposta(true);
+									}
+									
+									if (opcaoResposta.getOpcao().equalsIgnoreCase(EbtUtil.OPCAO_NAO) && !valor.equals("300")) {
+										opcaoResposta.setResposta(true);
+									}
+								}
+							} else {
+							
+								QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA // TODO: extrair em método
+										.get(questao.getPergunta());
+								String respostaQuestao = record.get(questionarioEbtHeader);
+								respostaQuestao = respostaQuestao.equalsIgnoreCase(EbtUtil.OPCAO_SIM) ? EbtUtil.OPCAO_SIM : EbtUtil.OPCAO_NAO;
+								
+								QuestaoMultiplaEscolha qme = (QuestaoMultiplaEscolha) questao;
+								List<OpcaoResposta> opcoesResposta = qme.getOpcoesResposta();
+	
+								for (OpcaoResposta opcaoResposta : opcoesResposta) {
+									if (opcaoResposta.getOpcao().equalsIgnoreCase(respostaQuestao)) {
+										opcaoResposta.setResposta(true);
+									}
 								}
 							}
 						} else if (questao.getTipo() == TipoQuestao.DESCRITIVA) {
@@ -132,7 +152,6 @@ public class MigradorAvaliacaoEbtService {
 					}
 				}
 				
-				System.out.println(ConversorQuestionario.toJson(blocos));
 				// Monta a resposta do questionario e grava
 				RespostaQuestionario respostaQuestionario = RespostaQuestionario.builder()
 					.questionario(avaliacao.getQuestionario())

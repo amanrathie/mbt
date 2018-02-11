@@ -166,7 +166,14 @@ public class BlocoEbtBuilder {
 		
 		// TODO: Verificar se os pesos das opções estão corretas
 		
-		QuestaoMatriz questao3 = QuestaoMatriz.builder() 
+		QuestaoMultiplaEscolha questao3 = QuestaoMultiplaEscolha.builder()
+				.pergunta(EbtUtil.QUESTAO_alternativa_sic_eletronico)
+				.peso(getPorcentagemPeso(300, 2700))
+				.ordem(3)
+				.selecaoUnica(true)
+				.opcoesResposta(getOpcoesRespostaSimNao())
+				.build();
+		/*QuestaoMatriz questao3 = QuestaoMatriz.builder() 
 				.pergunta(EbtUtil.QUESTAO_nao_exige_identificacao)
 				.peso(getPorcentagemPeso(300, 2700))
 				.ordem(3)
@@ -200,7 +207,7 @@ public class BlocoEbtBuilder {
 						.peso(getPorcentagemPeso(60, 300))
 						.ordem(5)
 						.build())
-				.build();
+				.build();*/
 		
 		QuestaoMultiplaEscolha questao4 = QuestaoMultiplaEscolha.builder()
 				.pergunta(EbtUtil.QUESTAO_possibilidade_acompanhamento)

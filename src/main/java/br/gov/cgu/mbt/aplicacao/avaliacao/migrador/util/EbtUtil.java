@@ -31,7 +31,7 @@ public class EbtUtil {
 	
 	public final static String QUESTAO_alternativa_sic_eletronico = "Há alternativa de enviar pedidos de forma eletrônica ao SIC?";
 	
-	public final static String QUESTAO_nao_exige_identificacao = "Para fazer a solicitação, são exigidos dados de  identificação do requerente que dificultem ou impossibilitem o acesso à informação?";
+	public final static String QUESTAO_nao_exige_identificacao = "Para a realização dos pedidos de informação, são exigidos apenas dados que não impossibilitem ou dificultem o acesso?";
 	public final static String QUESTAO_envio_documento_cadastro = "Envio de qualquer documento para cadastro (PF e PJ)";
 	public final static String QUESTAO_assinatura_reconhecida = "Assinatura reconhecida";
 	public final static String QUESTAO_declaracao_responsabilidade = "Declaração de responsabilidade";
