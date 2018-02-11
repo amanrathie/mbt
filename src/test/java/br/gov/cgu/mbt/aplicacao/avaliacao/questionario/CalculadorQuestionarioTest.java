@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Test;
 
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.EbtUtil;
+import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.calculador.CalculadorQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Bloco;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.OpcaoResposta;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.QuestaoMultiplaEscolha;

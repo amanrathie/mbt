@@ -12,10 +12,10 @@ public class ResultadoAvaliacaoRepository extends RepositoryJpa<ResultadoAvaliac
 	
 	private QResultadoAvaliacao resultadoAvaliacao = QResultadoAvaliacao.resultadoAvaliacao;
 	
-	public List<ResultadoAvaliacao> getPorNomeMunicipio(String nomeMunicipio) {
+	public List<ResultadoAvaliacao> getPorIdAvaliacao(Integer idAvaliacao) {
 		return getJPAQuery()
 				.selectFrom(resultadoAvaliacao)
-				.where(resultadoAvaliacao.nomeMunicipio.equalsIgnoreCase(nomeMunicipio))
+				.where(resultadoAvaliacao.avaliacao.id.eq(idAvaliacao))
 				.fetch();
 	}
 

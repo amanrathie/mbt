@@ -94,7 +94,6 @@ public class MigradorAvaliacaoEbtService {
 							
 							// Essa pergunta necessitou um tratamento especial, pois a pontuação não era por item
 							if (questao.getPergunta().equals(EbtUtil.QUESTAO_alternativa_sic_eletronico)) {
-								
 								String valor = record.get(QuestionarioEbtHeader.nao_exige_identificacaop);
 								QuestaoMultiplaEscolha qme = (QuestaoMultiplaEscolha) questao;
 								List<OpcaoResposta> opcoesResposta = qme.getOpcoesResposta();
@@ -133,7 +132,7 @@ public class MigradorAvaliacaoEbtService {
 						} else if (questao.getTipo() == TipoQuestao.MATRIZ) {
 							QuestaoMatriz qm = (QuestaoMatriz) questao;
 							List<OpcaoMultiplaEscolha> opcoesMultiplaEscolha = qm.getOpcoesMultiplaEscolha();
-							
+
 							for (OpcaoMultiplaEscolha opcaoMultiplaEscolha : opcoesMultiplaEscolha) {
 								// No caso de questao matriz, devemos escolher a pergunta da questão múltipla escolha, e não da pergunta mãe (que é apenas um agrupador)
 								QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA.get(opcaoMultiplaEscolha.getPergunta());

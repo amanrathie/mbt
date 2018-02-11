@@ -1,6 +1,5 @@
 package br.gov.cgu.mbt.aplicacao.avaliacao.migrador;
 
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ public class RespostaEbtParser {
 	private static Iterable<CSVRecord> records;
 	
 	public RespostaEbtParser(@Value("${arquivo.ebt.importar}") String arquivoParaImportar) throws Exception {		
-		InputStreamReader in = new InputStreamReader(new ClassPathResource(arquivoParaImportar).getInputStream(), "UTF8");
+		InputStreamReader in = new InputStreamReader(new ClassPathResource(arquivoParaImportar).getInputStream(), "UTF-8");
 	    
 		records = CSVFormat.DEFAULT
 		  .withDelimiter(';')
