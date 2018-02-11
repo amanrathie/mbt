@@ -44,5 +44,4 @@
 - Arquivos SQL do Flyway são apenas exemplificativos e devem ser substituídos.
 
 ##Decisões de arquitetura
-
 - Os scripts de banco são executados pelo flyway. Para fins de desenvolvimento local, os script localizados em db/migration são executados ao se iniciar a aplicação no profile h2. Para outros ambientes, os scripts do flyway se encontram na pasta flyway. Essa decisão foi tomada para mantermos os scripts do H2 e do SQL Server sincronizados. Caso optassemos por ter um script H2 completo de criação do banco, seria difícil saber se os ambientes estão iguais. 
