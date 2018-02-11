@@ -2,6 +2,37 @@
 <#include "../_formulario.ftl">
 <#include "../_breadcrumb.ftl">
 
+<#assign scriptContent>
+<script>
+	function exibeAvaliacoes(data){
+		if ($.isArray(data.data)){
+			$('#avaliador-2').empty();
+			$.each(data.data, function(index, value){
+				$('#avaliador-2').append(				
+				"<div class='dmb-30 block-painel'>" +
+						"<div class='block-painel__top'>" +
+							"<div class='row'>" +
+								"<div class='col-xs-7'>" +
+									"<a href='#' class='title-section'>" + value + "</a>" + 
+								"</div>" + 
+							"</div>" + 
+						"</div>") + 
+				"</div>";
+			});
+		}else{
+			$('#avaliador-2').html("Nome: " + data.data);
+		}
+	}
+	
+   	$.ajax({
+   			type:'GET',
+   			dataType: 'json',
+			url:'/mbt/admin/api/auth/painel_geral_avaliacoes',
+			success: exibeAvaliacoes		
+	});
+</script>
+</#assign>
+
 
 <#assign breadcrumb>
 	<#assign path>
@@ -15,7 +46,7 @@
 	</@breadcrumb>>
 </#assign>
 
-<@admin titulo="Painel Geral de Avaliações" breadcrumb=breadcrumb>
+<@admin titulo="Painel Geral de Avaliações" breadcrumb=breadcrumb script=scriptContent>
 	<section class="status-do-filtro ativo dmb-30">
 			<div class="status-do-filtro-inativo">
 				<div class="block-rate position-relative block-rate--gray">
@@ -71,6 +102,8 @@
 		<section class="block-filter-chart">
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane active" id="avaliador-2">
+				
+				<#--
 					<div class="dmb-30 block-painel">
 						<div class="block-painel__top">
 							<div class="row">
@@ -134,7 +167,7 @@
 							</div>
 						</div>
 					</div>
-
+	
 					<div class="dmb-30 block-painel">
 						<div class="block-painel__top">
 							<div class="row">
@@ -636,7 +669,7 @@
 							</div>
 						</div>
 					</div>
-
+-->
 					<div class="block-pagination">
 						<div class="block-pagination__list">
 							<span>Página 16 de 1834</span>
