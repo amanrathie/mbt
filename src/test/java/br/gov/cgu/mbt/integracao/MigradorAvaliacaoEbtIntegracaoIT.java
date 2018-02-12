@@ -16,8 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.gov.cgu.mbt.aplicacao.avaliacao.AvaliacaoRepository;
-import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoService;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorArquivoRespostaParser;
+import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoService;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.QuestionarioEbtHeader;
 import br.gov.cgu.mbt.aplicacao.avaliacao.resultado.ResultadoAvaliacaoRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
@@ -52,10 +52,8 @@ public class MigradorAvaliacaoEbtIntegracaoIT {
 	
 	@Test
 	public void avaliacoes_migradas_corretamente() throws Exception {
-		migradorAvaliacaoEbtService.criarAvaliacoesIndependentes();
-		
-		List<Avaliacao> avaliacoes = avaliacaoRepository.getAll();
-		
+		List<Avaliacao> avaliacoes = migradorAvaliacaoEbtService.criarAvaliacoesIndependentes();
+
 		MigradorArquivoRespostaParser parser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
 		
 		for (Avaliacao avaliacao : avaliacoes) {

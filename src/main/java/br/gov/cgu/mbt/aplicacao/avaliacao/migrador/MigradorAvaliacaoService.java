@@ -54,8 +54,7 @@ public class MigradorAvaliacaoService {
 	}
 
 	@Transactional
-	public void criarAvaliacoesIndependentes() throws Exception {
-		
+	public List<Avaliacao> criarAvaliacoesIndependentes() throws Exception {
 		// TODO: lançar erro caso as EBT's já estejam migradas
 		List<Avaliacao> avaliacoes = new AvaliacaoEbtBuilder().build();
 		String jsonEstrutura = ConversorQuestionario.toJson(new BlocoEbtBuilder().build());
@@ -68,16 +67,16 @@ public class MigradorAvaliacaoService {
 			avaliacaoRepository.put(avaliacao);
 		}
 
-		migrarRespostasAvaliacoesIndependentes();
+		migrarRespostasAvaliacoesIndependentes(avaliacoes);
 		
-		criarResultadosAvaliacao();
+		criarResultadosAvaliacao(avaliacoes);
+		
+		return avaliacoes;
 	}
 
 	@Transactional
-	private void migrarRespostasAvaliacoesIndependentes() throws Exception {
+	private void migrarRespostasAvaliacoesIndependentes(List<Avaliacao> avaliacoes) throws Exception {
 		MigradorArquivoRespostaParser respostasParser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
-
-		List<Avaliacao> avaliacoes = avaliacaoRepository.getAll();
 
 		for (Avaliacao avaliacao : avaliacoes) {
 
@@ -170,8 +169,7 @@ public class MigradorAvaliacaoService {
 	}
 	
 	@Transactional
-	private void criarResultadosAvaliacao() {
-		List<Avaliacao> avaliacoes = avaliacaoRepository.getAll(); // TODO: modificar para pegar valores exatos
+	private void criarResultadosAvaliacao(List<Avaliacao> avaliacoes) {
 		for (Avaliacao avaliacao : avaliacoes) {
 			List<RespostaQuestionario> respostas = avaliacao.getQuestionario().getRespostas();
 		
