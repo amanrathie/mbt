@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.CalculadorQuestionario;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.ConversorQuestionario;
+import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.calculador.CalculadorQuestionario;
+import br.gov.cgu.mbt.aplicacao.avaliacao.resultado.ResultadoAvaliacaoRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.RespostaQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacao;
-import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacaoRepository;
 
 @Service
 public class PublicadorDeAvaliacao {
@@ -35,7 +35,7 @@ public class PublicadorDeAvaliacao {
 		
 		for (RespostaQuestionario resposta : respostas) {
 			BigDecimal notaFinal = calculadorQuestionario.calculaNota(ConversorQuestionario.toBlocos(resposta.getEstrutura()));
-			
+
 			ResultadoAvaliacao resultado = 
 					ResultadoAvaliacao.builder()
 					.avaliacao(avaliacao)

@@ -7,17 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.gov.cgu.mbt.aplicacao.avaliacao.AvaliacaoRepository;
 import br.gov.cgu.mbt.aplicacao.avaliacao.PublicadorDeAvaliacao;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.AvaliacaoEbtBuilder;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.BlocoEbtBuilder;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.EbtUtil;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.QuestionarioEbtHeader;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.ConversorQuestionario;
+import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.QuestionarioRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
-import br.gov.cgu.mbt.negocio.avaliacao.AvaliacaoRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.questao.TipoQuestao;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
-import br.gov.cgu.mbt.negocio.avaliacao.questionario.QuestionarioRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.RespostaQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Bloco;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.OpcaoMultiplaEscolha;
@@ -94,7 +94,6 @@ public class MigradorAvaliacaoEbtService {
 							
 							// Essa pergunta necessitou um tratamento especial, pois a pontuação não era por item
 							if (questao.getPergunta().equals(EbtUtil.QUESTAO_alternativa_sic_eletronico)) {
-								
 								String valor = record.get(QuestionarioEbtHeader.nao_exige_identificacaop);
 								QuestaoMultiplaEscolha qme = (QuestaoMultiplaEscolha) questao;
 								List<OpcaoResposta> opcoesResposta = qme.getOpcoesResposta();
@@ -133,7 +132,7 @@ public class MigradorAvaliacaoEbtService {
 						} else if (questao.getTipo() == TipoQuestao.MATRIZ) {
 							QuestaoMatriz qm = (QuestaoMatriz) questao;
 							List<OpcaoMultiplaEscolha> opcoesMultiplaEscolha = qm.getOpcoesMultiplaEscolha();
-							
+
 							for (OpcaoMultiplaEscolha opcaoMultiplaEscolha : opcoesMultiplaEscolha) {
 								// No caso de questao matriz, devemos escolher a pergunta da questão múltipla escolha, e não da pergunta mãe (que é apenas um agrupador)
 								QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA.get(opcaoMultiplaEscolha.getPergunta());
