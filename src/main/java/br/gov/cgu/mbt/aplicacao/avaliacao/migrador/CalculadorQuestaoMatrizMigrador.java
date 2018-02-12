@@ -1,15 +1,17 @@
-package br.gov.cgu.mbt.aplicacao.avaliacao.questionario.calculador;
+package br.gov.cgu.mbt.aplicacao.avaliacao.migrador;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.EbtUtil;
+import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.calculador.CalculadorQuestao;
+import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.calculador.CalculadorQuestaoMatriz;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.OpcaoMultiplaEscolha;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.OpcaoResposta;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Questao;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.QuestaoMatriz;
 
-public class CalculadorQuestaoMatrizEbtAntigo implements CalculadorQuestao {
+public class CalculadorQuestaoMatrizMigrador implements CalculadorQuestao {
 
 	@Override
 	public BigDecimal calcula(Questao questao) {

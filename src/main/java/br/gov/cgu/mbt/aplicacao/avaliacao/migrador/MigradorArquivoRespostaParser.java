@@ -12,10 +12,10 @@ import org.springframework.core.io.ClassPathResource;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.QuestionarioEbtHeader;
 
 
-public class RespostaEbtParser {
+public class MigradorArquivoRespostaParser {
 	private static Iterable<CSVRecord> records;
 	
-	public RespostaEbtParser(@Value("${arquivo.ebt.importar}") String arquivoParaImportar) throws Exception {		
+	public MigradorArquivoRespostaParser(@Value("${arquivo.ebt.importar}") String arquivoParaImportar) throws Exception {		
 		InputStreamReader in = new InputStreamReader(new ClassPathResource(arquivoParaImportar).getInputStream(), "UTF-8");
 	    
 		records = CSVFormat.DEFAULT

@@ -6,12 +6,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.Test;
 
-import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoEbtService;
+import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoService;
 import br.gov.cgu.test.mvc.ControllerTest;
 
 public class MigradorAvaliacaoEbtControllerTest extends ControllerTest {
 	
-	private MigradorAvaliacaoEbtService migrador = mock(MigradorAvaliacaoEbtService.class);
+	private MigradorAvaliacaoService migrador = mock(MigradorAvaliacaoService.class);
 	private MigradorAvaliacaoEbtController controller = new MigradorAvaliacaoEbtController(migrador);
 
 	@Override

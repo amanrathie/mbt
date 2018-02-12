@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoEbtService;
+import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoService;
 
 @RestController
 @RequestMapping("/admin")
@@ -15,10 +15,10 @@ public class MigradorAvaliacaoEbtController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MigradorAvaliacaoEbtController.class);
 	
-	private MigradorAvaliacaoEbtService migrador;
+	private MigradorAvaliacaoService migrador;
 	
 	@Autowired
-	public MigradorAvaliacaoEbtController(MigradorAvaliacaoEbtService migrador) {
+	public MigradorAvaliacaoEbtController(MigradorAvaliacaoService migrador) {
 		this.migrador = migrador;
 	}
 

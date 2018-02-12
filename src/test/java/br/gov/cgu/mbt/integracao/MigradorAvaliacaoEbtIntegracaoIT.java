@@ -16,8 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.gov.cgu.mbt.aplicacao.avaliacao.AvaliacaoRepository;
-import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoEbtService;
-import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.RespostaEbtParser;
+import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoService;
+import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorArquivoRespostaParser;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.QuestionarioEbtHeader;
 import br.gov.cgu.mbt.aplicacao.avaliacao.resultado.ResultadoAvaliacaoRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
@@ -28,7 +28,7 @@ import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacao;
 public class MigradorAvaliacaoEbtIntegracaoIT {
 	
 	@Autowired
-	private MigradorAvaliacaoEbtService migradorAvaliacaoEbtService;
+	private MigradorAvaliacaoService migradorAvaliacaoEbtService;
 	
 	@Autowired
 	private ResultadoAvaliacaoRepository resultadoAvaliacaoRepository;
@@ -56,7 +56,7 @@ public class MigradorAvaliacaoEbtIntegracaoIT {
 		
 		List<Avaliacao> avaliacoes = avaliacaoRepository.getAll();
 		
-		RespostaEbtParser parser = new RespostaEbtParser("/ebt/ebt_respostas.csv");
+		MigradorArquivoRespostaParser parser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
 		
 		for (Avaliacao avaliacao : avaliacoes) {
 			List<CSVRecord> records = parser.parse(avaliacao.getEdicao());

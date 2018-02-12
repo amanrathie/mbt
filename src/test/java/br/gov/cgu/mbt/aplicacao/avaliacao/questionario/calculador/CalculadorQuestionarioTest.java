@@ -3,7 +3,6 @@ package br.gov.cgu.mbt.aplicacao.avaliacao.questionario.calculador;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,14 +10,13 @@ import org.junit.Test;
 
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.EbtUtil;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.ConversorQuestionario;
-import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.calculador.CalculadorQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Bloco;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.OpcaoResposta;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.QuestaoMultiplaEscolha;
 
 public class CalculadorQuestionarioTest {
 	
-	private CalculadorQuestionario calculador = new CalculadorQuestionario();
+	private CalculadorQuestionario calculador = new CalculadorQuestionarioMBT(); // TODO: Criar testador de cada tipo
 	
 	
 	// TODO: testar diferentes cenarios
