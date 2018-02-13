@@ -1,4 +1,4 @@
-package br.gov.cgu.mbt.aplicacao.painelgeral;
+package br.gov.cgu.mbt.aplicacao.avaliacao.painelgeral;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

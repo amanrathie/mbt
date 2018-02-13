@@ -6,14 +6,12 @@ import java.util.List;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.springframework.stereotype.Repository;
 
 import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacao;
 import br.gov.cgu.test.entitymanager.InjetarEntityManager;
 import br.gov.cgu.test.entitymanager.InjetarEntityManagerRule;
 import br.gov.cgu.test.entitymanager.InjetarEntityManagerRuleBuilder;
 
-@Repository
 public class ResultadoAvaliacaoRepositoryTest {
 	
     @Rule

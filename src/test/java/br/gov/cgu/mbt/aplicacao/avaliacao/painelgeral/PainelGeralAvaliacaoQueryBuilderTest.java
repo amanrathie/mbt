@@ -1,4 +1,4 @@
-package br.gov.cgu.mbt.aplicacao.painelgeral;
+package br.gov.cgu.mbt.aplicacao.avaliacao.painelgeral;
 
 import org.junit.Rule;
 import org.junit.Test;
