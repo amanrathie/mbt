@@ -3,10 +3,18 @@
 <#include "../_breadcrumb.ftl">
 
 <#assign scriptContent>
-<script>
-	 $( document ).ready(function() {
-       buscaAvaliacoes();
+<script>	
+	
+	 $( document ).ready(function() {	 	
+	 	buscaAvaliacoes();       	       
     });
+    
+    function configuraFiltro(){
+    	var filtro = {};
+    	filtro.tipo = $("#tipo").val();    
+    	
+    	return filtro;	
+    }
 
 	function montaDivAvaliacoes(avaliacao){
 		return "<div class='dmb-30 block-painel'>" +
@@ -48,11 +56,21 @@
 	function trocaPagina(num){
 		$.ajax({
 			type:'GET',
-			data: num,
-			url: '/mbt/admin/api/auth/painel_geral_avaliacoes/' + num,
+			url: '/mbt/admin/api/auth/painel_geral_avaliacoes/',
+			data: {numPagina: num},			
 			success: exibeAvaliacoes						
 		});
 		
+	};	
+	
+	function filtraAvaliacoes(filtro){
+		$.ajax({
+   			type:'GET',
+   			dataType: 'json',
+   			data:{tipo: filtro.tipo},
+			url:'/mbt/admin/api/auth/painel_geral_avaliacoes',			
+			success: exibeAvaliacoes		
+		});
 	};
 	
 	function buscaAvaliacoes(){
@@ -67,7 +85,7 @@
 	
 	$('#btnFiltrar').click(function(event){
 		event.preventDefault();
-		buscaAvaliacoes();
+		filtraAvaliacoes(configuraFiltro());		
 	});
 	
 </script>

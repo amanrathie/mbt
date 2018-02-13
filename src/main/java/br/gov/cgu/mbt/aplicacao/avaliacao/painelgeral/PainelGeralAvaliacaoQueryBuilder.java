@@ -22,6 +22,8 @@ public class PainelGeralAvaliacaoQueryBuilder extends QueryBuilderJPASQL<PainelG
 								
 				)
 		.from(avaliacao);
+		
+		filtrarSePreenchido(query, filtro.getTipo(), x -> avaliacao.idTipoAvaliacao.eq(filtro.getTipo().ordinal()));
 		//.orderBy(avaliacao.idTipoAvaliacao.asc());		
 		return query;
 	}
