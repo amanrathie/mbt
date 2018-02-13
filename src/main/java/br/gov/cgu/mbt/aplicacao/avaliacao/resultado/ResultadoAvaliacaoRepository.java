@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import br.gov.cgu.mbt.negocio.avaliacao.QResultadoAvaliacao;
+import br.gov.cgu.mbt.negocio.avaliacao.resultado.QResultadoAvaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacao;
 import br.gov.cgu.persistencia.jpa.RepositoryJpa;
 
