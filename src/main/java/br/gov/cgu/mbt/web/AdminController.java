@@ -43,18 +43,21 @@ public class AdminController {
 		return "/admin/painel_geral_de_avaliacoes";
 	}
 
+//	@RequestMapping(value = "/api/auth/painel_geral_avaliacoes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//	@ResponseBody
+//	public DataTablesResponse<PainelGeralAvaliacaoDTO> exibeAvaliacoes(PainelGeralAvaliacaoFiltro filtro) {		
+//		RespostaConsulta<PainelGeralAvaliacaoDTO> resposta = buscador.buscar(filtro);
+//		return DataTablesResponseFactory.build(resposta);
+//	}
+	
 	@RequestMapping(value = "/api/auth/painel_geral_avaliacoes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public DataTablesResponse<PainelGeralAvaliacaoDTO> exibeAvaliacoes(PainelGeralAvaliacaoFiltro filtro) {		
-		RespostaConsulta<PainelGeralAvaliacaoDTO> resposta = buscador.buscar(filtro);
-		return DataTablesResponseFactory.build(resposta);
-	}
-	
-	@RequestMapping(value = "/api/auth/painel_geral_avaliacoes/{numPagina}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public DataTablesResponse<PainelGeralAvaliacaoDTO> exibeAvaliacoes(@PathVariable Integer numPagina, PainelGeralAvaliacaoFiltro filtro) {
+	public DataTablesResponse<PainelGeralAvaliacaoDTO> exibeAvaliacoes(Integer numPagina, PainelGeralAvaliacaoFiltro filtro) {
 		//Tamanho da pagina 15 por default
-		filtro.setOffset(filtro.getTamanhoPagina() * (numPagina -1));
+		if(numPagina != null) {
+			filtro.setOffset(filtro.getTamanhoPagina() * (numPagina -1));
+		}
+		
 		RespostaConsulta<PainelGeralAvaliacaoDTO> resposta = buscador.buscar(filtro);
 		return DataTablesResponseFactory.build(resposta);
 	}
