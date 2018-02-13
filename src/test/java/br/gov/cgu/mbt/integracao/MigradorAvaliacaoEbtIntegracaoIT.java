@@ -55,7 +55,7 @@ public class MigradorAvaliacaoEbtIntegracaoIT {
 	@Test
 	public void avaliacoes_migradas_corretamente() throws Exception {
 		List<Avaliacao> avaliacoes = migradorAvaliacaoEbtService.criarAvaliacoesIndependentes();
-		BigDecimal tolerancia = new BigDecimal(0.1);
+		BigDecimal tolerancia = new BigDecimal(0.01);
 
 		for (Avaliacao avaliacao : avaliacoes) {
 			MigradorArquivoRespostaParser parser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
