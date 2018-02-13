@@ -1,7 +1,3 @@
-CREATE SCHEMA dbo;
-
-SET IGNORECASE true;
-SET MODE MSSQLServer;
 
 -- Tabelas de tipos
 

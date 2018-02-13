@@ -22,4 +22,33 @@ INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEnt
 INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) values (3, 1, 'Entidade Avaliadora 3', 0);
 INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) values (4, 1, 'Entidade Avaliadora 4', 0);
 INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) values (5, 1, 'Entidade Avaliadora 5', 0);
+
+-- UF
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('AC', 'Acre');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('AL',	'Alagoas');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('AM',	'Amazonas');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('AP',	'Amapá');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('BA',	'Bahia');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('CE',	'Ceará');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('DF',	'Distrito Federal');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('ES',	'Espírito Santo');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('GO',	'Goiás');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('MA',	'Maranhão');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('MG',	'Minas Gerais');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('MS',	'Mato Grosso do Sul');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('MT',	'Mato Grosso');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('PA',	'Pará');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('PB',	'Paraíba');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('PE',	'Pernambuco');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('PI',	'Piauí');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('PR',	'Paraná');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('RJ',	'Rio de Janeiro');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('RN',	'Rio Grande do Norte');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('RO',	'Rondônia');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('RR',	'Roraima');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('RS',	'Rio Grande do Sul');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('SC',	'Santa Catarina');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('SE',	'Sergipe');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('SP',	'São Paulo');
+INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('TO',	'Tocantins');
 	
