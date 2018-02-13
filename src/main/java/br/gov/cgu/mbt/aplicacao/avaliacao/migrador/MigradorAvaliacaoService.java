@@ -82,7 +82,6 @@ public class MigradorAvaliacaoService {
 
 			Questionario questionario = avaliacao.getQuestionario();
 			String jsonQuestionario = questionario.getEstrutura();
-			System.out.println(jsonQuestionario);
 
 			List<CSVRecord> csvRecords = respostasParser.parse(avaliacao.getEdicao());
 

@@ -7,12 +7,12 @@ INSERT INTO dbo.Usuario (IdUsuario, IdPerfil, NomUsuario)
 	VALUES (1, 0, 'Beltrano da Silva');
 	
 -- Avaliações
-INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdEntidadeAvaliadora) 
-	VALUES (0, 'Escala Brasil Transparente', 1, 0, 5, 0);
-INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdEntidadeAvaliadora) 
-	VALUES (1, 'Escala Brasil Transparente', 2, 0, 5, 0);
-INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdEntidadeAvaliadora) 
-	VALUES (2, 'Escala Brasil Transparente', 3, 0, 5, 0);
+INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdPoder, IdEntidadeAvaliadora, FlgAtiva) 
+	VALUES (0, 'Escala Brasil Transparente', 1, 0, 5, 0, 0, 1);
+INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdPoder, IdEntidadeAvaliadora, FlgAtiva) 
+	VALUES (1, 'Escala Brasil Transparente', 2, 0, 5, 0, 0, 1);
+INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdPoder, IdEntidadeAvaliadora, FlgAtiva) 
+	VALUES (2, 'Escala Brasil Transparente', 3, 0, 5, 0, 0, 1);
 	
 -- Resultados de avaliações
 INSERT INTO dbo.ResultadoAvaliacao(IdResultadoAvaliacao, IdAvaliacao, NomMunicipio, ValNota)

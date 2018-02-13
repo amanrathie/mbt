@@ -13,8 +13,18 @@ CREATE TABLE dbo.Fase
 (
   IdFase        INTEGER  NOT NULL,
   DescFase      VARCHAR(255)    NOT NULL,
+  NumOrdem      INTEGER    NOT NULL,
 
   CONSTRAINT PK_Fase PRIMARY KEY (IdFase)
+);
+
+
+CREATE TABLE dbo.Poder
+(
+  IdPoder        	INTEGER  NOT NULL,
+  DescPoder      	VARCHAR(255)    NOT NULL,
+
+  CONSTRAINT PK_Poder PRIMARY KEY (IdPoder)
 );
 
 CREATE TABLE dbo.TipoQuestao
@@ -96,14 +106,17 @@ CREATE TABLE dbo.Avaliacao
   NumEdicao         	INTEGER,
   IdTipoAvaliacao		INTEGER			NOT NULL,
   IdFase				INTEGER			NOT NULL,
+  IdPoder				INTEGER			NOT NULL,
+  IdEntidadeAvaliadora	INTEGER			NOT NULL,
   IdQuestionario		INTEGER,
-  IdEntidadeAvaliadora	INTEGER,
+  FlgAtiva				TINYINT			NOT NULL,
 
   CONSTRAINT PK_Avaliacao PRIMARY KEY (IdAvaliacao),
   CONSTRAINT FK_Avaliacao_TipoAvaliacao FOREIGN KEY (IdTipoAvaliacao) REFERENCES dbo.TipoAvaliacao (IdTipoAvaliacao),
   CONSTRAINT FK_Avaliacao_Fase FOREIGN KEY (IdFase) REFERENCES dbo.Fase (IdFase),
-  CONSTRAINT FK_Avaliacao_Questionario FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario),
-  CONSTRAINT FK_Avaliacao_EntAvaliadora FOREIGN KEY (IdEntidadeAvaliadora) REFERENCES dbo.EntidadeAvaliadora (IdEntidadeAvaliadora)
+  CONSTRAINT FK_Avaliacao_Poder FOREIGN KEY (IdPoder) REFERENCES dbo.Poder (IdPoder),
+  CONSTRAINT FK_Avaliacao_EntAvaliadora FOREIGN KEY (IdEntidadeAvaliadora) REFERENCES dbo.EntidadeAvaliadora (IdEntidadeAvaliadora),
+  CONSTRAINT FK_Avaliacao_Questionario FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario)
 );
 
 CREATE TABLE dbo.AvaliacaoLog
@@ -112,11 +125,9 @@ CREATE TABLE dbo.AvaliacaoLog
   REVTYPE         		TINYINT,
   IdAvaliacao       	INTEGER  		NOT NULL,
   NomAvaliacao      	VARCHAR(255)    NOT NULL,
-  NumEdicao         	INTEGER,
-  IdTipoAvaliacao		INTEGER			NOT NULL,
   IdFase				INTEGER			NOT NULL,
   IdQuestionario		INTEGER,
-  IdEntidadeAvaliadora	INTEGER
+  FlgAtiva				TINYINT			NOT NULL
 );
 
 
@@ -167,12 +178,12 @@ INSERT INTO dbo.TipoAvaliacao VALUES (1, 'Avaliação Cidadã');
 INSERT INTO dbo.TipoAvaliacao VALUES (2, 'Auto Avaliação');
 
 -- Fase Avaliação
-INSERT INTO dbo.Fase VALUES (0, 'Em planejamento');
-INSERT INTO dbo.Fase VALUES (1, 'Questionário em aprovação');
-INSERT INTO dbo.Fase VALUES (2, 'Questionário aprovado');
-INSERT INTO dbo.Fase VALUES (3, 'Em andamento');
-INSERT INTO dbo.Fase VALUES (4, 'Aguardando publicação');
-INSERT INTO dbo.Fase VALUES (5, 'Publicada');
+INSERT INTO dbo.Fase VALUES (0, 'Em planejamento', 0);
+INSERT INTO dbo.Fase VALUES (1, 'Questionário em aprovação', 1);
+INSERT INTO dbo.Fase VALUES (2, 'Questionário aprovado', 2);
+INSERT INTO dbo.Fase VALUES (3, 'Em andamento', 3);
+INSERT INTO dbo.Fase VALUES (4, 'Aguardando publicação', 4);
+INSERT INTO dbo.Fase VALUES (5, 'Publicada', 5);
 
 -- Tipo Questão
 INSERT INTO dbo.TipoQuestao VALUES (0, 'Descritiva');
@@ -189,6 +200,11 @@ INSERT INTO dbo.TipoEntidade VALUES(0, 'Localidade');
 INSERT INTO dbo.TipoEntidade VALUES(1, 'Orgão/Entidade');
 INSERT INTO dbo.TipoEntidade VALUES(2, 'Entidade Governamental');
 INSERT INTO dbo.TipoEntidade VALUES(3, 'Organização da sociedade civil');
+
+-- Poder
+INSERT INTO dbo.Poder VALUES(0, 'Executivo');
+INSERT INTO dbo.Poder VALUES(1, 'Legislativo');
+INSERT INTO dbo.Poder VALUES(2, 'Judiciário');
 
 -- Entidade Avaliadora
 INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) values (0, 1, 'CGU', 1);

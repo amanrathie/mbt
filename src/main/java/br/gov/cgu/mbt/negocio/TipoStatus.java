@@ -1,8 +1,8 @@
 package br.gov.cgu.mbt.negocio;
 
 public enum TipoStatus {
-	ATIVO("Ativo"),
-	INATIVO("Inativo");
+	INATIVO("Inativo"),
+	ATIVO("Ativo");
 	
 	private final String descricao;
 

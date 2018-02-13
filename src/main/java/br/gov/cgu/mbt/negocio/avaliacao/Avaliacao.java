@@ -21,6 +21,8 @@ import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.gov.cgu.mbt.Constantes;
+import br.gov.cgu.mbt.negocio.TipoPoder;
+import br.gov.cgu.mbt.negocio.TipoStatus;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
 import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacao;
 import br.gov.cgu.mbt.negocio.entidadeavaliadora.EntidadeAvaliadora;
@@ -54,15 +56,22 @@ public class Avaliacao implements Entidade<Integer>, Serializable {
 	private String nome;
 	
 	@Column(name="NumEdicao")
+	@NotAudited
 	private Integer edicao;
 	
 	@Column(name="IdTipoAvaliacao")
 	@Enumerated(EnumType.ORDINAL)
+	@NotAudited
 	private TipoAvaliacao tipo;
 	
 	@Column(name="IdFase")
 	@Enumerated(EnumType.ORDINAL)
 	private TipoFaseAvaliacao fase;
+	
+	@Column(name="IdPoder")
+	@Enumerated(EnumType.ORDINAL)
+	@NotAudited
+	private TipoPoder poder;
 	
 	@ManyToOne
 	@JoinColumn(name="IdQuestionario")
@@ -76,5 +85,14 @@ public class Avaliacao implements Entidade<Integer>, Serializable {
 	@OneToMany(mappedBy="avaliacao")
 	@NotAudited
 	private List<ResultadoAvaliacao> resultados;
+	
+	@Column(name="FlgAtiva")
+	@Enumerated(EnumType.ORDINAL)
+	private TipoStatus status;
+	
+	// O Lombok reconhece valores padrões para builders dessa maneira
+	public static class AvaliacaoBuilder {
+		private TipoStatus status = TipoStatus.ATIVO;
+	}
 	
 }
