@@ -18,7 +18,7 @@ public class ConversorQuestionario {
 			return blocos;
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RuntimeException();
+			throw new RuntimeException("Estrutura invalida");
 		}
 	}
 	
@@ -26,7 +26,7 @@ public class ConversorQuestionario {
 		try {
 			return mapper.writeValueAsString(blocos);
 		} catch (JsonProcessingException e) {
-			throw new RuntimeException();
+			throw new RuntimeException("Estrutura invalida");
 		}
 	}
 

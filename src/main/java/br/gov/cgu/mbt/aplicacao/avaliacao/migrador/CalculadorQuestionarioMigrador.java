@@ -47,6 +47,6 @@ public class CalculadorQuestionarioMigrador implements CalculadorQuestionario {
 			notaFinal = notaFinal.add(notaNoBloco);
 		}
 		
-		return notaFinal.divide(new BigDecimal(10), 4, RoundingMode.HALF_UP);
+		return notaFinal.divide(new BigDecimal(10), 2, RoundingMode.HALF_UP);
 	}
 }

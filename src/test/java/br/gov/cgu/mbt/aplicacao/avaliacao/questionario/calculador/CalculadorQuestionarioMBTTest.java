@@ -14,7 +14,7 @@ import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Bloco;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.OpcaoResposta;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.QuestaoMultiplaEscolha;
 
-public class CalculadorQuestionarioTest {
+public class CalculadorQuestionarioMBTTest {
 	
 	private CalculadorQuestionario calculador = new CalculadorQuestionarioMBT(); // TODO: Criar testador de cada tipo
 	
