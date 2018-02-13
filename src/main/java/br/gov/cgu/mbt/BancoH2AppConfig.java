@@ -24,7 +24,7 @@ public class BancoH2AppConfig {
         datasource = new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .setScriptEncoding("UTF-8")
-                //.addScripts("classpath:sql/h2options.sql", "classpath:sql/esquema.sql", "classpath:sql/dados.sql")
+                .addScripts("classpath:sql/h2options.sql", "classpath:sql/esquema.sql", "classpath:sql/dados.sql")
                 .build();
         return datasource;
     }

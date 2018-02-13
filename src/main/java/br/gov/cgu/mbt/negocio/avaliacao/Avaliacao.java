@@ -23,6 +23,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import br.gov.cgu.mbt.Constantes;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
 import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacao;
+import br.gov.cgu.mbt.negocio.entidadeavaliadora.EntidadeAvaliadora;
 import br.gov.cgu.persistencia.jpa.Entidade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -66,6 +67,11 @@ public class Avaliacao implements Entidade<Integer>, Serializable {
 	@ManyToOne
 	@JoinColumn(name="IdQuestionario")
 	private Questionario questionario;
+	
+	@ManyToOne
+	@JoinColumn(name="IdEntidadeAvaliadora")
+	@NotAudited
+	private EntidadeAvaliadora entidadeAvaliadora;
 	
 	@OneToMany(mappedBy="avaliacao")
 	@NotAudited

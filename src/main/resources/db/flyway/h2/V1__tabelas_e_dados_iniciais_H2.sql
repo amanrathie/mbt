@@ -1,7 +1,3 @@
-CREATE SCHEMA dbo;
-
-SET IGNORECASE true;
-SET MODE MSSQLServer;
 
 -- Tabelas de tipos
 
@@ -29,6 +25,14 @@ CREATE TABLE dbo.TipoQuestao
   CONSTRAINT PK_TipoQuestao PRIMARY KEY (IdTipoQuestao)
 );
 
+CREATE TABLE dbo.TipoEntidade
+(
+  IdTipoEntidade        	INTEGER  NOT NULL,
+  DescTipoEntidade      	VARCHAR(255)    NOT NULL,
+
+  CONSTRAINT PK_TipoEntidade PRIMARY KEY (IdTipoEntidade)
+);
+
 -- Tabelas de negócio
 
 CREATE TABLE dbo.Perfil
@@ -48,6 +52,27 @@ CREATE TABLE dbo.Usuario
 
   CONSTRAINT PK_Usuario PRIMARY KEY (IdUsuario),
   CONSTRAINT FK_Usuario_Perfil FOREIGN KEY (IdPerfil) REFERENCES dbo.Perfil (IdPerfil)
+);
+
+CREATE TABLE dbo.EntidadeAvaliadora (
+   IdEntidadeAvaliadora           INTEGER IDENTITY NOT NULL,
+   IdTipoEntidade				  INTEGER        NOT NULL,
+   NomEntidade					  VARCHAR(255)   NOT NULL,
+   FlgCGU						  TINYINT		 NOT NULL,
+   
+   CONSTRAINT PK_EntidadeAvaliadora PRIMARY KEY (IdEntidadeAvaliadora),
+   CONSTRAINT FK_EntAvaliadora_TipoEntidade FOREIGN KEY (IdTipoEntidade) REFERENCES dbo.TipoEntidade (IdTipoEntidade)
+);
+
+CREATE TABLE dbo.EntidadeAvaliadora_Usuario (
+   IdEntidadeAvaliadoraUsuario           INTEGER IDENTITY NOT NULL,
+   IdEntidadeAvaliadora				  INTEGER        NOT NULL,
+   IdUsuario					  INTEGER        NOT NULL,
+   FlgAdministrador						  TINYINT,
+   
+   CONSTRAINT PK_EntidadeAvaliadoraUsuario PRIMARY KEY (IdEntidadeAvaliadoraUsuario),
+   CONSTRAINT FK_EntAvdoraUsu_EntAvdora FOREIGN KEY (IdEntidadeAvaliadora) REFERENCES dbo.EntidadeAvaliadora (IdEntidadeAvaliadora),
+   CONSTRAINT FK_Usuario_EntidadeAvaliadora FOREIGN KEY (IdUsuario) REFERENCES dbo.Usuario (IdUsuario)
 );
 
 CREATE TABLE dbo.Questionario (
@@ -72,11 +97,13 @@ CREATE TABLE dbo.Avaliacao
   IdTipoAvaliacao		INTEGER			NOT NULL,
   IdFase				INTEGER			NOT NULL,
   IdQuestionario		INTEGER,
+  IdEntidadeAvaliadora	INTEGER,
 
   CONSTRAINT PK_Avaliacao PRIMARY KEY (IdAvaliacao),
   CONSTRAINT FK_Avaliacao_TipoAvaliacao FOREIGN KEY (IdTipoAvaliacao) REFERENCES dbo.TipoAvaliacao (IdTipoAvaliacao),
   CONSTRAINT FK_Avaliacao_Fase FOREIGN KEY (IdFase) REFERENCES dbo.Fase (IdFase),
-  CONSTRAINT FK_Avaliacao_Questionario FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario)
+  CONSTRAINT FK_Avaliacao_Questionario FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario),
+  CONSTRAINT FK_Avaliacao_EntAvaliadora FOREIGN KEY (IdEntidadeAvaliadora) REFERENCES dbo.EntidadeAvaliadora (IdEntidadeAvaliadora)
 );
 
 CREATE TABLE dbo.AvaliacaoLog
@@ -89,6 +116,7 @@ CREATE TABLE dbo.AvaliacaoLog
   IdTipoAvaliacao		INTEGER			NOT NULL,
   IdFase				INTEGER			NOT NULL,
   IdQuestionario		INTEGER,
+  IdEntidadeAvaliadora	INTEGER
 );
 
 
@@ -155,3 +183,12 @@ INSERT INTO dbo.TipoQuestao VALUES (3, 'Matriz');
 -- Usuario/Perfil
 INSERT INTO dbo.Perfil VALUES (0, 'Administrador CGU');
 INSERT INTO dbo.Perfil VALUES (1, 'Administrador de Entidade');
+
+-- Tipo Entidade
+INSERT INTO dbo.TipoEntidade VALUES(0, 'Localidade');
+INSERT INTO dbo.TipoEntidade VALUES(1, 'Orgão/Entidade');
+INSERT INTO dbo.TipoEntidade VALUES(2, 'Entidade Governamental');
+INSERT INTO dbo.TipoEntidade VALUES(3, 'Organização da sociedade civil');
+
+-- Entidade Avaliadora
+INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) values (0, 1, 'CGU', 1);

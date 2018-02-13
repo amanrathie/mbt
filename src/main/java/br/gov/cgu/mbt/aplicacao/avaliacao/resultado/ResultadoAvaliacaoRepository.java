@@ -1,10 +1,11 @@
-package br.gov.cgu.mbt.negocio.avaliacao.resultado;
+package br.gov.cgu.mbt.aplicacao.avaliacao.resultado;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import br.gov.cgu.mbt.negocio.avaliacao.QResultadoAvaliacao;
+import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacao;
 import br.gov.cgu.persistencia.jpa.RepositoryJpa;
 
 @Repository
@@ -12,10 +13,10 @@ public class ResultadoAvaliacaoRepository extends RepositoryJpa<ResultadoAvaliac
 	
 	private QResultadoAvaliacao resultadoAvaliacao = QResultadoAvaliacao.resultadoAvaliacao;
 	
-	public List<ResultadoAvaliacao> getPorNomeMunicipio(String nomeMunicipio) {
+	public List<ResultadoAvaliacao> getPorIdAvaliacao(Integer idAvaliacao) {
 		return getJPAQuery()
 				.selectFrom(resultadoAvaliacao)
-				.where(resultadoAvaliacao.nomeMunicipio.equalsIgnoreCase(nomeMunicipio))
+				.where(resultadoAvaliacao.avaliacao.id.eq(idAvaliacao))
 				.fetch();
 	}
 

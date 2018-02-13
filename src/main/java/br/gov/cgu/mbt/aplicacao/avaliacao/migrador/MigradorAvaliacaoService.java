@@ -1,23 +1,26 @@
 package br.gov.cgu.mbt.aplicacao.avaliacao.migrador;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.gov.cgu.mbt.aplicacao.avaliacao.PublicadorDeAvaliacao;
+import br.gov.cgu.mbt.aplicacao.avaliacao.AvaliacaoRepository;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.AvaliacaoEbtBuilder;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.BlocoEbtBuilder;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.EbtUtil;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.QuestionarioEbtHeader;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.ConversorQuestionario;
+import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.QuestionarioRepository;
+import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.calculador.CalculadorQuestionario;
+import br.gov.cgu.mbt.aplicacao.avaliacao.resultado.ResultadoAvaliacaoRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
-import br.gov.cgu.mbt.negocio.avaliacao.AvaliacaoRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.questao.TipoQuestao;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
-import br.gov.cgu.mbt.negocio.avaliacao.questionario.QuestionarioRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.RespostaQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Bloco;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.OpcaoMultiplaEscolha;
@@ -26,30 +29,33 @@ import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Questao;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.QuestaoDescritiva;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.QuestaoMatriz;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.QuestaoMultiplaEscolha;
+import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacao;
 
 @Service
-public class MigradorAvaliacaoEbtService {
+public class MigradorAvaliacaoService {
 
+	private CalculadorQuestionario calculadorQuestionario;
+	
 	private AvaliacaoRepository avaliacaoRepository;
 
 	private QuestionarioRepository questionarioRepository;
 	
-	private PublicadorDeAvaliacao publicadorDeAvaliacao;
+	private ResultadoAvaliacaoRepository resultadoAvaliacaoRepository;
 
 	@Autowired
-	public MigradorAvaliacaoEbtService(AvaliacaoRepository avaliacaoRepository,
+	public MigradorAvaliacaoService(@Qualifier("calculadorQuestionarioMigrador")CalculadorQuestionario calculadorQuestionario,
+			AvaliacaoRepository avaliacaoRepository,
 			QuestionarioRepository questionarioRepository,
-			PublicadorDeAvaliacao publicadorDeAvaliacao) {
+			ResultadoAvaliacaoRepository resultadoAvaliacaoRepository) {
 		this.avaliacaoRepository = avaliacaoRepository;
 		this.questionarioRepository = questionarioRepository;
-		this.publicadorDeAvaliacao = publicadorDeAvaliacao;
+		this.calculadorQuestionario = calculadorQuestionario;
+		this.resultadoAvaliacaoRepository = resultadoAvaliacaoRepository;
 	}
 
 	@Transactional
-	public void criarAvaliacoesIndependentes() throws Exception {
-		
+	public List<Avaliacao> criarAvaliacoesIndependentes() throws Exception {
 		// TODO: lançar erro caso as EBT's já estejam migradas
-		// Inicialmente só teremos as EBT's, então podemos obter todas
 		List<Avaliacao> avaliacoes = new AvaliacaoEbtBuilder().build();
 		String jsonEstrutura = ConversorQuestionario.toJson(new BlocoEbtBuilder().build());
 		Questionario questionario = Questionario.builder().estrutura(jsonEstrutura).build();
@@ -61,18 +67,16 @@ public class MigradorAvaliacaoEbtService {
 			avaliacaoRepository.put(avaliacao);
 		}
 
-		migrarRespostasAvaliacoesIndependentes();
+		migrarRespostasAvaliacoesIndependentes(avaliacoes);
 		
-		for (Avaliacao avaliacao : avaliacoes) {
-			publicadorDeAvaliacao.publicar(avaliacao);
-		}
+		criarResultadosAvaliacao(avaliacoes);
+		
+		return avaliacoes;
 	}
 
 	@Transactional
-	private void migrarRespostasAvaliacoesIndependentes() throws Exception {
-		RespostaEbtParser respostasParser = new RespostaEbtParser("/ebt/ebt_respostas.csv");
-
-		List<Avaliacao> avaliacoes = avaliacaoRepository.getAll();
+	private void migrarRespostasAvaliacoesIndependentes(List<Avaliacao> avaliacoes) throws Exception {
+		MigradorArquivoRespostaParser respostasParser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
 
 		for (Avaliacao avaliacao : avaliacoes) {
 
@@ -94,7 +98,6 @@ public class MigradorAvaliacaoEbtService {
 							
 							// Essa pergunta necessitou um tratamento especial, pois a pontuação não era por item
 							if (questao.getPergunta().equals(EbtUtil.QUESTAO_alternativa_sic_eletronico)) {
-								
 								String valor = record.get(QuestionarioEbtHeader.nao_exige_identificacaop);
 								QuestaoMultiplaEscolha qme = (QuestaoMultiplaEscolha) questao;
 								List<OpcaoResposta> opcoesResposta = qme.getOpcoesResposta();
@@ -133,7 +136,7 @@ public class MigradorAvaliacaoEbtService {
 						} else if (questao.getTipo() == TipoQuestao.MATRIZ) {
 							QuestaoMatriz qm = (QuestaoMatriz) questao;
 							List<OpcaoMultiplaEscolha> opcoesMultiplaEscolha = qm.getOpcoesMultiplaEscolha();
-							
+
 							for (OpcaoMultiplaEscolha opcaoMultiplaEscolha : opcoesMultiplaEscolha) {
 								// No caso de questao matriz, devemos escolher a pergunta da questão múltipla escolha, e não da pergunta mãe (que é apenas um agrupador)
 								QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA.get(opcaoMultiplaEscolha.getPergunta());
@@ -161,6 +164,26 @@ public class MigradorAvaliacaoEbtService {
 				
 				Questionario questionarioDoBanco = questionarioRepository.get(questionario.getId());
 				questionarioDoBanco.addResposta(respostaQuestionario);
+			}
+		}
+	}
+	
+	@Transactional
+	private void criarResultadosAvaliacao(List<Avaliacao> avaliacoes) {
+		for (Avaliacao avaliacao : avaliacoes) {
+			List<RespostaQuestionario> respostas = avaliacao.getQuestionario().getRespostas();
+		
+			for (RespostaQuestionario resposta : respostas) {
+				BigDecimal notaFinal = calculadorQuestionario.calculaNota(ConversorQuestionario.toBlocos(resposta.getEstrutura()));
+	
+				ResultadoAvaliacao resultado = 
+						ResultadoAvaliacao.builder()
+						.avaliacao(avaliacao)
+						.nomeMunicipio(resposta.getMunicipio())
+						.nota(notaFinal)
+						.build();
+				
+				resultadoAvaliacaoRepository.put(resultado);
 			}
 		}
 	}

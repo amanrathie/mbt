@@ -12,7 +12,7 @@ public class RespostaEbtParserTest {
 	
 	@Test
 	public void parser_ebt_rodada_1() throws Exception {
-		RespostaEbtParser parser = new RespostaEbtParser("/ebt/ebt_respostas.csv");
+		MigradorArquivoRespostaParser parser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
 		
 		assertThat(parser.parse(EbtUtil.RODADA_1))
 			.isNotEmpty()
@@ -21,7 +21,7 @@ public class RespostaEbtParserTest {
 	
 	@Test
 	public void parser_ebt_rodada_2() throws Exception {
-		RespostaEbtParser parser = new RespostaEbtParser("/ebt/ebt_respostas.csv");
+		MigradorArquivoRespostaParser parser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
 		
 		assertThat(parser.parse(EbtUtil.RODADA_2))
 			.isNotEmpty()
@@ -30,7 +30,7 @@ public class RespostaEbtParserTest {
 	
 	@Test
 	public void parser_ebt_rodada_3() throws Exception {
-		RespostaEbtParser parser = new RespostaEbtParser("/ebt/ebt_respostas.csv");
+		MigradorArquivoRespostaParser parser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
 		
 		assertThat(parser.parse(EbtUtil.RODADA_3))
 			.isNotEmpty()
