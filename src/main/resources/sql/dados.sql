@@ -1,6 +1,11 @@
 -- Utilizado para popular base de testes que será usada para as queries builders, repositories etc
 
-
+-- Usuarios
+INSERT INTO dbo.Usuario (IdUsuario, IdPerfil, NomUsuario) 
+	VALUES (0, 0, 'Fulano da Silva');
+INSERT INTO dbo.Usuario (IdUsuario, IdPerfil, NomUsuario) 
+	VALUES (1, 0, 'Beltrano da Silva');
+	
 -- Avaliações
 INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdEntidadeAvaliadora) 
 	VALUES (0, 'Escala Brasil Transparente', 1, 0, 5, 0);
@@ -17,12 +22,17 @@ INSERT INTO dbo.ResultadoAvaliacao(IdResultadoAvaliacao, IdAvaliacao, NomMunicip
 	VALUES (1, 0, 'São Paulo', 9);	
 	
 -- Entidades Avaliadoras
-INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) values (1, 1, 'Entidade Avaliadora 1', 0);
-INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) values (2, 1, 'Entidade Avaliadora 2', 0);
-INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) values (3, 1, 'Entidade Avaliadora 3', 0);
-INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) values (4, 1, 'Entidade Avaliadora 4', 0);
-INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) values (5, 1, 'Entidade Avaliadora 5', 0);
+INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) VALUES (1, 1, 'Entidade Avaliadora 1', 0);
+INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) VALUES (2, 1, 'Entidade Avaliadora 2', 0);
+INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) VALUES (3, 1, 'Entidade Avaliadora 3', 0);
+INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) VALUES (4, 1, 'Entidade Avaliadora 4', 0);
+INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) VALUES (5, 1, 'Entidade Avaliadora 5', 0);
 
+INSERT INTO dbo.EntidadeAvaliadora_Usuario(IdEntidadeAvaliadoraUsuario, IdEntidadeAvaliadora, IdUsuario, FlgAdministrador)
+	VALUES (0, 0, 0, 1);
+INSERT INTO dbo.EntidadeAvaliadora_Usuario(IdEntidadeAvaliadoraUsuario, IdEntidadeAvaliadora, IdUsuario, FlgAdministrador)
+	VALUES (1, 0, 0, 0);
+	
 -- UF
 INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('AC', 'Acre');
 INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('AL',	'Alagoas');

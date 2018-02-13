@@ -27,5 +27,12 @@ public class EntidadeAvaliadoraRepositoryTest {
     		.extracting("nome")
     		.contains(TERMO_CGU);
     }
+    
+    @Test
+    public void get_retorna_dados_usuarios_relacionados() {
+    	assertThat(repository.get(0).usuarios)
+    		.isNotEmpty()
+    		.hasSize(2);
+    }
 
 }

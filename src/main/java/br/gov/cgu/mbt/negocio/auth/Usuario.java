@@ -10,8 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -49,8 +49,8 @@ public class Usuario implements Entidade<Integer>, Serializable, UserDetails {
 	@Column(name="NomUsuario")
 	private String nome;
 	
-	@OneToOne
-	@MapsId
+	@ManyToOne
+	@JoinColumn(name="IdPerfil")
 	private Perfil perfil;
 	
 	@JsonIgnore

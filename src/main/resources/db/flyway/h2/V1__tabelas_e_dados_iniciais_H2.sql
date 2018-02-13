@@ -64,6 +64,17 @@ CREATE TABLE dbo.EntidadeAvaliadora (
    CONSTRAINT FK_EntAvaliadora_TipoEntidade FOREIGN KEY (IdTipoEntidade) REFERENCES dbo.TipoEntidade (IdTipoEntidade)
 );
 
+CREATE TABLE dbo.EntidadeAvaliadora_Usuario (
+   IdEntidadeAvaliadoraUsuario           INTEGER IDENTITY NOT NULL,
+   IdEntidadeAvaliadora				  INTEGER        NOT NULL,
+   IdUsuario					  INTEGER        NOT NULL,
+   FlgAdministrador						  TINYINT,
+   
+   CONSTRAINT PK_EntidadeAvaliadoraUsuario PRIMARY KEY (IdEntidadeAvaliadoraUsuario),
+   CONSTRAINT FK_EntAvdoraUsu_EntAvdora FOREIGN KEY (IdEntidadeAvaliadora) REFERENCES dbo.EntidadeAvaliadora (IdEntidadeAvaliadora),
+   CONSTRAINT FK_Usuario_EntidadeAvaliadora FOREIGN KEY (IdUsuario) REFERENCES dbo.Usuario (IdUsuario)
+);
+
 CREATE TABLE dbo.Questionario (
    IdQuestionario           INTEGER IDENTITY NOT NULL,
    TxtEstrutura				TEXT        NULL,
