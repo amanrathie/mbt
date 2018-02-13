@@ -9,18 +9,18 @@ import lombok.Data;
 
 @Data
 public class PainelGeralAvaliacaoDTO extends Filtro {
-	
-	private String nome;	
+
+	private String nome;
 	private String tipo;
 	private String fase;
 
 	@QueryProjection
+
 	public PainelGeralAvaliacaoDTO(String nome, int tipo, int fase) {
-		
+
 		this.nome = nome;
 		this.tipo = TipoAvaliacao.values()[tipo].name();
 		this.fase = TipoFaseAvaliacao.values()[fase].name();
 	}
-	
-	
+
 }

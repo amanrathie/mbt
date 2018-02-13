@@ -8,6 +8,8 @@ import com.querydsl.jpa.sql.JPASQLQuery;
 import br.gov.cgu.mbt.negocio.sqlentities.SAvaliacao;
 import br.gov.cgu.persistencia.querybuilder.QueryBuilderJPASQL;
 
+import br.gov.cgu.mbt.aplicacao.avaliacao.painelgeral.QPainelGeralAvaliacaoDTO;
+
 @Service
 public class PainelGeralAvaliacaoQueryBuilder extends QueryBuilderJPASQL<PainelGeralAvaliacaoFiltro, PainelGeralAvaliacaoDTO> {
 	

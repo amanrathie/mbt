@@ -12,4 +12,14 @@ CREATE TABLE dbo.Vw_UF
   CONSTRAINT PK_SigUF PRIMARY KEY (SigUF)
 );
 
+CREATE TABLE dbo.Vw_Municipio
+(
+  IdMunicipio        INTEGER  NOT NULL,
+  SigUF				 CHAR(2)	NOT NULL,
+  DescMunicipio       VARCHAR(255)    NOT NULL,
+  CodMunicipioGeo        INTEGER  NOT NULL,
+
+  CONSTRAINT PK_Municipio PRIMARY KEY (IdMunicipio)
+);
+
 RUNSCRIPT FROM 'file:src/main/resources/db/flyway/h2/V1__tabelas_e_dados_iniciais_H2.sql';

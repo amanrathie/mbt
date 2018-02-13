@@ -3,10 +3,12 @@ package br.gov.cgu.mbt.negocio.avaliacao;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +26,7 @@ import br.gov.cgu.mbt.Constantes;
 import br.gov.cgu.mbt.negocio.TipoPoder;
 import br.gov.cgu.mbt.negocio.TipoStatus;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
+import br.gov.cgu.mbt.negocio.avaliacao.questionario.RespostaQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacao;
 import br.gov.cgu.mbt.negocio.entidadeavaliadora.EntidadeAvaliadora;
 import br.gov.cgu.persistencia.jpa.Entidade;
@@ -85,6 +88,9 @@ public class Avaliacao implements Entidade<Integer>, Serializable {
 	@OneToMany(mappedBy="avaliacao")
 	@NotAudited
 	private List<ResultadoAvaliacao> resultados;
+	
+	@OneToMany(mappedBy="avaliacao")
+	private List<RespostaQuestionario> respostas;
 	
 	@Column(name="FlgAtiva")
 	@Enumerated(EnumType.ORDINAL)

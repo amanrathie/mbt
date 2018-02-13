@@ -64,6 +64,25 @@ CREATE TABLE dbo.Usuario
   CONSTRAINT FK_Usuario_Perfil FOREIGN KEY (IdPerfil) REFERENCES dbo.Perfil (IdPerfil)
 );
 
+CREATE TABLE dbo.EntidadeAvaliada (
+   IdEntidadeAvaliada           INTEGER IDENTITY NOT NULL,
+   IdTipoEntidade				  INTEGER        NOT NULL,
+   IdPoder				INTEGER			NOT NULL,
+   
+   CONSTRAINT PK_EntidadeAvaliada PRIMARY KEY (IdEntidadeAvaliada),
+   CONSTRAINT FK_EntAvaliada_TipoEntidade FOREIGN KEY (IdTipoEntidade) REFERENCES dbo.TipoEntidade (IdTipoEntidade),
+   CONSTRAINT FK_EntidadeAvaliada_Poder FOREIGN KEY (IdPoder) REFERENCES dbo.Poder (IdPoder),
+);
+
+
+CREATE TABLE dbo.Localidade (
+   IdLocalidade           INTEGER IDENTITY NOT NULL,
+   IdEntidadeAvaliada           INTEGER  NOT NULL,
+   
+   CONSTRAINT PK_Localidade PRIMARY KEY (IdLocalidade),
+   CONSTRAINT FK_Localidade_EntAvaliada FOREIGN KEY (IdEntidadeAvaliada) REFERENCES dbo.EntidadeAvaliada (IdEntidadeAvaliada)
+);
+
 CREATE TABLE dbo.EntidadeAvaliadora (
    IdEntidadeAvaliadora           INTEGER IDENTITY NOT NULL,
    IdTipoEntidade				  INTEGER        NOT NULL,
@@ -133,27 +152,33 @@ CREATE TABLE dbo.AvaliacaoLog
 
 CREATE TABLE dbo.Resposta (
    IdResposta INTEGER IDENTITY NOT NULL,
-   IdQuestionario        	INTEGER              NULL, -- not null
+   IdQuestionario        	INTEGER              NOT NULL,
+   IdAvaliacao        	INTEGER          NOT NULL,
    TxtEstrutura			TEXT        NULL,
    municipio			VARCHAR(100)		 NULL, -- temporario
+   uf				char(2)		 NULL, -- temporario
    
    CONSTRAINT PK_Resposta PRIMARY KEY (IdResposta),
-   CONSTRAINT FK_Resposta_Questionario FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario)
+   CONSTRAINT FK_Resposta_Questionario FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario),
+   CONSTRAINT FK_Resposta_Avaliacao FOREIGN KEY (IdAvaliacao) REFERENCES dbo.Avaliacao (IdAvaliacao)
 );
 
 CREATE TABLE dbo.RespostaLog (
    REV             		INTEGER         NOT NULL,
    REVTYPE         		TINYINT,
-	IdResposta INTEGER  NOT NULL,
-   IdQuestionario        	INTEGER              NULL, -- not null
+   IdResposta INTEGER  NOT NULL,
+   IdQuestionario        	INTEGER              NOT NULL,
+   IdAvaliacao        	INTEGER          NOT NULL,
    TxtEstrutura			TEXT        NULL,
    municipio			VARCHAR(100)		 NULL, -- temporario
+   uf			char(2)		 NULL, -- temporario
 );
 
 CREATE TABLE dbo.ResultadoAvaliacao (
    IdResultadoAvaliacao INTEGER IDENTITY NOT NULL,
    IdAvaliacao        	INTEGER          NOT NULL,
-   NomMunicipio			TEXT        NULL,
+   NomMunicipio			VARCHAR(100)     NOT NULL,
+   SigUF				CHAR(2)     	NOT NULL,
    ValNota				NUMBER(4,2),
    
    CONSTRAINT PK_ResultadoAvaliacao PRIMARY KEY (IdResultadoAvaliacao),

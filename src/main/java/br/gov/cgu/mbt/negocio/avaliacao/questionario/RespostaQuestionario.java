@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import org.hibernate.envers.Audited;
 
 import br.gov.cgu.mbt.Constantes;
+import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.persistencia.jpa.Entidade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,10 +43,17 @@ public class RespostaQuestionario implements Entidade<Integer>, Serializable {
 	@JoinColumn(name="IdQuestionario")
 	private Questionario questionario;
 	
+	@ManyToOne
+	@JoinColumn(name="IdAvaliacao")
+	private Avaliacao avaliacao;
+	
 	@Column(name = "TxtEstrutura")
 	private String estrutura;
 	
 	@Column(name = "municipio") // temporario
 	private String municipio;
+	
+	@Column(name = "uf") // temporario
+	private String uf;
 
 }

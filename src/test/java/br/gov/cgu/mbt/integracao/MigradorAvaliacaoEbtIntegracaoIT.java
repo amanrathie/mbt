@@ -1,5 +1,7 @@
 package br.gov.cgu.mbt.integracao;
 
+import static org.assertj.core.api.Assertions.within;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -53,20 +55,20 @@ public class MigradorAvaliacaoEbtIntegracaoIT {
 	@Test
 	public void avaliacoes_migradas_corretamente() throws Exception {
 		List<Avaliacao> avaliacoes = migradorAvaliacaoEbtService.criarAvaliacoesIndependentes();
+		BigDecimal tolerancia = new BigDecimal(0.1);
 
-		MigradorArquivoRespostaParser parser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
-		
 		for (Avaliacao avaliacao : avaliacoes) {
+			MigradorArquivoRespostaParser parser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
 			List<CSVRecord> records = parser.parse(avaliacao.getEdicao());
 			Map<String, BigDecimal> municipioNota = new HashMap<String, BigDecimal>();
 			
-			for (CSVRecord record : records) {
+			for (CSVRecord record : records) { // TODO: colocar codigo do IBGE no mapa depois que tiver o SQL populado
+				String uf = record.get(QuestionarioEbtHeader.uf);
 				String municipio = record.get(QuestionarioEbtHeader.municipio);
-				//System.out.println(municipio);
 				String nota = record.get(QuestionarioEbtHeader.nota);
 				
 				if (!municipio.equalsIgnoreCase("ESTADO")) {
-					municipioNota.put(municipio, new BigDecimal(nota));
+					municipioNota.put(uf+"_"+municipio, new BigDecimal(nota));
 				}
 			}
 			
@@ -75,8 +77,10 @@ public class MigradorAvaliacaoEbtIntegracaoIT {
 			for (ResultadoAvaliacao resultado : resultados) {
 				
 				if (!resultado.getNomeMunicipio().equalsIgnoreCase("ESTADO")) {
-					System.out.println(resultado.getNomeMunicipio());
-					softAssertions.assertThat(municipioNota.get(resultado.getNomeMunicipio())).isEqualByComparingTo(resultado.getNota());
+					softAssertions.assertThat(municipioNota.get(resultado.getUf()+"_"+resultado.getNomeMunicipio()))
+					.as("Municipio: %s - %s na ediçao %d", resultado.getUf(), resultado.getNomeMunicipio(), resultado.getAvaliacao().getEdicao())
+					.isNotNull()
+					.isCloseTo(resultado.getNota(), within(tolerancia));
 				}
 			}
 			
