@@ -14,12 +14,20 @@ INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao
 INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdPoder, IdEntidadeAvaliadora, FlgAtiva) 
 	VALUES (2, 'Escala Brasil Transparente', 3, 0, 5, 0, 0, 1);
 	
--- Resultados de avaliações
-INSERT INTO dbo.ResultadoAvaliacao(IdResultadoAvaliacao, IdAvaliacao, NomMunicipio, ValNota)
-	VALUES (0, 0, 'Brasília', 10);
+-- Questionario
+INSERT INTO dbo.Questionario (IdQuestionario, TxtEstrutura)
+	VALUES (0, '');
 
-INSERT INTO dbo.ResultadoAvaliacao(IdResultadoAvaliacao, IdAvaliacao, NomMunicipio, ValNota)
-	VALUES (1, 0, 'São Paulo', 9);	
+-- Respostas
+INSERT INTO dbo.Resposta (IdResposta, IdQuestionario, IdAvaliacao, TxtEstrutura)
+	VALUES (0, 0, 0, '');	
+	
+-- Resultados de avaliações
+INSERT INTO dbo.ResultadoAvaliacao(IdResultadoAvaliacao, IdAvaliacao, SigUF, NomMunicipio, ValNota)
+	VALUES (0, 0, 'DF', 'Brasília', 10);
+
+INSERT INTO dbo.ResultadoAvaliacao(IdResultadoAvaliacao, IdAvaliacao, SigUF, NomMunicipio, ValNota)
+	VALUES (1, 0, 'SP', 'São Paulo', 9);	
 	
 -- Entidades Avaliadoras
 INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) VALUES (1, 1, 'Entidade Avaliadora 1', 0);

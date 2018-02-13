@@ -16,6 +16,7 @@ import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.EbtUtil;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.QuestionarioEbtHeader;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.ConversorQuestionario;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.QuestionarioRepository;
+import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.RespostaQuestionarioRepository;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.calculador.CalculadorQuestionario;
 import br.gov.cgu.mbt.aplicacao.avaliacao.resultado.ResultadoAvaliacaoRepository;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
@@ -40,16 +41,20 @@ public class MigradorAvaliacaoService {
 
 	private QuestionarioRepository questionarioRepository;
 	
+	private RespostaQuestionarioRepository respostaQuestionarioRepository;
+	
 	private ResultadoAvaliacaoRepository resultadoAvaliacaoRepository;
 
 	@Autowired
 	public MigradorAvaliacaoService(@Qualifier("calculadorQuestionarioMigrador")CalculadorQuestionario calculadorQuestionario,
 			AvaliacaoRepository avaliacaoRepository,
 			QuestionarioRepository questionarioRepository,
+			RespostaQuestionarioRepository respostaQuestionarioRepository,
 			ResultadoAvaliacaoRepository resultadoAvaliacaoRepository) {
+		this.calculadorQuestionario = calculadorQuestionario;
 		this.avaliacaoRepository = avaliacaoRepository;
 		this.questionarioRepository = questionarioRepository;
-		this.calculadorQuestionario = calculadorQuestionario;
+		this.respostaQuestionarioRepository = respostaQuestionarioRepository;
 		this.resultadoAvaliacaoRepository = resultadoAvaliacaoRepository;
 	}
 
@@ -76,16 +81,17 @@ public class MigradorAvaliacaoService {
 
 	@Transactional
 	private void migrarRespostasAvaliacoesIndependentes(List<Avaliacao> avaliacoes) throws Exception {
-		MigradorArquivoRespostaParser respostasParser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
-
 		for (Avaliacao avaliacao : avaliacoes) {
 
 			Questionario questionario = avaliacao.getQuestionario();
 			String jsonQuestionario = questionario.getEstrutura();
-
+			
+			MigradorArquivoRespostaParser respostasParser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
 			List<CSVRecord> csvRecords = respostasParser.parse(avaliacao.getEdicao());
+			
+			System.out.println(csvRecords.size());
 
-			// Para cada respostsa
+			// Para cada respostas
 			for (CSVRecord record : csvRecords) {
 				List<Bloco> blocos = ConversorQuestionario.toBlocos(jsonQuestionario);
 
@@ -96,7 +102,7 @@ public class MigradorAvaliacaoService {
 						if (questao.getTipo() == TipoQuestao.MULTIPLA_ESCOLHA) {
 							
 							// Essa pergunta necessitou um tratamento especial, pois a pontuação não era por item
-							if (questao.getPergunta().equals(EbtUtil.QUESTAO_alternativa_sic_eletronico)) {
+							if (questao.getPergunta().equals(EbtUtil.QUESTAO_nao_exige_identificacao)) {
 								String valor = record.get(QuestionarioEbtHeader.nao_exige_identificacaop);
 								QuestaoMultiplaEscolha qme = (QuestaoMultiplaEscolha) questao;
 								List<OpcaoResposta> opcoesResposta = qme.getOpcoesResposta();
@@ -157,21 +163,25 @@ public class MigradorAvaliacaoService {
 				// Monta a resposta do questionario e grava
 				RespostaQuestionario respostaQuestionario = RespostaQuestionario.builder()
 					.questionario(avaliacao.getQuestionario())
+					.avaliacao(avaliacao)
 					.estrutura(ConversorQuestionario.toJson(blocos))
-					.municipio(record.get(QuestionarioEbtHeader.municipio))
+					.municipio(record.get(QuestionarioEbtHeader.municipio)) // TODO: temporario
+					.uf(record.get(QuestionarioEbtHeader.uf)) // TODO: temporario
 					.build();
 				
-				Questionario questionarioDoBanco = questionarioRepository.get(questionario.getId());
-				questionarioDoBanco.addResposta(respostaQuestionario);
+				//Questionario questionarioDoBanco = questionarioRepository.get(questionario.getId());
+				questionario.addResposta(respostaQuestionario);
 			}
+			System.out.println("Salvando respostas: " + questionario.getRespostas().size()); 
+			questionarioRepository.flush();
 		}
 	}
 	
 	@Transactional
 	private void criarResultadosAvaliacao(List<Avaliacao> avaliacoes) {
 		for (Avaliacao avaliacao : avaliacoes) {
-			List<RespostaQuestionario> respostas = avaliacao.getQuestionario().getRespostas();
-		
+			List<RespostaQuestionario> respostas = respostaQuestionarioRepository.getPorIdAvaliacao(avaliacao.getId());
+			System.out.println(respostas.size());
 			for (RespostaQuestionario resposta : respostas) {
 				BigDecimal notaFinal = calculadorQuestionario.calculaNota(ConversorQuestionario.toBlocos(resposta.getEstrutura()));
 	
@@ -179,6 +189,7 @@ public class MigradorAvaliacaoService {
 						ResultadoAvaliacao.builder()
 						.avaliacao(avaliacao)
 						.nomeMunicipio(resposta.getMunicipio())
+						.uf(resposta.getUf())
 						.nota(notaFinal)
 						.build();
 				

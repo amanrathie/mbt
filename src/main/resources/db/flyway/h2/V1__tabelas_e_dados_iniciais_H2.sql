@@ -152,27 +152,33 @@ CREATE TABLE dbo.AvaliacaoLog
 
 CREATE TABLE dbo.Resposta (
    IdResposta INTEGER IDENTITY NOT NULL,
-   IdQuestionario        	INTEGER              NULL, -- not null
+   IdQuestionario        	INTEGER              NOT NULL,
+   IdAvaliacao        	INTEGER          NOT NULL,
    TxtEstrutura			TEXT        NULL,
    municipio			VARCHAR(100)		 NULL, -- temporario
+   uf				char(2)		 NULL, -- temporario
    
    CONSTRAINT PK_Resposta PRIMARY KEY (IdResposta),
-   CONSTRAINT FK_Resposta_Questionario FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario)
+   CONSTRAINT FK_Resposta_Questionario FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario),
+   CONSTRAINT FK_Resposta_Avaliacao FOREIGN KEY (IdAvaliacao) REFERENCES dbo.Avaliacao (IdAvaliacao)
 );
 
 CREATE TABLE dbo.RespostaLog (
    REV             		INTEGER         NOT NULL,
    REVTYPE         		TINYINT,
-	IdResposta INTEGER  NOT NULL,
-   IdQuestionario        	INTEGER              NULL, -- not null
+   IdResposta INTEGER  NOT NULL,
+   IdQuestionario        	INTEGER              NOT NULL,
+   IdAvaliacao        	INTEGER          NOT NULL,
    TxtEstrutura			TEXT        NULL,
    municipio			VARCHAR(100)		 NULL, -- temporario
+   uf			char(2)		 NULL, -- temporario
 );
 
 CREATE TABLE dbo.ResultadoAvaliacao (
    IdResultadoAvaliacao INTEGER IDENTITY NOT NULL,
    IdAvaliacao        	INTEGER          NOT NULL,
-   NomMunicipio			TEXT        NULL,
+   NomMunicipio			VARCHAR(100)     NOT NULL,
+   SigUF				CHAR(2)     	NOT NULL,
    ValNota				NUMBER(4,2),
    
    CONSTRAINT PK_ResultadoAvaliacao PRIMARY KEY (IdResultadoAvaliacao),
