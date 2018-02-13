@@ -13,7 +13,7 @@ public class PainelGeralAvaliacaoDTO extends Filtro {
 	private String tipo;
 
 	@QueryProjection
-	public PainelGeralAvaliacaoDTO(String nome, int tipo) {
+	public PainelGeralAvaliacaoDTO(String nome, int tipo, int idFase) {
 		
 		this.nome = nome;
 		this.tipo = TipoAvaliacao.values()[tipo].name();

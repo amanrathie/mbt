@@ -33,6 +33,14 @@ INSERT INTO dbo.EntidadeAvaliadora_Usuario(IdEntidadeAvaliadoraUsuario, IdEntida
 INSERT INTO dbo.EntidadeAvaliadora_Usuario(IdEntidadeAvaliadoraUsuario, IdEntidadeAvaliadora, IdUsuario, FlgAdministrador)
 	VALUES (1, 0, 0, 0);
 	
+-- Entidades Avaliadas
+INSERT INTO dbo.EntidadeAvaliada (IdEntidadeAvaliada, IdTipoEntidade, IdPoder) VALUES (0, 0, 0);
+INSERT INTO dbo.EntidadeAvaliada (IdEntidadeAvaliada, IdTipoEntidade, IdPoder) VALUES (1, 0, 0);
+
+-- Localidade
+INSERT INTO dbo.Localidade (IdLocalidade, IdEntidadeAvaliada) VALUES (0, 0);
+INSERT INTO dbo.Localidade (IdLocalidade, IdEntidadeAvaliada) VALUES (1, 1);
+	
 -- UF
 INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('AC', 'Acre');
 INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('AL',	'Alagoas');
@@ -61,4 +69,9 @@ INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('SC',	'Santa Catarina');
 INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('SE',	'Sergipe');
 INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('SP',	'São Paulo');
 INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('TO',	'Tocantins');
+
+-- Município (ToDO: outros)
+
+INSERT INTO dbo.Vw_Municipio (IdMunicipio, SigUF, DescMunicipio, CodMunicipioGeo)
+	VALUES (530010,	'DF',	'Brasília', 5300108);
 	

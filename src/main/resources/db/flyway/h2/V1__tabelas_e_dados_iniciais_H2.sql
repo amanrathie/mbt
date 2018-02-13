@@ -64,6 +64,25 @@ CREATE TABLE dbo.Usuario
   CONSTRAINT FK_Usuario_Perfil FOREIGN KEY (IdPerfil) REFERENCES dbo.Perfil (IdPerfil)
 );
 
+CREATE TABLE dbo.EntidadeAvaliada (
+   IdEntidadeAvaliada           INTEGER IDENTITY NOT NULL,
+   IdTipoEntidade				  INTEGER        NOT NULL,
+   IdPoder				INTEGER			NOT NULL,
+   
+   CONSTRAINT PK_EntidadeAvaliada PRIMARY KEY (IdEntidadeAvaliada),
+   CONSTRAINT FK_EntAvaliada_TipoEntidade FOREIGN KEY (IdTipoEntidade) REFERENCES dbo.TipoEntidade (IdTipoEntidade),
+   CONSTRAINT FK_EntidadeAvaliada_Poder FOREIGN KEY (IdPoder) REFERENCES dbo.Poder (IdPoder),
+);
+
+
+CREATE TABLE dbo.Localidade (
+   IdLocalidade           INTEGER IDENTITY NOT NULL,
+   IdEntidadeAvaliada           INTEGER  NOT NULL,
+   
+   CONSTRAINT PK_Localidade PRIMARY KEY (IdLocalidade),
+   CONSTRAINT FK_Localidade_EntAvaliada FOREIGN KEY (IdEntidadeAvaliada) REFERENCES dbo.EntidadeAvaliada (IdEntidadeAvaliada)
+);
+
 CREATE TABLE dbo.EntidadeAvaliadora (
    IdEntidadeAvaliadora           INTEGER IDENTITY NOT NULL,
    IdTipoEntidade				  INTEGER        NOT NULL,
