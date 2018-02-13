@@ -113,6 +113,7 @@
 			<script src="<@spring.url '/static/libs/bootstrap/js/bootstrap.min.js'/>"></script>
 			<script src="<@spring.url '/static/js/plugins/jquery.form-validator.min.js'/>"></script>
 			<script src="<@spring.url '/static/js/plugins/d3.v3.min.js'/>" charset="utf-8"></script>
+			<script src="<@spring.url '/static/js/plugins/jquery.bootpag.min.js'/>" charset="utf-8"></script>
 	
 			<script src="<@spring.url '/static/js/admin/base.js'/>"></script>
 	

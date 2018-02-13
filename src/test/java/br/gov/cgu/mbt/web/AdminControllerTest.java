@@ -58,12 +58,12 @@ public class AdminControllerTest extends ControllerTest {
 		 .andExpect(status().isOk())
 		 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 		 .andExpect(content().string(
-				 "{\"draw\":0,\"recordsTotal\":1,\"recordsFiltered\":1,\"data\":[{\"direcaoOrdenacao\":\"ASC\",\"colunaOrdenacao\":\"\",\"tamanhoPagina\":15,\"offset\":0,\"nome\":\"Avaliação de Teste\",\"tipo\":\"CIDADA\"}],\"error\":null}"
+				 "{\"draw\":0,\"recordsTotal\":1,\"recordsFiltered\":1,\"data\":[{\"direcaoOrdenacao\":\"ASC\",\"colunaOrdenacao\":\"\",\"tamanhoPagina\":15,\"offset\":0,\"nome\":\"Avaliação de Teste\",\"tipo\":\"CIDADA\",\"fase\":\"QUESTIONARIO_EM_APROVACAO\"}],\"error\":null}"
 						 ));
 	 }
 	 
 	 private PainelGeralAvaliacaoDTO mockDTOs() {
-		 return new PainelGeralAvaliacaoDTO("Avaliação de Teste", 1);
+		 return new PainelGeralAvaliacaoDTO("Avaliação de Teste", 1, 1);
 	 }
 
 

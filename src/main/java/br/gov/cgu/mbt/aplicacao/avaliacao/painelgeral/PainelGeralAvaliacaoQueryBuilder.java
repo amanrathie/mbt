@@ -18,10 +18,11 @@ public class PainelGeralAvaliacaoQueryBuilder extends QueryBuilderJPASQL<PainelG
 		JPASQLQuery<PainelGeralAvaliacaoDTO> query = new JPASQLQuery<>(entityManager, sqlTemplate);
 		
 		query
-		.select(avaliacao.nomAvaliacao)
+		.select(new QPainelGeralAvaliacaoDTO(avaliacao.nomAvaliacao, avaliacao.idTipoAvaliacao, avaliacao.idFase)
+								
+				)
 		.from(avaliacao);
-		//.orderBy(avaliacao.idTipoAvaliacao.asc());
-		
+		//.orderBy(avaliacao.idTipoAvaliacao.asc());		
 		return query;
 	}
 
