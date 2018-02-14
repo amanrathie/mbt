@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.gov.cgu.mbt.Constantes;
 import br.gov.cgu.mbt.negocio.TipoPoder;
+import br.gov.cgu.mbt.negocio.auth.Usuario;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.TipoAvaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.TipoFaseAvaliacao;
@@ -25,6 +26,8 @@ public class AvaliacaoEbtBuilder {
 				.edicao(1)
 				.fase(TipoFaseAvaliacao.PUBLICADA)
 				.poder(TipoPoder.EXECUTIVO)
+				.administrador(Usuario.builder().id(Constantes.ID_ADMIN_AVALIACAO_EBT_PADRAO).build())
+				.responsavelCGU(Usuario.builder().id(Constantes.ID_ADMIN_CGU_PADRAO).build())
 				.entidadeAvaliadora(cgu)
 				.build();
 		Avaliacao v2 = Avaliacao.builder()
@@ -33,6 +36,8 @@ public class AvaliacaoEbtBuilder {
 				.edicao(2)
 				.fase(TipoFaseAvaliacao.PUBLICADA)
 				.poder(TipoPoder.EXECUTIVO)
+				.administrador(Usuario.builder().id(Constantes.ID_ADMIN_AVALIACAO_EBT_PADRAO).build())
+				.responsavelCGU(Usuario.builder().id(Constantes.ID_ADMIN_CGU_PADRAO).build())
 				.entidadeAvaliadora(cgu)
 				.build();
 		Avaliacao v3 = Avaliacao.builder()
@@ -41,6 +46,8 @@ public class AvaliacaoEbtBuilder {
 				.edicao(3)
 				.fase(TipoFaseAvaliacao.PUBLICADA)
 				.poder(TipoPoder.EXECUTIVO)
+				.administrador(Usuario.builder().id(Constantes.ID_ADMIN_AVALIACAO_EBT_PADRAO).build())
+				.responsavelCGU(Usuario.builder().id(Constantes.ID_ADMIN_CGU_PADRAO).build())
 				.entidadeAvaliadora(cgu)
 				.build();
 		

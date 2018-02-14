@@ -1,5 +1,7 @@
 package br.gov.cgu.mbt.negocio.auth;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,6 +39,7 @@ import lombok.ToString;
 @Builder
 @ToString
 @EqualsAndHashCode
+@Audited
 @Entity
 @Table(name = "Usuario", schema = Constantes.SCHEMA_APLICACAO)
 @Referenciavel(label = "Usuário")
@@ -51,6 +55,7 @@ public class Usuario implements Entidade<Integer>, Serializable, UserDetails {
 	
 	@ManyToOne
 	@JoinColumn(name="IdPerfil")
+	@Audited(targetAuditMode = NOT_AUDITED)
 	private Perfil perfil;
 	
 	@JsonIgnore

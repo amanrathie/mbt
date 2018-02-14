@@ -1,18 +1,18 @@
--- Utilizado para popular base de testes que será usada para as queries builders, repositories etc
-
--- Usuarios
-INSERT INTO dbo.Usuario (IdUsuario, IdPerfil, NomUsuario) 
-	VALUES (0, 0, 'Fulano da Silva');
-INSERT INTO dbo.Usuario (IdUsuario, IdPerfil, NomUsuario) 
-	VALUES (1, 0, 'Beltrano da Silva');
+-- Utilizado para popular base de testes que será usada apenas para os testes
 	
 -- Avaliações
-INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdPoder, IdEntidadeAvaliadora, FlgAtiva) 
-	VALUES (0, 'Escala Brasil Transparente', 1, 0, 5, 0, 0, 1);
-INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdPoder, IdEntidadeAvaliadora, FlgAtiva) 
-	VALUES (1, 'Escala Brasil Transparente', 2, 0, 5, 0, 0, 1);
-INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdPoder, IdEntidadeAvaliadora, FlgAtiva) 
-	VALUES (2, 'Escala Brasil Transparente', 3, 0, 5, 0, 0, 1);
+INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdPoder, IdEntidadeAvaliadora, 
+	IdUsuarioAdministrador, IdUsuarioCGU, FlgAtiva) 
+	VALUES (0, 'Escala Brasil Transparente', 1, 0, 5, 0, 0, 
+	0, 1, 1);
+INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdPoder, IdEntidadeAvaliadora, 
+	IdUsuarioAdministrador, IdUsuarioCGU, FlgAtiva) 
+	VALUES (1, 'Escala Brasil Transparente', 2, 0, 5, 0, 0, 
+	0, 1, 1);
+INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, IdPoder, IdEntidadeAvaliadora, 
+	IdUsuarioAdministrador, IdUsuarioCGU, FlgAtiva) 
+	VALUES (2, 'Escala Brasil Transparente', 3, 0, 5, 0, 0, 
+	0, 1, 1);
 	
 -- Questionario
 INSERT INTO dbo.Questionario (IdQuestionario, TxtEstrutura)
@@ -83,6 +83,7 @@ INSERT INTO dbo.Vw_UF (SigUF, DescUF) values('TO',	'Tocantins');
 INSERT INTO dbo.Vw_Municipio (IdMunicipio, SigUF, DescMunicipio, CodMunicipioGeo)
 	VALUES (530010,	'DF',	'Brasília', 5300108);
 	
+/*	
 INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, idPoder, IdEntidadeAvaliadora, FlgAtiva) values (3, 'Escala Brasil Transparente v4', 4, 1, 3, 0, 0, 1);
 INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, idPoder, IdEntidadeAvaliadora, FlgAtiva) values (4, 'Escala Brasil Transparente v5', 5, 0, 5, 0, 0, 1);
 INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, idPoder, IdEntidadeAvaliadora, FlgAtiva) values (5, 'Escala Brasil Transparente v6', 6, 0, 5, 0, 0, 1);
@@ -130,3 +131,5 @@ INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao
 INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, idPoder, IdEntidadeAvaliadora, FlgAtiva) values (47, 'Escala Brasil Transparente v48', 48, 1, 3, 0, 0, 1);
 INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, idPoder, IdEntidadeAvaliadora, FlgAtiva) values (48, 'Escala Brasil Transparente v49', 49, 1, 3, 0, 0, 1);
 INSERT INTO dbo.Avaliacao (IdAvaliacao, NomAvaliacao, NumEdicao, IdTipoAvaliacao, IdFase, idPoder, IdEntidadeAvaliadora, FlgAtiva) values (49, 'Escala Brasil Transparente v50', 50, 0, 5, 0, 0, 1);
+*/	
+	

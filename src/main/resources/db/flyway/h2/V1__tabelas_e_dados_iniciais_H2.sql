@@ -1,4 +1,3 @@
-
 -- Tabelas de tipos
 
 CREATE TABLE dbo.TipoAvaliacao
@@ -122,12 +121,18 @@ CREATE TABLE dbo.Avaliacao
 (
   IdAvaliacao       	INTEGER IDENTITY NOT NULL,
   NomAvaliacao      	VARCHAR(255)    NOT NULL,
-  NumEdicao         	INTEGER,
+  DescAvaliacao			VARCHAR(1000),
   IdTipoAvaliacao		INTEGER			NOT NULL,
   IdFase				INTEGER			NOT NULL,
   IdPoder				INTEGER			NOT NULL,
   IdEntidadeAvaliadora	INTEGER			NOT NULL,
+  IdUsuarioAdministrador INTEGER		NOT NULL,
+  IdUsuarioCGU 			INTEGER			NOT NULL,
   IdQuestionario		INTEGER,
+  NumEdicao				INTEGER,
+  DescEdicao			VARCHAR(1000),
+  DthInicio				DATETIME,
+  DthFim				DATETIME,
   FlgAtiva				BIT			NOT NULL,
 
   CONSTRAINT PK_Avaliacao PRIMARY KEY (IdAvaliacao),
@@ -135,6 +140,8 @@ CREATE TABLE dbo.Avaliacao
   CONSTRAINT FK_Avaliacao_Fase FOREIGN KEY (IdFase) REFERENCES dbo.Fase (IdFase),
   CONSTRAINT FK_Avaliacao_Poder FOREIGN KEY (IdPoder) REFERENCES dbo.Poder (IdPoder),
   CONSTRAINT FK_Avaliacao_EntAvaliadora FOREIGN KEY (IdEntidadeAvaliadora) REFERENCES dbo.EntidadeAvaliadora (IdEntidadeAvaliadora),
+  CONSTRAINT FK_Avaliacao_Usuario_1 FOREIGN KEY (IdUsuarioAdministrador) REFERENCES dbo.Usuario (IdUsuario),
+  CONSTRAINT FK_Avaliacao_Usuario_2 FOREIGN KEY (IdUsuarioCGU) REFERENCES dbo.Usuario (IdUsuario),
   CONSTRAINT FK_Avaliacao_Questionario FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario)
 );
 
@@ -145,8 +152,11 @@ CREATE TABLE dbo.AvaliacaoLog
   IdAvaliacao       	INTEGER  		NOT NULL,
   NomAvaliacao      	VARCHAR(255)    NOT NULL,
   IdFase				INTEGER			NOT NULL,
-  IdQuestionario		INTEGER,
-  FlgAtiva				TINYINT			NOT NULL
+  IdUsuarioAdministrador INTEGER		NOT NULL,
+  IdUsuarioCGU 			INTEGER			NOT NULL,
+  DthInicio				DATETIME,
+  DthFim				DATETIME,
+  FlgAtiva				BIT			NOT NULL,
 );
 
 
@@ -233,3 +243,9 @@ INSERT INTO dbo.Poder VALUES(2, 'Judiciário');
 
 -- Entidade Avaliadora
 INSERT INTO dbo.EntidadeAvaliadora (IdEntidadeAvaliadora, IdTipoEntidade, NomEntidade, FlgCGU) values (0, 1, 'CGU', 1);
+
+-- Usuarios (colocar somente os que devem ser migrados oficialmente)
+INSERT INTO dbo.Usuario (IdUsuario, IdPerfil, NomUsuario) 
+	VALUES (0, 0, 'Fulano da Silva - Adm CGU');
+INSERT INTO dbo.Usuario (IdUsuario, IdPerfil, NomUsuario) 
+	VALUES (1, 0, 'Beltrano da Silva - Avaliador CGU');
