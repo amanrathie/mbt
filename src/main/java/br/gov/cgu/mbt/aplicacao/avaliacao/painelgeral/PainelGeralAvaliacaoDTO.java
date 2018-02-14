@@ -21,9 +21,9 @@ public class PainelGeralAvaliacaoDTO extends Filtro {
 	public PainelGeralAvaliacaoDTO(String nome, int tipo, int poder, int fase, boolean ativo) {
 
 		this.nome = nome;
-		this.tipo = TipoAvaliacao.values()[tipo].name();
-		this.poder = TipoPoder.values()[poder].name();
-		this.fase = TipoFaseAvaliacao.values()[fase].name();
+		this.tipo = TipoAvaliacao.values()[tipo].getDescricao();
+		this.poder = TipoPoder.values()[poder].getDescricao();
+		this.fase = TipoFaseAvaliacao.values()[fase].getDescricao();
 		this.ativo = ativo;
 	}
 
