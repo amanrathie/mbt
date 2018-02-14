@@ -17,6 +17,14 @@ CREATE TABLE dbo.Fase
   CONSTRAINT PK_Fase PRIMARY KEY (IdFase)
 );
 
+CREATE TABLE dbo.Etapa
+(
+  IdEtapa        INTEGER  NOT NULL,
+  DescEtapa      VARCHAR(255)    NOT NULL,
+
+  CONSTRAINT PK_Etapa PRIMARY KEY (IdEtapa)
+);
+
 
 CREATE TABLE dbo.Poder
 (
@@ -99,7 +107,7 @@ CREATE TABLE dbo.EntidadeAvaliadora_Usuario (
    FlgAdministrador						  TINYINT,
    
    CONSTRAINT PK_EntidadeAvaliadoraUsuario PRIMARY KEY (IdEntidadeAvaliadoraUsuario),
-   CONSTRAINT FK_EntAvdoraUsu_EntAvdora FOREIGN KEY (IdEntidadeAvaliadora) REFERENCES dbo.EntidadeAvaliadora (IdEntidadeAvaliadora),
+   CONSTRAINT FK_EntAvaliadoraUsuario_EntAvaliadora FOREIGN KEY (IdEntidadeAvaliadora) REFERENCES dbo.EntidadeAvaliadora (IdEntidadeAvaliadora),
    CONSTRAINT FK_Usuario_EntidadeAvaliadora FOREIGN KEY (IdUsuario) REFERENCES dbo.Usuario (IdUsuario)
 );
 
@@ -165,11 +173,15 @@ CREATE TABLE dbo.Resposta (
    IdQuestionario        	INTEGER              NOT NULL,
    IdAvaliacao        	INTEGER          NOT NULL,
    TxtEstrutura			TEXT        NULL,
+   IdEtapa				INTEGER 		NOT NULL,
+   IdUsuario			INTEGER			NOT NULL,
    municipio			VARCHAR(100)		 NULL, -- temporario
    uf				char(2)		 NULL, -- temporario
    
    CONSTRAINT PK_Resposta PRIMARY KEY (IdResposta),
    CONSTRAINT FK_Resposta_Questionario FOREIGN KEY (IdQuestionario) REFERENCES dbo.Questionario (IdQuestionario),
+   CONSTRAINT FK_Resposta_Etapa FOREIGN KEY (IdEtapa) REFERENCES dbo.Etapa (IdEtapa),
+   CONSTRAINT FK_RespostaQuest_Usuario FOREIGN KEY (IdUsuario) REFERENCES dbo.Usuario (IdUsuario),
    CONSTRAINT FK_Resposta_Avaliacao FOREIGN KEY (IdAvaliacao) REFERENCES dbo.Avaliacao (IdAvaliacao)
 );
 
@@ -180,8 +192,8 @@ CREATE TABLE dbo.RespostaLog (
    IdQuestionario        	INTEGER              NOT NULL,
    IdAvaliacao        	INTEGER          NOT NULL,
    TxtEstrutura			TEXT        NULL,
-   municipio			VARCHAR(100)		 NULL, -- temporario
-   uf			char(2)		 NULL, -- temporario
+   IdEtapa				INTEGER 		NOT NULL,
+   IdUsuario			INTEGER			NOT NULL,
 );
 
 CREATE TABLE dbo.ResultadoAvaliacao (
@@ -219,6 +231,11 @@ INSERT INTO dbo.Fase VALUES (2, 'Questionário aprovado', 2);
 INSERT INTO dbo.Fase VALUES (3, 'Em andamento', 3);
 INSERT INTO dbo.Fase VALUES (4, 'Aguardando publicação', 4);
 INSERT INTO dbo.Fase VALUES (5, 'Publicada', 5);
+
+-- Etapa de Avaliação
+INSERT INTO dbo.Etapa VALUES (0, 'Avaliação');
+INSERT INTO dbo.Etapa VALUES (1, 'Revisão');
+INSERT INTO dbo.Etapa VALUES (2, 'Validação');
 
 -- Tipo Questão
 INSERT INTO dbo.TipoQuestao VALUES (0, 'Descritiva');

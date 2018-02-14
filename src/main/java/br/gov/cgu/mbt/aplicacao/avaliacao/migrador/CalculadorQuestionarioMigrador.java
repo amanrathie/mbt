@@ -6,10 +6,8 @@ import java.math.RoundingMode;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.calculador.CalculadorQuestaoMultiplaEscolha;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.calculador.CalculadorQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.questao.TipoQuestao;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.json.Bloco;
@@ -31,7 +29,7 @@ public class CalculadorQuestionarioMigrador implements CalculadorQuestionario {
 			List<Questao> questoes = bloco.getQuestoes();
 			for (Questao questao : questoes) {
 				if (questao.getTipo().equals(TipoQuestao.MULTIPLA_ESCOLHA)) {
-					CalculadorQuestaoMultiplaEscolha calculador = new CalculadorQuestaoMultiplaEscolha();
+					CalculadorQuestaoMultiplaEscolhaMigrador calculador = new CalculadorQuestaoMultiplaEscolhaMigrador();
 					BigDecimal notaNaQuestao = calculador.calcula(questao);
 					
 					notaNoBloco = notaNoBloco.add(notaNaQuestao.multiply(questao.getPeso()).divide(valor100, 4, RoundingMode.HALF_UP));

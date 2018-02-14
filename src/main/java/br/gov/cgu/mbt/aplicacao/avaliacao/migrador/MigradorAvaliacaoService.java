@@ -22,7 +22,9 @@ import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.QuestionarioRepository;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.RespostaQuestionarioRepository;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.calculador.CalculadorQuestionario;
 import br.gov.cgu.mbt.aplicacao.avaliacao.resultado.ResultadoAvaliacaoRepository;
+import br.gov.cgu.mbt.negocio.auth.Usuario;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
+import br.gov.cgu.mbt.negocio.avaliacao.TipoEtapaAvaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.questao.TipoQuestao;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.RespostaQuestionario;
@@ -102,6 +104,8 @@ public class MigradorAvaliacaoService {
 					.questionario(avaliacao.getQuestionario())
 					.avaliacao(avaliacao)
 					.estrutura(ConversorQuestionario.toJson(blocos))
+					.etapaAvaliacao(TipoEtapaAvaliacao.AVALIACAO)
+					.usuario(Usuario.builder().id(Constantes.ID_ADMIN_CGU_PADRAO).build())
 					.municipio(record.get(QuestionarioEbtHeader.municipio)) // TODO: temporario
 					.uf(record.get(QuestionarioEbtHeader.uf)) // TODO: temporario
 					.build();
