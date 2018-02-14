@@ -28,6 +28,7 @@ public class PainelGeralAvaliacaoQueryBuilder extends QueryBuilderJPASQL<PainelG
 		filtrarSePreenchido(query, filtro.getTipo(), x -> avaliacao.idTipoAvaliacao.eq(filtro.getTipo().ordinal()));
 		filtrarSePreenchido(query, filtro.getFase(), x -> avaliacao.idFase.eq(filtro.getFase().ordinal()));
 		filtrarSePreenchido(query, filtro.getPoder(), x -> avaliacao.idPoder.eq(filtro.getPoder().ordinal()));
+		filtrarSePreenchido(query, filtro.getAtivo(), x -> avaliacao.flgAtiva.eq(filtro.getAtivo()));
 		
 		
 		

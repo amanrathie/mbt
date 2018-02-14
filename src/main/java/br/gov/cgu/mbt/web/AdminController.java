@@ -31,7 +31,8 @@ public class AdminController {
 	}
 
 	@GetMapping("/painel_geral_avaliacoes")
-	public String listar(PainelGeralAvaliacaoFiltro filtro, Model m) {		
+	public String listar(PainelGeralAvaliacaoFiltro filtro, Model m) {	
+		filtro.setAtivo(true);
 		
 		m.addAttribute("filtro", filtro);
 		m.addAttribute("tipos", TipoAvaliacao.values());
