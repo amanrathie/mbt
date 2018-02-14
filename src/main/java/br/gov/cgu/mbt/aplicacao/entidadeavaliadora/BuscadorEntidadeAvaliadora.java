@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import br.gov.cgu.mbt.negocio.entidadeavaliadora.EntidadeAvaliadora;
 
 @Service
-public class BuscadorDeEntidadeAvaliadora {
+public class BuscadorEntidadeAvaliadora {
 	
 	private EntidadeAvaliadoraRepository repository;
 	
 	@Autowired
-	public BuscadorDeEntidadeAvaliadora(EntidadeAvaliadoraRepository repository) {
+	public BuscadorEntidadeAvaliadora(EntidadeAvaliadoraRepository repository) {
 		this.repository = repository;
 	}
 	

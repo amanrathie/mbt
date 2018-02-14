@@ -12,16 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.cgu.mbt.Constantes;
-import br.gov.cgu.mbt.aplicacao.avaliacao.AvaliacaoRepository;
+import br.gov.cgu.mbt.aplicacao.avaliacao.GerenciadorAvaliacao;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.AvaliacaoEbtBuilder;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.BlocoEbtBuilder;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.EbtUtil;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.QuestionarioEbtHeader;
+import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.BuscadorRespostaQuestionario;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.ConversorQuestionario;
-import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.QuestionarioRepository;
-import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.RespostaQuestionarioRepository;
+import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.GerenciadorQuestionario;
 import br.gov.cgu.mbt.aplicacao.avaliacao.questionario.calculador.CalculadorQuestionario;
-import br.gov.cgu.mbt.aplicacao.avaliacao.resultado.ResultadoAvaliacaoRepository;
+import br.gov.cgu.mbt.aplicacao.avaliacao.resultado.GerenciadorResultadoAvaliacao;
 import br.gov.cgu.mbt.negocio.auth.Usuario;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.TipoEtapaAvaliacao;
@@ -42,25 +42,25 @@ public class MigradorAvaliacaoService {
 
 	private CalculadorQuestionario calculadorQuestionario;
 	
-	private AvaliacaoRepository avaliacaoRepository;
+	private GerenciadorAvaliacao gerenciadorAvaliacao;
 
-	private QuestionarioRepository questionarioRepository;
+	private GerenciadorQuestionario gerenciadorQuestionario;
 	
-	private RespostaQuestionarioRepository respostaQuestionarioRepository;
+	private BuscadorRespostaQuestionario buscadorRespostaQuestionario;
 	
-	private ResultadoAvaliacaoRepository resultadoAvaliacaoRepository;
+	private GerenciadorResultadoAvaliacao gerenciadorResultadoAvaliacao;
 
 	@Autowired
 	public MigradorAvaliacaoService(@Qualifier("calculadorQuestionarioMigrador")CalculadorQuestionario calculadorQuestionario,
-			AvaliacaoRepository avaliacaoRepository,
-			QuestionarioRepository questionarioRepository,
-			RespostaQuestionarioRepository respostaQuestionarioRepository,
-			ResultadoAvaliacaoRepository resultadoAvaliacaoRepository) {
+			GerenciadorAvaliacao gerenciadorAvaliacao,
+			GerenciadorQuestionario gerenciadorQuestionario,
+			GerenciadorResultadoAvaliacao gerenciadorResultadoAvaliacao,
+			BuscadorRespostaQuestionario buscadorRespostaQuestionario) {
 		this.calculadorQuestionario = calculadorQuestionario;
-		this.avaliacaoRepository = avaliacaoRepository;
-		this.questionarioRepository = questionarioRepository;
-		this.respostaQuestionarioRepository = respostaQuestionarioRepository;
-		this.resultadoAvaliacaoRepository = resultadoAvaliacaoRepository;
+		this.gerenciadorAvaliacao = gerenciadorAvaliacao;
+		this.gerenciadorQuestionario = gerenciadorQuestionario;
+		this.gerenciadorResultadoAvaliacao = gerenciadorResultadoAvaliacao;
+		this.buscadorRespostaQuestionario = buscadorRespostaQuestionario;
 	}
 
 	@Transactional
@@ -70,11 +70,11 @@ public class MigradorAvaliacaoService {
 		String jsonEstrutura = ConversorQuestionario.toJson(new BlocoEbtBuilder().build());
 		Questionario questionario = Questionario.builder().estrutura(jsonEstrutura).build();
 
-		questionarioRepository.put(questionario);
+		gerenciadorQuestionario.salvar(questionario);
 
 		for (Avaliacao avaliacao : avaliacoes) {
 			avaliacao.setQuestionario(questionario);
-			avaliacaoRepository.put(avaliacao);
+			gerenciadorAvaliacao.salvar(avaliacao);
 		}
 
 		migrarRespostasAvaliacoesIndependentes(avaliacoes);
@@ -113,15 +113,13 @@ public class MigradorAvaliacaoService {
 
 				questionario.addResposta(respostaQuestionario);
 			}
-
-			questionarioRepository.flush();
 		}
 	}
 	
 	@Transactional
 	private void criarResultadosAvaliacao(List<Avaliacao> avaliacoes) {
 		for (Avaliacao avaliacao : avaliacoes) {
-			List<RespostaQuestionario> respostas = respostaQuestionarioRepository.getPorIdAvaliacao(avaliacao.getId());
+			List<RespostaQuestionario> respostas = buscadorRespostaQuestionario.getPorIdAvaliacao(avaliacao.getId());
 			
 			Map<String, BigDecimal> municipioNotaArquivo = getMunicipioNotaArquivo(avaliacao);
 			BigDecimal ERRO_PERMITIDO = new BigDecimal("0.01");
@@ -142,7 +140,7 @@ public class MigradorAvaliacaoService {
 						.nota(notaFinalSistema)
 						.build();
 				
-				resultadoAvaliacaoRepository.put(resultado);
+				gerenciadorResultadoAvaliacao.salvar(resultado);
 			}
 		}
 	}

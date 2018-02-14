@@ -9,14 +9,14 @@ import java.util.List;
 
 import org.junit.Test;
 
-import br.gov.cgu.mbt.aplicacao.entidadeavaliadora.BuscadorDeEntidadeAvaliadora;
+import br.gov.cgu.mbt.aplicacao.entidadeavaliadora.BuscadorEntidadeAvaliadora;
 import br.gov.cgu.mbt.aplicacao.entidadeavaliadora.EntidadeAvaliadoraRepository;
 import br.gov.cgu.mbt.negocio.entidadeavaliadora.EntidadeAvaliadora;
 
 public class BuscadorDeEntidadeAvaliadoraTest {
 	
 	private EntidadeAvaliadoraRepository repository = mock(EntidadeAvaliadoraRepository.class);
-	private BuscadorDeEntidadeAvaliadora buscador = new BuscadorDeEntidadeAvaliadora(repository);
+	private BuscadorEntidadeAvaliadora buscador = new BuscadorEntidadeAvaliadora(repository);
 	
 	@Test
 	public void buscarPorNome_deve_retornar_dados_repository() {
