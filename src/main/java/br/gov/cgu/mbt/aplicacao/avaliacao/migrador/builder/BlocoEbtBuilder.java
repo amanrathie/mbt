@@ -167,7 +167,7 @@ public class BlocoEbtBuilder {
 		// TODO: Verificar se os pesos das opções estão corretas
 		
 		QuestaoMultiplaEscolha questao3 = QuestaoMultiplaEscolha.builder()
-				.pergunta(EbtUtil.QUESTAO_alternativa_sic_eletronico)
+				.pergunta(EbtUtil.QUESTAO_nao_exige_identificacao)
 				.peso(getPorcentagemPeso(300, 2700))
 				.ordem(3)
 				.selecaoUnica(true)

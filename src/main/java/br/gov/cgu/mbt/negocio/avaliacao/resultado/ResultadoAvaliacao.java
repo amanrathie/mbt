@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.envers.Audited;
-
 import br.gov.cgu.mbt.Constantes;
 import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
 import br.gov.cgu.persistencia.jpa.Entidade;
@@ -39,6 +37,9 @@ public class ResultadoAvaliacao implements Entidade<Integer>, Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="IdResultadoAvaliacao")
 	private Integer id;
+	
+	@Column(name="SigUF")
+	private String uf;
 	
 	@Column(name="NomMunicipio")
 	private String nomeMunicipio;

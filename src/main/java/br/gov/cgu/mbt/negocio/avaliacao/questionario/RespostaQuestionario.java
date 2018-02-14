@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,8 +14,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import br.gov.cgu.mbt.Constantes;
+import br.gov.cgu.mbt.negocio.auth.Usuario;
+import br.gov.cgu.mbt.negocio.avaliacao.Avaliacao;
+import br.gov.cgu.mbt.negocio.avaliacao.TipoEtapaAvaliacao;
 import br.gov.cgu.persistencia.jpa.Entidade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,10 +48,30 @@ public class RespostaQuestionario implements Entidade<Integer>, Serializable {
 	@JoinColumn(name="IdQuestionario")
 	private Questionario questionario;
 	
+	@ManyToOne
+	@JoinColumn(name="IdAvaliacao")
+	private Avaliacao avaliacao;
+	
 	@Column(name = "TxtEstrutura")
 	private String estrutura;
 	
+	@ManyToOne
+	@JoinColumn(name="IdUsuario")
+	private Usuario usuario;
+	
+	@Column(name="IdEtapa")
+	@Enumerated(EnumType.ORDINAL)
+	private TipoEtapaAvaliacao etapaAvaliacao;
+	
 	@Column(name = "municipio") // temporario
+	@NotAudited
 	private String municipio;
+	
+	@Column(name = "uf") // temporario
+	@NotAudited
+	private String uf;
+	
+	@Column(name="FlgFinalizada")
+	private boolean finalizada;
 
 }

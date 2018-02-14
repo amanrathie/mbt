@@ -1,6 +1,7 @@
 package br.gov.cgu.mbt.negocio.avaliacao;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -21,8 +22,12 @@ import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.gov.cgu.mbt.Constantes;
+import br.gov.cgu.mbt.negocio.TipoPoder;
+import br.gov.cgu.mbt.negocio.auth.Usuario;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
+import br.gov.cgu.mbt.negocio.avaliacao.questionario.RespostaQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacao;
+import br.gov.cgu.mbt.negocio.entidadeavaliadora.EntidadeAvaliadora;
 import br.gov.cgu.persistencia.jpa.Entidade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,28 +52,74 @@ public class Avaliacao implements Entidade<Integer>, Serializable {
 	@Column(name="IdAvaliacao")
 	private Integer id;
 	
-	@Size(min = 1, max = 64)
+	@Size(min = 1, max = 255)
 	@Column(name="NomAvaliacao")
 	@NotBlank(message = "Nome da avaliação é obrigatório")
 	private String nome;
 	
-	@Column(name="NumEdicao")
-	private Integer edicao;
+	@Column(name = "DescAvaliacao")
+	@NotAudited
+	private String descAvaliacao;
 	
 	@Column(name="IdTipoAvaliacao")
 	@Enumerated(EnumType.ORDINAL)
+	@NotAudited
 	private TipoAvaliacao tipo;
 	
 	@Column(name="IdFase")
 	@Enumerated(EnumType.ORDINAL)
 	private TipoFaseAvaliacao fase;
 	
+	@Column(name="IdPoder")
+	@Enumerated(EnumType.ORDINAL)
+	@NotAudited
+	private TipoPoder poder;
+	
 	@ManyToOne
 	@JoinColumn(name="IdQuestionario")
+	@NotAudited
 	private Questionario questionario;
+	
+	@ManyToOne
+	@JoinColumn(name="IdEntidadeAvaliadora")
+	@NotAudited
+	private EntidadeAvaliadora entidadeAvaliadora;
+	
+	@ManyToOne
+	@JoinColumn(name="IdUsuarioAdministrador")
+	private Usuario administrador;
+	
+	@ManyToOne
+	@JoinColumn(name="IdUsuarioCGU")
+	private Usuario responsavelCGU;
 	
 	@OneToMany(mappedBy="avaliacao")
 	@NotAudited
 	private List<ResultadoAvaliacao> resultados;
+	
+	@OneToMany(mappedBy="avaliacao")
+	private List<RespostaQuestionario> respostas;
+	
+	@Column(name="NumEdicao")
+	@NotAudited
+	private Integer edicao;
+
+	@Column(name = "DescEdicao")
+	@NotAudited
+	private String descEdicao;
+	
+	@Column(name = "DthInicio")
+    private LocalDateTime dataInicio;
+	 
+	@Column(name = "DthFim")
+    private LocalDateTime dataFim;
+	
+	@Column(name="FlgAtiva")
+	private boolean ativo;
+	
+	// O Lombok reconhece valores padrões para builders dessa maneira
+	public static class AvaliacaoBuilder {
+		private boolean ativo = true;
+	}
 	
 }

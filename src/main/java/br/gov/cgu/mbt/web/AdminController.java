@@ -14,7 +14,6 @@ import br.gov.cgu.mbt.aplicacao.avaliacao.painelgeral.BuscadorPainelGeralAvaliac
 import br.gov.cgu.mbt.aplicacao.avaliacao.painelgeral.PainelGeralAvaliacaoDTO;
 import br.gov.cgu.mbt.aplicacao.avaliacao.painelgeral.PainelGeralAvaliacaoFiltro;
 import br.gov.cgu.mbt.negocio.TipoPoder;
-import br.gov.cgu.mbt.negocio.TipoStatus;
 import br.gov.cgu.mbt.negocio.avaliacao.TipoAvaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.TipoFaseAvaliacao;
 import br.gov.cgu.mbt.web.datatables.DataTablesResponseFactory;
@@ -32,19 +31,33 @@ public class AdminController {
 	}
 
 	@GetMapping("/painel_geral_avaliacoes")
-	public String listar(PainelGeralAvaliacaoFiltro filtro, Model m) {
+	public String listar(PainelGeralAvaliacaoFiltro filtro, Model m) {	
+		filtro.setAtivo(true);
+		
 		m.addAttribute("filtro", filtro);
 		m.addAttribute("tipos", TipoAvaliacao.values());
 		m.addAttribute("fases", TipoFaseAvaliacao.values());
 		m.addAttribute("poderes", TipoPoder.values());
-		m.addAttribute("status", TipoStatus.values());
 		return "/admin/painel_geral_de_avaliacoes";
 	}
 
+//	@RequestMapping(value = "/api/auth/painel_geral_avaliacoes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//	@ResponseBody
+//	public DataTablesResponse<PainelGeralAvaliacaoDTO> exibeAvaliacoes(PainelGeralAvaliacaoFiltro filtro) {		
+//		RespostaConsulta<PainelGeralAvaliacaoDTO> resposta = buscador.buscar(filtro);
+//		return DataTablesResponseFactory.build(resposta);
+//	}
+	
 	@RequestMapping(value = "/api/auth/painel_geral_avaliacoes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public DataTablesResponse<PainelGeralAvaliacaoDTO> grid(PainelGeralAvaliacaoFiltro filtro) {		
+	public DataTablesResponse<PainelGeralAvaliacaoDTO> exibeAvaliacoes(Integer numPagina, PainelGeralAvaliacaoFiltro filtro) {
+		//Tamanho da pagina 15 por default
+		if(numPagina != null) {
+			filtro.setOffset(filtro.getTamanhoPagina() * (numPagina -1));
+		}
+		
 		RespostaConsulta<PainelGeralAvaliacaoDTO> resposta = buscador.buscar(filtro);
 		return DataTablesResponseFactory.build(resposta);
 	}
+	
 }

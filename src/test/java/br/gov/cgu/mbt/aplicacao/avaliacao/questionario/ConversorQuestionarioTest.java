@@ -1,6 +1,7 @@
 package br.gov.cgu.mbt.aplicacao.avaliacao.questionario;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 
@@ -18,17 +19,21 @@ public class ConversorQuestionarioTest {
 		assertThat(ConversorQuestionario.toBlocos(jsonQuestionario))
 			.isNotEmpty()
 			.hasSize(2);
-		
-		// TODO: valida questoes etc
 	}
 	
+	@Test
+	public void converte_json_para_blocos_fail() {
+		String jsonQuestionario = "estrutura_invalida";
+	
+		assertThatThrownBy(() -> ConversorQuestionario.toBlocos(jsonQuestionario))
+		.isInstanceOf(RuntimeException.class);
+	}
+	
+	@Test
 	public void converte_blocos_para_json() {
 		List<Bloco> blocos = new BlocoEbtBuilder().build();
 		
 		assertThat(ConversorQuestionario.toJson(blocos))
 			.isNotEmpty();
-		
-		// TODO: validar com estrutura esperada
 	}
-
 }

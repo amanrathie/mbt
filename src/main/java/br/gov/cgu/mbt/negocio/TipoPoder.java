@@ -1,9 +1,9 @@
 package br.gov.cgu.mbt.negocio;
 
 public enum TipoPoder {
+	EXECUTIVO("Executivo"),
 	LEGISLATIVO("Legislativo"), 
 	JUDICIARIO("Judiciário"), 
-	EXECUTIVO("Executivo"),
 	MINISTERIO_PUBLICO("Ministério Público");
 
 	private final String descricao;

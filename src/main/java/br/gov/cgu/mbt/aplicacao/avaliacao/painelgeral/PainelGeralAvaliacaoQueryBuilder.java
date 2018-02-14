@@ -8,6 +8,8 @@ import com.querydsl.jpa.sql.JPASQLQuery;
 import br.gov.cgu.mbt.negocio.sqlentities.SAvaliacao;
 import br.gov.cgu.persistencia.querybuilder.QueryBuilderJPASQL;
 
+import br.gov.cgu.mbt.aplicacao.avaliacao.painelgeral.QPainelGeralAvaliacaoDTO;
+
 @Service
 public class PainelGeralAvaliacaoQueryBuilder extends QueryBuilderJPASQL<PainelGeralAvaliacaoFiltro, PainelGeralAvaliacaoDTO> {
 	
@@ -18,10 +20,20 @@ public class PainelGeralAvaliacaoQueryBuilder extends QueryBuilderJPASQL<PainelG
 		JPASQLQuery<PainelGeralAvaliacaoDTO> query = new JPASQLQuery<>(entityManager, sqlTemplate);
 		
 		query
-		.select(avaliacao.nomAvaliacao)
+		.select( new QPainelGeralAvaliacaoDTO(avaliacao.nomAvaliacao, avaliacao.idTipoAvaliacao, avaliacao.idPoder, avaliacao.idFase, avaliacao.flgAtiva )
+								
+				)
 		.from(avaliacao);
-		//.orderBy(avaliacao.idTipoAvaliacao.asc());
 		
+		filtrarSePreenchido(query, filtro.getTipo(), x -> avaliacao.idTipoAvaliacao.eq(filtro.getTipo().ordinal()));
+		filtrarSePreenchido(query, filtro.getFase(), x -> avaliacao.idFase.eq(filtro.getFase().ordinal()));
+		filtrarSePreenchido(query, filtro.getPoder(), x -> avaliacao.idPoder.eq(filtro.getPoder().ordinal()));
+		filtrarSePreenchido(query, filtro.getAtivo(), x -> avaliacao.flgAtiva.eq(filtro.getAtivo()));
+		
+		
+		
+		
+		//.orderBy(avaliacao.idTipoAvaliacao.asc());		
 		return query;
 	}
 
