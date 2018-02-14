@@ -37,7 +37,6 @@ public class AdminController {
 		m.addAttribute("tipos", TipoAvaliacao.values());
 		m.addAttribute("fases", TipoFaseAvaliacao.values());
 		m.addAttribute("poderes", TipoPoder.values());
-		//m.addAttribute("status", TipoStatus.values());
 		return "/admin/painel_geral_de_avaliacoes";
 	}
 

@@ -11,8 +11,10 @@
     
     function configuraFiltro(){
     	var filtro = {};
-    	filtro.tipo = $("#tipo").val();    
-    	
+    	filtro.tipo = $("#tipo").val(); 
+    	filtro.fase = $("#fase").val();
+    	filtro.poder = $("#poder").val();
+    	filtro.status = $("#status").val();
     	return filtro;	
     }
 
@@ -21,11 +23,48 @@
 					"<div class='block-painel__top'>" +
 						"<div class='row'>" +
 							"<div class='col-xs-7'>" +
-								"<a href='#' class='title-section'>" + avaliacao.nome + "</a>" + 
+								"<a href='#' class='title-section'>" + avaliacao.nome + "</a>" +
+								"<div class='row dmt-5'>" +
+								 	"<div class='col-xs-3'>" +
+								 		"<strong>" + avaliacao.poder + "</strong>" +
+								 	"</div>" + 
+									 "<div class='col-xs-4'>" +
+										"<strong>" + "Entidade responsável" + "</strong>" +
+									"</div>" +
+								"</div>" +
 							"</div>" + 
+							"<div class='col-xs-5 text-right'>" +
+									"<a href='#' class='button--primary-a dmt-10 dmr-10'>Ver minhas atividades</a>" +
+									"<a href='#' class='button--primary-a dmt-10'>Acompanhar</a>" +
+							"</div>" +
 						"</div>" + 
+					"</div>" +
+					
+					"<div class='dpt-20 dpb-20 dpl-20 dpr-20'>" +
+						"<div class='row'>" +
+							"<div class='col-xs-2'>" +
+								"<div class='block-painel__calendario'>" +
+									"<p><small>Início 00/00/0000</small></p>" +
+									"<p><small>Término 00/00/0000</small></p>" +
+								"</div>" +
+							"</div>" +
+							"<div class='col-xs-2 dpt-10'>" +
+								"<div class='toggle-wrapper'>" +
+									"<p class='toggle-text'>Ativa</p>" +
+									"<label class='toggle'>" +
+										"<input type='checkbox'/><div></div>" +
+									"</label>" +
+									"<p class='toggle-text'>Inativa</p>" +
+								"</div>" +
+							"</div>" +
+							"<div class='col-xs-3 text-center'>" +
+								"<p class='block-painel__avaliacao block-painel__avaliacao-back-yellow'>" + avaliacao.tipo + "</p>" +
+								"<p><small><i>" + avaliacao.fase + "</i></small></p>" +
+							"</div>" +
+						"</div>" +
 					"</div>" + 
-				"</div>";
+			"</div>"		
+				;
 	};
 	
 	function exibeAvaliacoesIniciais(avaliacoes){	
@@ -37,13 +76,25 @@
 		configuraPaginacao(avaliacoes.recordsTotal);		
 	};		
 	
-	function exibeAvaliacoes(avaliacoes){	
-		$('#avaliador-3').empty();	
-		$.each(avaliacoes.data, function(index, avaliacao){
-			$('#avaliador-3').append(montaDivAvaliacoes(avaliacao));
-		});	
-		reconfiguraPaginacao(avaliacoes.recordsTotal);				
+	function exibeAvaliacoes(avaliacoes){		
+		$('#avaliador-3').empty();
+		
+		if(avaliacoes.recordsTotal > 0){
+			$.each(avaliacoes.data, function(index, avaliacao){
+				$('#avaliador-3').append(montaDivAvaliacoes(avaliacao));
+			});	
+			reconfiguraPaginacao(avaliacoes.recordsTotal);
+		}else{
+			exibeMensagemVazio();			
+		}
+						
 	};	
+	
+	function exibeMensagemVazio(){
+		var mensagem = "Nenhum registro encontrado";
+		$('#avaliador-3').html("<p>"+mensagem+"</p>");
+		$('#block-pagination').empty();
+	};
 	
 	function reconfiguraPaginacao(numRegistros){
 		$('#block-pagination').bootpag({		
@@ -65,7 +116,12 @@
 		$.ajax({
 			type:'GET',
 			url: '/mbt/admin/api/auth/painel_geral_avaliacoes/',
-			data: {numPagina: num, tipo: filtro.tipo},			
+			data: {
+					numPagina: num, 
+					tipo: filtro.tipo, 
+					fase: filtro.fase, 
+					poder: filtro.poder,
+					status: filtro.status},			
 			success: exibeAvaliacoes						
 		});
 		
@@ -128,7 +184,12 @@
 										<@campoSelectFormulario label="Poder" id="poder" opcoes=poderes valorSelecionado=filtro.poder opcaoPadrao="Selecione" opcaoTodos=true opcaoNenhum=true />
 									</div>
 									<div class="col-xs-3">
-										<@campoSelectFormulario label="Status da avaliação" id="status" opcoes=status valorSelecionado=filtro.status opcaoPadrao="Selecione" opcaoTodos=true />
+										<label for="ativo">Situação </label>
+										<select class="form-control" id="ativo" name="ativo">
+                							<option value="" <#if !(filtro.ativo??)>selected="selected"</#if>>Todos</option>
+                							<option value="true" <#if filtro.ativo?? && filtro.ativo>selected="selected"</#if>>Ativos</option>
+                							<option value="false" <#if filtro.ativo?? && !filtro.ativo>selected="selected"</#if>>Inativos</option>
+            							</select>
 									</div>
 								</div>
 								<div class="row dmt-30">

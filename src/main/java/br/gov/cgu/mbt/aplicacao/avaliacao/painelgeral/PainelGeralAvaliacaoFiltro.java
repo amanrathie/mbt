@@ -12,5 +12,5 @@ public class PainelGeralAvaliacaoFiltro extends Filtro {
 	private TipoAvaliacao tipo;
 	private TipoFaseAvaliacao fase;
 	private TipoPoder poder;
-	//private TipoStatus status;
+	private boolean ativo;
 }

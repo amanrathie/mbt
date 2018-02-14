@@ -20,12 +20,18 @@ public class PainelGeralAvaliacaoQueryBuilder extends QueryBuilderJPASQL<PainelG
 		JPASQLQuery<PainelGeralAvaliacaoDTO> query = new JPASQLQuery<>(entityManager, sqlTemplate);
 		
 		query
-		.select(new QPainelGeralAvaliacaoDTO(avaliacao.nomAvaliacao, avaliacao.idTipoAvaliacao, avaliacao.idFase)
+		.select( new QPainelGeralAvaliacaoDTO(avaliacao.nomAvaliacao, avaliacao.idTipoAvaliacao, avaliacao.idPoder, avaliacao.idFase, avaliacao.flgAtiva )
 								
 				)
 		.from(avaliacao);
 		
 		filtrarSePreenchido(query, filtro.getTipo(), x -> avaliacao.idTipoAvaliacao.eq(filtro.getTipo().ordinal()));
+		filtrarSePreenchido(query, filtro.getFase(), x -> avaliacao.idFase.eq(filtro.getFase().ordinal()));
+		filtrarSePreenchido(query, filtro.getPoder(), x -> avaliacao.idPoder.eq(filtro.getPoder().ordinal()));
+		
+		
+		
+		
 		//.orderBy(avaliacao.idTipoAvaliacao.asc());		
 		return query;
 	}

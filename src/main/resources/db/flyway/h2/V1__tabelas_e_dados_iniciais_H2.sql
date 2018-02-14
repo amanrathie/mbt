@@ -128,7 +128,7 @@ CREATE TABLE dbo.Avaliacao
   IdPoder				INTEGER			NOT NULL,
   IdEntidadeAvaliadora	INTEGER			NOT NULL,
   IdQuestionario		INTEGER,
-  FlgAtiva				TINYINT			NOT NULL,
+  FlgAtiva				BIT			NOT NULL,
 
   CONSTRAINT PK_Avaliacao PRIMARY KEY (IdAvaliacao),
   CONSTRAINT FK_Avaliacao_TipoAvaliacao FOREIGN KEY (IdTipoAvaliacao) REFERENCES dbo.TipoAvaliacao (IdTipoAvaliacao),

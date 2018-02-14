@@ -39,7 +39,6 @@ public class AdminControllerTest extends ControllerTest {
 				.andExpect(model().attribute("tipos", TipoAvaliacao.values()))
 				.andExpect(model().attribute("fases", TipoFaseAvaliacao.values()))
 				.andExpect(model().attribute("poderes", TipoPoder.values()))
-				//.andExpect(model().attribute("status", TipoStatus.values()))
 				.andExpect(view().name("/admin/painel_geral_de_avaliacoes"));
 	}
 	
@@ -56,12 +55,12 @@ public class AdminControllerTest extends ControllerTest {
 		 .andExpect(status().isOk())
 		 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 		 .andExpect(content().string(
-				 "{\"draw\":0,\"recordsTotal\":1,\"recordsFiltered\":1,\"data\":[{\"direcaoOrdenacao\":\"ASC\",\"colunaOrdenacao\":\"\",\"tamanhoPagina\":15,\"offset\":0,\"nome\":\"Avaliação de Teste\",\"tipo\":\"CIDADA\",\"fase\":\"EM_PLANEJAMENTO\"}],\"error\":null}"
+				 "{\"draw\":0,\"recordsTotal\":1,\"recordsFiltered\":1,\"data\":[{\"direcaoOrdenacao\":\"ASC\",\"colunaOrdenacao\":\"\",\"tamanhoPagina\":15,\"offset\":0,\"nome\":\"Avaliação de Teste\",\"tipo\":\"CIDADA\",\"poder\":\"EXECUTIVO\",\"fase\":\"EM_PLANEJAMENTO\",\"ativo\":true}],\"error\":null}"
 						 ));
 	 }
 	 
 	 private PainelGeralAvaliacaoDTO mockDTOs() {
-		 return new PainelGeralAvaliacaoDTO("Avaliação de Teste", 1, 0);
+		 return new PainelGeralAvaliacaoDTO("Avaliação de Teste", 1, 0, 0, true);
 	 }
 
 

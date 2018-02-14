@@ -33,7 +33,7 @@
             <option value="">${opcaoPadrao}</option>
             </#if>
             <#if opcaoTodos>
-            	<option value="todos">Todos</option>
+            	<option value="">Todos</option>
             </#if>
             <#if opcaoNenhum>
             	<option value="nenhum">Nenhum</option>
