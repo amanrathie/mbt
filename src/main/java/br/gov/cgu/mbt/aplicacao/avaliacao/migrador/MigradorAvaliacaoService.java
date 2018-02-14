@@ -105,8 +105,7 @@ public class MigradorAvaliacaoService {
 					.municipio(record.get(QuestionarioEbtHeader.municipio)) // TODO: temporario
 					.uf(record.get(QuestionarioEbtHeader.uf)) // TODO: temporario
 					.build();
-				
-				//Questionario questionarioDoBanco = questionarioRepository.get(questionario.getId());
+
 				questionario.addResposta(respostaQuestionario);
 			}
 
