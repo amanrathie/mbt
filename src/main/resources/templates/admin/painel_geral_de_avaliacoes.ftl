@@ -14,7 +14,8 @@
     	filtro.tipo = $("#tipo").val(); 
     	filtro.fase = $("#fase").val();
     	filtro.poder = $("#poder").val();
-    	filtro.status = $("#status").val();
+    	filtro.ativo = $("#ativo").val();
+    	console.log(filtro.ativo);
     	return filtro;	
     }
 
@@ -68,12 +69,16 @@
 	};
 	
 	function exibeAvaliacoesIniciais(avaliacoes){	
-		$('#avaliador-3').empty();		
-		$.each(avaliacoes.data, function(index, avaliacao){
-			$('#avaliador-3').append(montaDivAvaliacoes(avaliacao));
-		});
+		$('#avaliador-3').empty();	
+		if(avaliacoes.recordsTotal > 0){	
+			$.each(avaliacoes.data, function(index, avaliacao){
+				$('#avaliador-3').append(montaDivAvaliacoes(avaliacao));
+			});
 		
-		configuraPaginacao(avaliacoes.recordsTotal);		
+			configuraPaginacao(avaliacoes.recordsTotal);
+		}else{
+				exibeMensagemVazio();			
+		}			
 	};		
 	
 	function exibeAvaliacoes(avaliacoes){		
@@ -115,13 +120,13 @@
 	function recarregaAvaliacoes(num, filtro){
 		$.ajax({
 			type:'GET',
-			url: '/mbt/admin/api/auth/painel_geral_avaliacoes/',
+			url: '/mbt/admin/api/auth/painel_geral_avaliacoes',
 			data: {
 					numPagina: num, 
 					tipo: filtro.tipo, 
 					fase: filtro.fase, 
 					poder: filtro.poder,
-					status: filtro.status},			
+					ativo: filtro.ativo},			
 			success: exibeAvaliacoes						
 		});
 		
@@ -186,9 +191,9 @@
 									<div class="col-xs-3">
 										<label for="ativo">Situação </label>
 										<select class="form-control" id="ativo" name="ativo">
-                							<option value="" <#if !(filtro.ativo??)>selected="selected"</#if>>Todos</option>
-                							<option value="true" <#if filtro.ativo?? && filtro.ativo>selected="selected"</#if>>Ativos</option>
-                							<option value="false" <#if filtro.ativo?? && !filtro.ativo>selected="selected"</#if>>Inativos</option>
+                							<option value="" selected>Todos</option>
+                							<option value="true">Ativos</option>
+                							<option value="false">Inativos</option>
             							</select>
 									</div>
 								</div>
