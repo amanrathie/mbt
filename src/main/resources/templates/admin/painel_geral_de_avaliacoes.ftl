@@ -41,37 +41,35 @@
 		$('#avaliador-3').empty();	
 		$.each(avaliacoes.data, function(index, avaliacao){
 			$('#avaliador-3').append(montaDivAvaliacoes(avaliacao));
-		});		
+		});	
+		reconfiguraPaginacao(avaliacoes.recordsTotal);				
 	};	
+	
+	function reconfiguraPaginacao(numRegistros){
+		$('#block-pagination').bootpag({		
+			<#-- 15 é a quantidade default de itens por pagina -->		
+            total: Math.ceil(numRegistros/15)
+        });
+	}
 	
 	function configuraPaginacao(numRegistros){
 		$('#block-pagination').bootpag({		
 			<#-- 15 é a quantidade default de itens por pagina -->		
             total: Math.ceil(numRegistros/15)
-        }).on("page", function(event, /* page number here */ num){        	    
-        	trocaPagina(num);        	         
+        }).on("page", function(event, num){
+        	recarregaAvaliacoes(num, configuraFiltro())        	        	         
         });
 	};
 	
-	function trocaPagina(num){
+	function recarregaAvaliacoes(num, filtro){
 		$.ajax({
 			type:'GET',
 			url: '/mbt/admin/api/auth/painel_geral_avaliacoes/',
-			data: {numPagina: num},			
+			data: {numPagina: num, tipo: filtro.tipo},			
 			success: exibeAvaliacoes						
 		});
 		
 	};	
-	
-	function filtraAvaliacoes(filtro){
-		$.ajax({
-   			type:'GET',
-   			dataType: 'json',
-   			data:{tipo: filtro.tipo},
-			url:'/mbt/admin/api/auth/painel_geral_avaliacoes',			
-			success: exibeAvaliacoes		
-		});
-	};
 	
 	function buscaAvaliacoes(){
 		$.ajax({
@@ -85,7 +83,7 @@
 	
 	$('#btnFiltrar').click(function(event){
 		event.preventDefault();
-		filtraAvaliacoes(configuraFiltro());		
+		recarregaAvaliacoes(1, configuraFiltro());		
 	});
 	
 </script>
