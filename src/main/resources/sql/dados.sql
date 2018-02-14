@@ -19,8 +19,8 @@ INSERT INTO dbo.Questionario (IdQuestionario, TxtEstrutura)
 	VALUES (0, '');
 
 -- Respostas
-INSERT INTO dbo.Resposta (IdResposta, IdQuestionario, IdAvaliacao, TxtEstrutura, IdEtapa, IdUsuario)
-	VALUES (0, 0, 0, '', 0, 0);	
+INSERT INTO dbo.Resposta (IdResposta, IdQuestionario, IdAvaliacao, TxtEstrutura, IdEtapa, IdUsuario, FlgFinalizada)
+	VALUES (0, 0, 0, '', 0, 0, 1);	
 	
 -- Resultados de avaliações
 INSERT INTO dbo.ResultadoAvaliacao(IdResultadoAvaliacao, IdAvaliacao, SigUF, NomMunicipio, ValNota)

@@ -108,6 +108,7 @@ public class MigradorAvaliacaoService {
 					.usuario(Usuario.builder().id(Constantes.ID_ADMIN_CGU_PADRAO).build())
 					.municipio(record.get(QuestionarioEbtHeader.municipio)) // TODO: temporario
 					.uf(record.get(QuestionarioEbtHeader.uf)) // TODO: temporario
+					.finalizada(true)
 					.build();
 
 				questionario.addResposta(respostaQuestionario);

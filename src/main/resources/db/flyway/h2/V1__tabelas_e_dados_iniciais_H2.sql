@@ -175,6 +175,7 @@ CREATE TABLE dbo.Resposta (
    TxtEstrutura			TEXT        NULL,
    IdEtapa				INTEGER 		NOT NULL,
    IdUsuario			INTEGER			NOT NULL,
+   FlgFinalizada			BIT				NOT NULL,
    municipio			VARCHAR(100)		 NULL, -- temporario
    uf				char(2)		 NULL, -- temporario
    
@@ -194,6 +195,7 @@ CREATE TABLE dbo.RespostaLog (
    TxtEstrutura			TEXT        NULL,
    IdEtapa				INTEGER 		NOT NULL,
    IdUsuario			INTEGER			NOT NULL,
+   FlgFinalizada			BIT				NOT NULL
 );
 
 CREATE TABLE dbo.ResultadoAvaliacao (

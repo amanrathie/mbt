@@ -70,5 +70,8 @@ public class RespostaQuestionario implements Entidade<Integer>, Serializable {
 	@Column(name = "uf") // temporario
 	@NotAudited
 	private String uf;
+	
+	@Column(name="FlgFinalizada")
+	private boolean finalizada;
 
 }
