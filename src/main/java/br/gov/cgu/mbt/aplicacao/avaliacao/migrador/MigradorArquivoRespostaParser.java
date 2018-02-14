@@ -1,5 +1,6 @@
 package br.gov.cgu.mbt.aplicacao.avaliacao.migrador;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +16,18 @@ import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.QuestionarioEbtHeader;
 public class MigradorArquivoRespostaParser {
 	private static Iterable<CSVRecord> records;
 	
-	public MigradorArquivoRespostaParser(@Value("${arquivo.ebt.importar}") String arquivoParaImportar) throws Exception {		
-		InputStreamReader in = new InputStreamReader(new ClassPathResource(arquivoParaImportar).getInputStream(), "UTF-8");
-	    
-		records = CSVFormat.DEFAULT
-		  .withDelimiter(';')
-	      .withHeader(QuestionarioEbtHeader.class)
-	      .withFirstRecordAsHeader()
-	      .parse(in);
+	public MigradorArquivoRespostaParser(@Value("${arquivo.ebt.importar}") String arquivoParaImportar) throws RuntimeException {		
+		InputStreamReader in;
+		try {
+			in = new InputStreamReader(new ClassPathResource(arquivoParaImportar).getInputStream(), "UTF-8");
+			records = CSVFormat.DEFAULT
+					  .withDelimiter(';')
+				      .withHeader(QuestionarioEbtHeader.class)
+				      .withFirstRecordAsHeader()
+				      .parse(in);
+		} catch (IOException e) {
+			throw new RuntimeException("Não foi possível ler o arquivo");
+		}	
 	}
 	
 	/**

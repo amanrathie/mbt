@@ -9,6 +9,8 @@ public final class Constantes {
     
     public static final Integer ID_ADMIN_CGU_PADRAO = 0;
     public static final Integer ID_ADMIN_AVALIACAO_EBT_PADRAO = 1;
+    
+    public static final String ARQUIVO_EBT_MIGRACAO = "/ebt/ebt_respostas.csv";
 
     private Constantes() {
         /*Hide do construtor de classe utilitaria*/

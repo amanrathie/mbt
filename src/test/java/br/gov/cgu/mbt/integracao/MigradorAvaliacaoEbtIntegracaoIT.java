@@ -1,7 +1,5 @@
 package br.gov.cgu.mbt.integracao;
 
-import static org.assertj.core.api.Assertions.within;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import br.gov.cgu.mbt.aplicacao.avaliacao.AvaliacaoRepository;
+import br.gov.cgu.mbt.Constantes;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorArquivoRespostaParser;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.MigradorAvaliacaoService;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.util.QuestionarioEbtHeader;
@@ -35,14 +33,10 @@ public class MigradorAvaliacaoEbtIntegracaoIT {
 	@Autowired
 	private ResultadoAvaliacaoRepository resultadoAvaliacaoRepository;
 	
-	@Autowired
-	private AvaliacaoRepository avaliacaoRepository;
-	
 	private SoftAssertions softAssertions;
 	
 	@Before
 	public void setUp() {
-
 		softAssertions = new SoftAssertions();
 	}
 
@@ -51,81 +45,38 @@ public class MigradorAvaliacaoEbtIntegracaoIT {
 		softAssertions.assertAll();
 	}
 	 
-	
 	@Test
 	public void avaliacoes_migradas_corretamente() throws Exception {
 		List<Avaliacao> avaliacoes = migradorAvaliacaoEbtService.criarAvaliacoesIndependentes();
-		BigDecimal tolerancia = new BigDecimal(0.01);
 
 		for (Avaliacao avaliacao : avaliacoes) {
-			MigradorArquivoRespostaParser parser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
-			List<CSVRecord> records = parser.parse(avaliacao.getEdicao());
-			Map<String, BigDecimal> municipioNota = new HashMap<String, BigDecimal>();
-			
-			for (CSVRecord record : records) { // TODO: colocar codigo do IBGE no mapa depois que tiver o SQL populado
-				String uf = record.get(QuestionarioEbtHeader.uf);
-				String municipio = record.get(QuestionarioEbtHeader.municipio);
-				String nota = record.get(QuestionarioEbtHeader.nota);
-				
-				if (!municipio.equalsIgnoreCase("ESTADO")) {
-					municipioNota.put(uf+"_"+municipio, new BigDecimal(nota));
-				}
-			}
+			MigradorArquivoRespostaParser parser = new MigradorArquivoRespostaParser(Constantes.ARQUIVO_EBT_MIGRACAO);
+			Map<String, BigDecimal> municipioNotaArquivo = getMunicipioNotaArquivo(avaliacao);
 			
 			List<ResultadoAvaliacao> resultados = resultadoAvaliacaoRepository.getPorIdAvaliacao(avaliacao.getId());
 			
 			for (ResultadoAvaliacao resultado : resultados) {
-				
-				if (!resultado.getNomeMunicipio().equalsIgnoreCase("ESTADO")) {
-					softAssertions.assertThat(municipioNota.get(resultado.getUf()+"_"+resultado.getNomeMunicipio()))
-					.as("Municipio: %s - %s na ediçao %d", resultado.getUf(), resultado.getNomeMunicipio(), resultado.getAvaliacao().getEdicao())
-					.isNotNull()
-					.isCloseTo(resultado.getNota(), within(tolerancia));
-				}
+				BigDecimal notaCalculada = municipioNotaArquivo.get(resultado.getUf()+"_"+resultado.getNomeMunicipio());
+				softAssertions.assertThat(notaCalculada.compareTo(resultado.getNota()))
+				.as("Municipio: %s - %s na ediçao %d", resultado.getUf(), resultado.getNomeMunicipio(), resultado.getAvaliacao().getEdicao())
+				.isEqualTo(0);
 			}
+		}
+	}
+	
+	private Map<String, BigDecimal> getMunicipioNotaArquivo(Avaliacao avaliacao) {
+		// Logica para salvar dados do .CSV caso o desvio seja de 0,01
+		MigradorArquivoRespostaParser parser = new MigradorArquivoRespostaParser(Constantes.ARQUIVO_EBT_MIGRACAO);
+		Map<String, BigDecimal> municipioNota = new HashMap<String, BigDecimal>();
+		List<CSVRecord> records = parser.parse(avaliacao.getEdicao());
+		for (CSVRecord record : records) { // TODO: colocar codigo do IBGE no mapa depois que tiver o SQL populado
+			String uf = record.get(QuestionarioEbtHeader.uf);
+			String municipio = record.get(QuestionarioEbtHeader.municipio);
+			String nota = record.get(QuestionarioEbtHeader.nota);
 			
-			/*Map<String, BigDecimal> municipioNota = records.stream()
-			.filter(e -> !e.get(QuestionarioEbtHeader.municipio).equalsIgnoreCase("ESTADO")) // retira os estados
-			.collect(Collectors.toList())
-			.stream()
-			.collect(Collectors.toMap(e -> e.get(QuestionarioEbtHeader.municipio), e -> new BigDecimal(e.get(QuestionarioEbtHeader.nota))));
-			
-			List<ResultadoAvaliacao> resultados = resultadoAvaliacaoRepository.getPorIdAvaliacao(avaliacao.getId());
-			
-			for (ResultadoAvaliacao resultado : resultados) {
-				assertThat(municipioNota.get(resultado.getNomeMunicipio())).isEqualByComparingTo(resultado.getNota());
-			}*/
-			
-			
+			municipioNota.put(uf+"_"+municipio, new BigDecimal(nota));
 		}
 		
-		/*assertThat(avaliacoes).isNotEmpty();
-		for (Avaliacao avaliacao : avaliacoes) {
-			Questionario questionario = avaliacao.getQuestionario();
-			assertThat(questionario).isNotNull();
-			
-			String jsonQuestionario = questionario.getEstrutura();
-			
-			List<Bloco> blocos = ConversorQuestionario.toBlocos(jsonQuestionario);
-
-			assertThat(blocos)
-			.isNotEmpty()
-			.hasSize(2);
-			
-			for (Bloco bloco : blocos) {
-				if (bloco.getNome().equals(EbtUtil.BLOCO_REGULAMENTACAO)) {
-					assertThat(bloco.getQuestoes().size()).isEqualTo(8);
-				} else if (bloco.getNome().equals(EbtUtil.BLOCO_TR_PASSIVA)) {
-					assertThat(bloco.getQuestoes().size()).isEqualTo(6);
-				}
-			}
-
-		}*/
-		
-		/*List<ResultadoAvaliacao> resultadoDeApiuna = resultadoAvaliacaoRepository.getPorNomeMunicipio("Apiuna");
-		assertThat(resultadoDeApiuna).isNotEmpty();
-		assertThat(resultadoDeApiuna.get(0).getNota()).isEqualTo(new BigDecimal(10));*/
-
-		// TODO: contém blocos, questões etc
+		return municipioNota;
 	}
 }

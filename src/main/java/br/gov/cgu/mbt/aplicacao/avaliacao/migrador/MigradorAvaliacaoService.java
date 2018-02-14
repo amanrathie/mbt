@@ -1,7 +1,9 @@
 package br.gov.cgu.mbt.aplicacao.avaliacao.migrador;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.gov.cgu.mbt.Constantes;
 import br.gov.cgu.mbt.aplicacao.avaliacao.AvaliacaoRepository;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.AvaliacaoEbtBuilder;
 import br.gov.cgu.mbt.aplicacao.avaliacao.migrador.builder.BlocoEbtBuilder;
@@ -59,7 +62,7 @@ public class MigradorAvaliacaoService {
 	}
 
 	@Transactional
-	public List<Avaliacao> criarAvaliacoesIndependentes() throws Exception {
+	public List<Avaliacao> criarAvaliacoesIndependentes() {
 		// TODO: lançar erro caso as EBT's já estejam migradas
 		List<Avaliacao> avaliacoes = new AvaliacaoEbtBuilder().build();
 		String jsonEstrutura = ConversorQuestionario.toJson(new BlocoEbtBuilder().build());
@@ -80,85 +83,19 @@ public class MigradorAvaliacaoService {
 	}
 
 	@Transactional
-	private void migrarRespostasAvaliacoesIndependentes(List<Avaliacao> avaliacoes) throws Exception {
+	private void migrarRespostasAvaliacoesIndependentes(List<Avaliacao> avaliacoes) {
 		for (Avaliacao avaliacao : avaliacoes) {
-
 			Questionario questionario = avaliacao.getQuestionario();
 			String jsonQuestionario = questionario.getEstrutura();
 			
-			MigradorArquivoRespostaParser respostasParser = new MigradorArquivoRespostaParser("/ebt/ebt_respostas.csv");
+			MigradorArquivoRespostaParser respostasParser = new MigradorArquivoRespostaParser(Constantes.ARQUIVO_EBT_MIGRACAO);
 			List<CSVRecord> csvRecords = respostasParser.parse(avaliacao.getEdicao());
-			
-			System.out.println(csvRecords.size());
 
-			// Para cada respostas
+			// Para cada linha do arquivo, construimos um questionário com as respostas preenchidas
 			for (CSVRecord record : csvRecords) {
 				List<Bloco> blocos = ConversorQuestionario.toBlocos(jsonQuestionario);
 
-				for (Bloco bloco : blocos) {
-					List<Questao> questoes = bloco.getQuestoes();
-					
-					for (Questao questao : questoes) {
-						if (questao.getTipo() == TipoQuestao.MULTIPLA_ESCOLHA) {
-							
-							// Essa pergunta necessitou um tratamento especial, pois a pontuação não era por item
-							if (questao.getPergunta().equals(EbtUtil.QUESTAO_nao_exige_identificacao)) {
-								String valor = record.get(QuestionarioEbtHeader.nao_exige_identificacaop);
-								QuestaoMultiplaEscolha qme = (QuestaoMultiplaEscolha) questao;
-								List<OpcaoResposta> opcoesResposta = qme.getOpcoesResposta();
-
-								for (OpcaoResposta opcaoResposta : opcoesResposta) {
-									if (opcaoResposta.getOpcao().equalsIgnoreCase(EbtUtil.OPCAO_SIM) && valor.equals("300")) {
-										opcaoResposta.setResposta(true);
-									}
-									
-									if (opcaoResposta.getOpcao().equalsIgnoreCase(EbtUtil.OPCAO_NAO) && !valor.equals("300")) {
-										opcaoResposta.setResposta(true);
-									}
-								}
-							} else {
-							
-								QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA // TODO: extrair em método
-										.get(questao.getPergunta());
-								String respostaQuestao = record.get(questionarioEbtHeader);
-								respostaQuestao = respostaQuestao.equalsIgnoreCase(EbtUtil.OPCAO_SIM) ? EbtUtil.OPCAO_SIM : EbtUtil.OPCAO_NAO;
-								
-								QuestaoMultiplaEscolha qme = (QuestaoMultiplaEscolha) questao;
-								List<OpcaoResposta> opcoesResposta = qme.getOpcoesResposta();
-	
-								for (OpcaoResposta opcaoResposta : opcoesResposta) {
-									if (opcaoResposta.getOpcao().equalsIgnoreCase(respostaQuestao)) {
-										opcaoResposta.setResposta(true);
-									}
-								}
-							}
-						} else if (questao.getTipo() == TipoQuestao.DESCRITIVA) {
-							QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA
-									.get(questao.getPergunta());
-							String respostaQuestao = record.get(questionarioEbtHeader);
-							QuestaoDescritiva qd = (QuestaoDescritiva) questao;
-							qd.setResposta(respostaQuestao);
-						} else if (questao.getTipo() == TipoQuestao.MATRIZ) {
-							QuestaoMatriz qm = (QuestaoMatriz) questao;
-							List<OpcaoMultiplaEscolha> opcoesMultiplaEscolha = qm.getOpcoesMultiplaEscolha();
-
-							for (OpcaoMultiplaEscolha opcaoMultiplaEscolha : opcoesMultiplaEscolha) {
-								// No caso de questao matriz, devemos escolher a pergunta da questão múltipla escolha, e não da pergunta mãe (que é apenas um agrupador)
-								QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA.get(opcaoMultiplaEscolha.getPergunta());
-								String respostaQuestao = record.get(questionarioEbtHeader);
-								respostaQuestao = respostaQuestao.equalsIgnoreCase(EbtUtil.OPCAO_SIM) ? EbtUtil.OPCAO_SIM : EbtUtil.OPCAO_NAO;
-								
-								List<OpcaoResposta> opcoesResposta = opcaoMultiplaEscolha.getOpcoesResposta();
-								
-								for (OpcaoResposta opcaoResposta : opcoesResposta) {
-									if (opcaoResposta.getOpcao().equalsIgnoreCase(respostaQuestao)) {
-										opcaoResposta.setResposta(true);
-									}
-								}
-							}
-						}
-					}
-				}
+				processaBloco(record, blocos);
 				
 				// Monta a resposta do questionario e grava
 				RespostaQuestionario respostaQuestionario = RespostaQuestionario.builder()
@@ -172,7 +109,7 @@ public class MigradorAvaliacaoService {
 				//Questionario questionarioDoBanco = questionarioRepository.get(questionario.getId());
 				questionario.addResposta(respostaQuestionario);
 			}
-			System.out.println("Salvando respostas: " + questionario.getRespostas().size()); 
+
 			questionarioRepository.flush();
 		}
 	}
@@ -181,22 +118,123 @@ public class MigradorAvaliacaoService {
 	private void criarResultadosAvaliacao(List<Avaliacao> avaliacoes) {
 		for (Avaliacao avaliacao : avaliacoes) {
 			List<RespostaQuestionario> respostas = respostaQuestionarioRepository.getPorIdAvaliacao(avaliacao.getId());
-			System.out.println(respostas.size());
+			
+			Map<String, BigDecimal> municipioNotaArquivo = getMunicipioNotaArquivo(avaliacao);
+			BigDecimal ERRO_PERMITIDO = new BigDecimal("0.01");
 			for (RespostaQuestionario resposta : respostas) {
-				BigDecimal notaFinal = calculadorQuestionario.calculaNota(ConversorQuestionario.toBlocos(resposta.getEstrutura()));
-	
-				// TODO: Logica para salvar dados do .CSV caso o desvio seja de 0,01
+				BigDecimal notaFinalSistema = calculadorQuestionario.calculaNota(ConversorQuestionario.toBlocos(resposta.getEstrutura()));
+				BigDecimal notaFinalArquivo = municipioNotaArquivo.get(resposta.getUf()+"_"+resposta.getMunicipio());
+				
+				// Algumas notas estavam com erro de 0,01 no cálculo. Por isso fazemos essa comparação e guardamos a nota da avaliação original nesses casos
+				if (notaFinalSistema.subtract(notaFinalArquivo).abs().compareTo(ERRO_PERMITIDO) == 0) {
+					notaFinalSistema = notaFinalArquivo;
+				}
 				
 				ResultadoAvaliacao resultado = 
 						ResultadoAvaliacao.builder()
 						.avaliacao(avaliacao)
 						.nomeMunicipio(resposta.getMunicipio())
 						.uf(resposta.getUf())
-						.nota(notaFinal)
+						.nota(notaFinalSistema)
 						.build();
 				
 				resultadoAvaliacaoRepository.put(resultado);
 			}
 		}
+	}
+	
+
+	private void processaBloco(CSVRecord record, List<Bloco> blocos) {
+		for (Bloco bloco : blocos) {
+			List<Questao> questoes = bloco.getQuestoes();
+			
+			for (Questao questao : questoes) {
+				if (questao.getTipo() == TipoQuestao.MULTIPLA_ESCOLHA) {
+					processaQuestaoMultiplaEscolha(record, questao);
+				} else if (questao.getTipo() == TipoQuestao.DESCRITIVA) {
+					processaQuestaoDescritiva(record, questao);
+				} else if (questao.getTipo() == TipoQuestao.MATRIZ) {
+					processaQuestaoMatriz(record, questao);
+				}
+			}
+		}
+	}
+
+	private void processaQuestaoMatriz(CSVRecord record, Questao questao) {
+		QuestaoMatriz qm = (QuestaoMatriz) questao;
+		List<OpcaoMultiplaEscolha> opcoesMultiplaEscolha = qm.getOpcoesMultiplaEscolha();
+
+		for (OpcaoMultiplaEscolha opcaoMultiplaEscolha : opcoesMultiplaEscolha) {
+			// No caso de questao matriz, devemos escolher a pergunta da questão múltipla escolha, e não da pergunta mãe (que é apenas um agrupador)
+			QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA.get(opcaoMultiplaEscolha.getPergunta());
+			String respostaQuestao = record.get(questionarioEbtHeader);
+			respostaQuestao = respostaQuestao.equalsIgnoreCase(EbtUtil.OPCAO_SIM) ? EbtUtil.OPCAO_SIM : EbtUtil.OPCAO_NAO;
+			
+			List<OpcaoResposta> opcoesResposta = opcaoMultiplaEscolha.getOpcoesResposta();
+			
+			for (OpcaoResposta opcaoResposta : opcoesResposta) {
+				if (opcaoResposta.getOpcao().equalsIgnoreCase(respostaQuestao)) {
+					opcaoResposta.setResposta(true);
+				}
+			}
+		}
+	}
+
+	private void processaQuestaoDescritiva(CSVRecord record, Questao questao) {
+		QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA
+				.get(questao.getPergunta());
+		String respostaQuestao = record.get(questionarioEbtHeader);
+		QuestaoDescritiva qd = (QuestaoDescritiva) questao;
+		qd.setResposta(respostaQuestao);
+	}
+
+	private void processaQuestaoMultiplaEscolha(CSVRecord record, Questao questao) {
+		// Essa pergunta necessitou um tratamento especial, pois a pontuação não era por item
+		if (questao.getPergunta().equals(EbtUtil.QUESTAO_nao_exige_identificacao)) {
+			String valor = record.get(QuestionarioEbtHeader.nao_exige_identificacaop);
+			QuestaoMultiplaEscolha qme = (QuestaoMultiplaEscolha) questao;
+			List<OpcaoResposta> opcoesResposta = qme.getOpcoesResposta();
+
+			for (OpcaoResposta opcaoResposta : opcoesResposta) {
+				if (opcaoResposta.getOpcao().equalsIgnoreCase(EbtUtil.OPCAO_SIM) && valor.equals("300")) {
+					opcaoResposta.setResposta(true);
+				}
+				
+				if (opcaoResposta.getOpcao().equalsIgnoreCase(EbtUtil.OPCAO_NAO) && !valor.equals("300")) {
+					opcaoResposta.setResposta(true);
+				}
+			}
+		} else {
+		
+			QuestionarioEbtHeader questionarioEbtHeader = EbtUtil.MAPEAMENTO_PERGUNTA_RESPOSTA // TODO: extrair em método
+					.get(questao.getPergunta());
+			String respostaQuestao = record.get(questionarioEbtHeader);
+			respostaQuestao = respostaQuestao.equalsIgnoreCase(EbtUtil.OPCAO_SIM) ? EbtUtil.OPCAO_SIM : EbtUtil.OPCAO_NAO;
+			
+			QuestaoMultiplaEscolha qme = (QuestaoMultiplaEscolha) questao;
+			List<OpcaoResposta> opcoesResposta = qme.getOpcoesResposta();
+
+			for (OpcaoResposta opcaoResposta : opcoesResposta) {
+				if (opcaoResposta.getOpcao().equalsIgnoreCase(respostaQuestao)) {
+					opcaoResposta.setResposta(true);
+				}
+			}
+		}
+	}
+	
+	private Map<String, BigDecimal> getMunicipioNotaArquivo(Avaliacao avaliacao) {
+		// Logica para salvar dados do .CSV caso o desvio seja de 0,01
+		MigradorArquivoRespostaParser parser = new MigradorArquivoRespostaParser(Constantes.ARQUIVO_EBT_MIGRACAO);
+		Map<String, BigDecimal> municipioNota = new HashMap<String, BigDecimal>();
+		List<CSVRecord> records = parser.parse(avaliacao.getEdicao());
+		for (CSVRecord record : records) { // TODO: colocar codigo do IBGE no mapa depois que tiver o SQL populado
+			String uf = record.get(QuestionarioEbtHeader.uf);
+			String municipio = record.get(QuestionarioEbtHeader.municipio);
+			String nota = record.get(QuestionarioEbtHeader.nota);
+			
+			municipioNota.put(uf+"_"+municipio, new BigDecimal(nota));
+		}
+		
+		return municipioNota;
 	}
 }
