@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,7 +14,6 @@ import br.gov.cgu.mbt.aplicacao.avaliacao.painelgeral.BuscadorPainelGeralAvaliac
 import br.gov.cgu.mbt.aplicacao.avaliacao.painelgeral.PainelGeralAvaliacaoDTO;
 import br.gov.cgu.mbt.aplicacao.avaliacao.painelgeral.PainelGeralAvaliacaoFiltro;
 import br.gov.cgu.mbt.negocio.TipoPoder;
-import br.gov.cgu.mbt.negocio.TipoStatus;
 import br.gov.cgu.mbt.negocio.avaliacao.TipoAvaliacao;
 import br.gov.cgu.mbt.negocio.avaliacao.TipoFaseAvaliacao;
 import br.gov.cgu.mbt.web.datatables.DataTablesResponseFactory;
@@ -39,7 +37,7 @@ public class AdminController {
 		m.addAttribute("tipos", TipoAvaliacao.values());
 		m.addAttribute("fases", TipoFaseAvaliacao.values());
 		m.addAttribute("poderes", TipoPoder.values());
-		m.addAttribute("status", TipoStatus.values());
+		//m.addAttribute("status", TipoStatus.values());
 		return "/admin/painel_geral_de_avaliacoes";
 	}
 

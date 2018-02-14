@@ -3,12 +3,10 @@ package br.gov.cgu.mbt.negocio.avaliacao;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +22,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import br.gov.cgu.mbt.Constantes;
 import br.gov.cgu.mbt.negocio.TipoPoder;
-import br.gov.cgu.mbt.negocio.TipoStatus;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.Questionario;
 import br.gov.cgu.mbt.negocio.avaliacao.questionario.RespostaQuestionario;
 import br.gov.cgu.mbt.negocio.avaliacao.resultado.ResultadoAvaliacao;
@@ -93,12 +90,11 @@ public class Avaliacao implements Entidade<Integer>, Serializable {
 	private List<RespostaQuestionario> respostas;
 	
 	@Column(name="FlgAtiva")
-	@Enumerated(EnumType.ORDINAL)
-	private TipoStatus status;
+	private boolean ativo;
 	
 	// O Lombok reconhece valores padrões para builders dessa maneira
 	public static class AvaliacaoBuilder {
-		private TipoStatus status = TipoStatus.ATIVO;
+		private boolean ativo = true;
 	}
 	
 }

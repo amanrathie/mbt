@@ -185,6 +185,8 @@ public class MigradorAvaliacaoService {
 			for (RespostaQuestionario resposta : respostas) {
 				BigDecimal notaFinal = calculadorQuestionario.calculaNota(ConversorQuestionario.toBlocos(resposta.getEstrutura()));
 	
+				// TODO: Logica para salvar dados do .CSV caso o desvio seja de 0,01
+				
 				ResultadoAvaliacao resultado = 
 						ResultadoAvaliacao.builder()
 						.avaliacao(avaliacao)
